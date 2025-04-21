@@ -1,0 +1,84 @@
+import { Clock, Check, X } from 'lucide-react';
+import { useGameState } from '@/hooks/useGameState';
+import { formatTime } from '@/lib/gameLogic';
+
+export default function FeedbackScreen() {
+  const { state } = useGameState();
+  const { questions, currentQuestionIndex, selectedAnswer, feedbackTimeRemaining } = state;
+  
+  const currentQuestion = questions[currentQuestionIndex];
+  const isCorrect = selectedAnswer === currentQuestion?.correctAnswer;
+  
+  if (!currentQuestion) {
+    return null;
+  }
+  
+  return (
+    <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+      <div className="p-4 text-white">
+        <div className={`${isCorrect ? 'bg-green-500' : 'bg-red-500'} p-4 rounded-t-lg`}>
+          <div className="flex items-center justify-between">
+            <h3 className="font-bold text-lg">{isCorrect ? 'Correct Answer' : 'Incorrect Answer'}</h3>
+            <div className="flex items-center">
+              <Clock className="h-5 w-5 mr-1" />
+              <span className="font-mono">{formatTime(feedbackTimeRemaining)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="p-5">
+        <p className="text-lg mb-6">{currentQuestion.text}</p>
+        
+        {/* Answer options with correct highlighted */}
+        <div className="space-y-3">
+          {currentQuestion.options.map((option, index) => {
+            const optionLetter = String.fromCharCode(65 + index);
+            const isSelectedAnswer = optionLetter === selectedAnswer;
+            const isCorrectAnswer = optionLetter === currentQuestion.correctAnswer;
+            
+            let className = "w-full text-left p-3 border-2 rounded-lg";
+            
+            if (isCorrectAnswer) {
+              className += " bg-green-50 border-green-500";
+            } else if (isSelectedAnswer) {
+              className += " bg-red-50 border-red-500";
+            } else {
+              className += " border-gray-200";
+            }
+            
+            return (
+              <div key={index} className={className}>
+                <span className="font-medium mr-2">{optionLetter}.</span>
+                <span>{option}</span>
+                
+                {isCorrectAnswer && (
+                  <div className="mt-1 text-sm text-green-700">
+                    <Check className="h-5 w-5 inline mr-1" />
+                    Correct Answer
+                  </div>
+                )}
+                
+                {isSelectedAnswer && !isCorrectAnswer && (
+                  <div className="mt-1 text-sm text-red-700">
+                    <X className="h-5 w-5 inline mr-1" />
+                    Your Answer
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      
+      {currentQuestion.explanation && (
+        <div className="p-4 bg-gray-50 border-t">
+          <div className="text-sm text-gray-600">
+            <p className="font-semibold mb-1">Explanation:</p>
+            <p>{currentQuestion.explanation}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
