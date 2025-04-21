@@ -1,4 +1,5 @@
 export type Difficulty = 'easy' | 'medium' | 'expert';
+export type Section = 'klinik' | 'preklinik';
 
 export interface Question {
   id: number;
@@ -6,10 +7,13 @@ export interface Question {
   options: string[];
   correctAnswer: string;
   explanation: string;
+  category?: string;
+  difficulty?: string;
 }
 
 export interface GameState {
-  currentScreen: 'welcome' | 'game' | 'feedback' | 'result';
+  currentScreen: 'welcome' | 'section' | 'game' | 'feedback' | 'result';
+  section: Section | null;
   difficulty: Difficulty | null;
   questions: Question[];
   currentQuestionIndex: number;
@@ -24,6 +28,7 @@ export interface GameState {
 }
 
 export type GameAction = 
+  | { type: 'SET_SECTION'; payload: Section }
   | { type: 'SET_DIFFICULTY'; payload: Difficulty }
   | { type: 'SET_QUESTIONS'; payload: Question[] }
   | { type: 'NEXT_QUESTION' }

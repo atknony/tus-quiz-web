@@ -1,11 +1,12 @@
 import { createContext, useContext, useReducer, ReactNode, useEffect, useRef } from 'react';
 import { useLocation } from 'wouter';
 import { apiRequest } from '@/lib/queryClient';
-import { GameState, GameAction, Difficulty, Question } from '@/lib/types';
+import { GameState, GameAction, Difficulty, Section, Question } from '@/lib/types';
 import { getMaxTime } from '@/lib/gameLogic';
 
 const initialState: GameState = {
   currentScreen: 'welcome',
+  section: null,
   difficulty: null,
   questions: [],
   currentQuestionIndex: 0,
@@ -21,9 +22,16 @@ const initialState: GameState = {
 
 function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
-    case 'SET_DIFFICULTY':
+    case 'SET_SECTION':
       return {
         ...initialState,
+        section: action.payload,
+        currentScreen: 'section'
+      };
+      
+    case 'SET_DIFFICULTY':
+      return {
+        ...state,
         difficulty: action.payload,
         currentScreen: 'game'
       };
@@ -176,6 +184,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 type GameStateContextType = {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
+  selectSection: (section: Section) => void;
   startGame: (difficulty: Difficulty) => void;
   checkAnswer: (answer: string) => void;
   playAgain: () => void;
@@ -229,12 +238,19 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
   
   // We don't need a navigation effect since we're managing screens via state
   
+  // Select section function
+  const selectSection = (section: Section) => {
+    dispatch({ type: 'SET_SECTION', payload: section });
+  };
+  
   // Start game function
   const startGame = async (difficulty: Difficulty) => {
     dispatch({ type: 'SET_DIFFICULTY', payload: difficulty });
     
     try {
-      const response = await apiRequest('GET', '/api/questions', undefined);
+      // Get questions for the selected section
+      const endpoint = state.section ? `/api/questions/${state.section}` : '/api/questions';
+      const response = await apiRequest('GET', endpoint, undefined);
       const data = await response.json();
       
       // Shuffle the questions randomly
@@ -256,7 +272,7 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
   
   // Play again function
   const playAgain = async () => {
-    if (state.difficulty) {
+    if (state.difficulty && state.section) {
       await startGame(state.difficulty);
     }
   };
@@ -270,7 +286,8 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     <GameStateContext.Provider 
       value={{ 
         state, 
-        dispatch, 
+        dispatch,
+        selectSection,
         startGame, 
         checkAnswer, 
         playAgain, 
