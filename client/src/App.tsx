@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import WelcomeScreen from "@/components/WelcomeScreen";
+import SectionScreen from "@/components/SectionScreen";
 import GameScreen from "@/components/GameScreen";
 import FeedbackScreen from "@/components/FeedbackScreen";
 import ResultScreen from "@/components/ResultScreen";
@@ -24,6 +25,8 @@ function CurrentScreen() {
   switch (state.currentScreen) {
     case 'welcome':
       return <WelcomeScreen />;
+    case 'section':
+      return <SectionScreen />;
     case 'game':
       return <GameScreen />;
     case 'feedback':

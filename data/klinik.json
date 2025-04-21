@@ -1,92 +1,152 @@
 [
   {
     "id": 1,
-    "text": "Kardiyak iskeminin en hassas belirteci hangisidir?",
+    "text": "Hipertansif bir hastada aşağıdaki ilaçlardan hangisi kontrendikedir?",
     "options": [
-      "Troponin I",
-      "CK-MB",
-      "LDH",
-      "AST",
-      "Miyoglobin"
+      "ACE inhibitörleri",
+      "Beta blokerler",
+      "Kalsiyum kanal blokerleri", 
+      "MAO inhibitörleri",
+      "Anjiyotensin reseptör blokerleri"
     ],
-    "correctAnswer": "A",
-    "explanation": "Troponin I, kardiyak iskeminin en hassas ve spesifik belirtecidir. Myokard hasarından sonra 3-12 saat içinde yükselir ve 5-10 gün yüksek kalabilir.",
+    "correctAnswer": "MAO inhibitörleri",
+    "explanation": "MAO inhibitörleri, hipertansif krizlere neden olabilir ve hipertansif hastalarda kontrendikedir.",
     "category": "Kardiyoloji",
     "difficulty": "medium"
   },
   {
     "id": 2,
-    "text": "Aşağıdakilerden hangisi atriyal fibrilasyon tedavisinde kullanılan bir ilaç değildir?",
+    "text": "Aşağıdaki enfeksiyon hastalıklarından hangisi vertikal bulaşla anneden bebeğe geçer?",
     "options": [
-      "Amiodaron",
-      "Propranolol",
-      "Digoksin",
-      "Verapamil",
-      "Hydralazin"
+      "Hepatit A",
+      "İnfluenza",
+      "Tüberküloz",
+      "Rubella",
+      "Rotavirüs"
     ],
-    "correctAnswer": "E",
-    "explanation": "Hydralazin bir vazodilatördür ve atriyal fibrilasyon tedavisinde kullanılmaz. Hipertansiyon tedavisinde kullanılır. Diğer ilaçlar ise atriyal fibrilasyonda hız kontrolü veya ritim kontrolü için kullanılabilir.",
-    "category": "Kardiyoloji",
-    "difficulty": "medium"
+    "correctAnswer": "Rubella",
+    "explanation": "Rubella (kızamıkçık) enfeksiyonu, özellikle gebeliğin ilk trimesterinde vertikal bulaşla fetüse geçerek konjenital rubella sendromuna neden olabilir.",
+    "category": "Enfeksiyon",
+    "difficulty": "easy"
   },
   {
     "id": 3,
-    "text": "Hipertiroidi tedavisinde kullanılan propiltiourasil (PTU) hangi mekanizma ile etki gösterir?",
+    "text": "Aşağıdakilerden hangisi tiroid maligniteleri arasında en sık görülendir?",
     "options": [
-      "Tiroid hormon reseptörlerini bloke eder",
-      "Tiroid peroksidazı inhibe eder",
-      "TSH reseptörlerini bloke eder",
-      "Deiodinaz enzimini aktive eder",
-      "Tiroglobulini parçalar"
+      "Papiller karsinom",
+      "Foliküler karsinom",
+      "Medüller karsinom",
+      "Anaplastik karsinom",
+      "Lenfoma"
     ],
-    "correctAnswer": "B",
-    "explanation": "Propiltiourasil (PTU), tiroid hormon sentezinde önemli bir enzim olan tiroid peroksidazı inhibe ederek etki gösterir. Bu enzim tirozin kalıntılarının iyodinasyonunu ve iyodotirozinlerin birleşmesini katalize eder.",
+    "correctAnswer": "Papiller karsinom",
+    "explanation": "Papiller karsinom, tiroid maligniteleri arasında en sık görülen türdür ve tüm tiroid kanserlerinin yaklaşık %80'ini oluşturur.",
     "category": "Endokrinoloji",
-    "difficulty": "easy"
+    "difficulty": "medium"
   },
   {
     "id": 4,
-    "text": "Acil servise şiddetli karın ağrısı ile başvuran bir hastada, Murphy işareti pozitif ise hangi tanı düşünülmelidir?",
+    "text": "Akut pankreatit tedavisinde aşağıdakilerden hangisi yanlıştır?",
     "options": [
-      "Akut apandisit",
-      "Akut kolesistit",
-      "Akut pankreatit",
-      "Renal kolik",
-      "Mezenter iskemi"
+      "Sıvı resüsitasyonu",
+      "Antibiyotik profilaksisi",
+      "Ağrı kontrolü",
+      "Oral alımın kesilmesi",
+      "Erken enteral beslenme"
     ],
-    "correctAnswer": "B",
-    "explanation": "Murphy işareti, sağ üst kadranda derin inspiryumda ağrı nedeniyle hastanın nefesini tutması olarak tanımlanır ve akut kolesistit için karakteristiktir.",
-    "category": "Genel Cerrahi",
-    "difficulty": "easy"
+    "correctAnswer": "Antibiyotik profilaksisi",
+    "explanation": "Akut pankreatitte rutin antibiyotik profilaksisi önerilmez. Sadece enfekte nekroz şüphesi veya kanıtı durumunda antibiyotik tedavisi gereklidir.",
+    "category": "Gastroenteroloji",
+    "difficulty": "expert"
   },
   {
     "id": 5,
-    "text": "Diabetik ketoasidoz tedavisinde aşağıdakilerden hangisi uygun değildir?",
+    "text": "Aşağıdakilerden hangisi kronik obstrüktif akciğer hastalığı (KOAH) tedavisinde kullanılan bir bronkodilatör değildir?",
     "options": [
-      "İntravenöz sıvı replasmanı",
-      "İntravenöz insülin infüzyonu",
-      "Potasyum replasmanı",
-      "Bikarbonat tedavisi (pH>7.0 ise)",
-      "Hiperglisemiyi hızla düzeltmek için agresif insülin tedavisi"
+      "Salbutamol",
+      "Tiotropium",
+      "Budesonid",
+      "Formoterol",
+      "İndakaterol"
     ],
-    "correctAnswer": "E",
-    "explanation": "Diabetik ketoasidozda kan şekerini çok hızlı düşürmek serebral ödem riskini artırır. Kan şekeri saatte 50-100 mg/dL'den fazla düşürülmemelidir. Bikarbonat tedavisi genellikle pH<7.0 olduğunda düşünülür.",
-    "category": "Endokrinoloji",
+    "correctAnswer": "Budesonid",
+    "explanation": "Budesonid bir inhale kortikosteroiddir, bronkodilatör değildir. Diğer seçenekler (salbutamol, tiotropium, formoterol ve indakaterol) bronkodilatör etkili ilaçlardır.",
+    "category": "Göğüs Hastalıkları",
     "difficulty": "medium"
   },
   {
     "id": 6,
-    "text": "Kronik böbrek yetmezliğinde aşağıdakilerden hangisi görülmez?",
+    "text": "Gebelikte aşağıdaki antibiyotiklerden hangisinin kullanımı kontrendikedir?",
     "options": [
-      "Hiperkalemi",
-      "Metabolik asidoz",
-      "Hipofosfatemi",
-      "Hipokalsemi",
-      "Anemi"
+      "Amoksisilin",
+      "Eritromisin",
+      "Azitromisin",
+      "Gentamisin",
+      "Tetrasiklin"
     ],
-    "correctAnswer": "C",
-    "explanation": "Kronik böbrek yetmezliğinde fosfat atılımı bozulduğu için hiperfosfatemi görülür, hipofosfatemi değil. Renal fonksiyon bozukluğu ilerledikçe fosfor birikimine bağlı olarak serum fosfor seviyesi yükselir.",
+    "correctAnswer": "Tetrasiklin",
+    "explanation": "Tetrasiklin, gebelikte kontrendikedir çünkü fetüste diş gelişimi sırasında diş minesinde kalıcı renk değişikliğine ve kemik gelişiminin inhibisyonuna neden olabilir.",
+    "category": "Kadın Hastalıkları ve Doğum",
+    "difficulty": "easy"
+  },
+  {
+    "id": 7,
+    "text": "Alzheimer hastalığının farmakolojik tedavisinde aşağıdaki ilaç gruplarından hangisi kullanılır?",
+    "options": [
+      "Dopamin agonistleri",
+      "Kolinesteraz inhibitörleri",
+      "Beta blokerler",
+      "Kalsiyum kanal blokerleri",
+      "Proton pompa inhibitörleri"
+    ],
+    "correctAnswer": "Kolinesteraz inhibitörleri",
+    "explanation": "Kolinesteraz inhibitörleri (donepezil, rivastigmin, galantamin) Alzheimer hastalığının tedavisinde kullanılan birinci basamak ilaçlardır. Kolinerjik transmisyonu artırarak hafıza ve kognitif fonksiyonları iyileştirirler.",
+    "category": "Nöroloji",
+    "difficulty": "medium"
+  },
+  {
+    "id": 8,
+    "text": "Aşağıdaki durumlardan hangisinde trombolitik tedavi kontrendikedir?",
+    "options": [
+      "Akut miyokard enfarktüsü",
+      "Pulmoner emboli",
+      "İskemik inme (ilk 4.5 saat içinde)",
+      "Aktif internal kanama",
+      "Akut periferik arter tıkanıklığı"
+    ],
+    "correctAnswer": "Aktif internal kanama",
+    "explanation": "Aktif internal kanama, trombolitik tedavi için kesin kontrendikasyondur çünkü trombolitikler kanamanın şiddetlenmesine ve hayatı tehdit eden durumlara yol açabilir.",
+    "category": "Acil Tıp",
+    "difficulty": "medium"
+  },
+  {
+    "id": 9,
+    "text": "Kronik böbrek yetmezliği olan hastalarda aşağıdaki elektrolit bozukluklarından hangisi en sık görülür?",
+    "options": [
+      "Hiponatremi",
+      "Hiperkalemi",
+      "Hipokalsemi",
+      "Hipomagnezemi",
+      "Hiperkloremi"
+    ],
+    "correctAnswer": "Hiperkalemi",
+    "explanation": "Kronik böbrek yetmezliğinde böbreklerin potasyum atılımı bozulur ve bu durum hiperkalemiye yol açar. Hiperkalemi, bu hastalarda en sık görülen ve en tehlikeli elektrolit bozukluğudur.",
     "category": "Nefroloji",
+    "difficulty": "medium"
+  },
+  {
+    "id": 10,
+    "text": "Aşağıdakilerden hangisi karaciğer sirozu komplikasyonları arasında yer almaz?",
+    "options": [
+      "Özofagus varisleri",
+      "Hepatorenal sendrom",
+      "Hepatik ensefalopati",
+      "Asit",
+      "Pankreatit"
+    ],
+    "correctAnswer": "Pankreatit",
+    "explanation": "Pankreatit, karaciğer sirozunun bir komplikasyonu değildir. Diğer seçenekler (özofagus varisleri, hepatorenal sendrom, hepatik ensefalopati ve asit) karaciğer sirozunun bilinen komplikasyonlarıdır.",
+    "category": "Gastroenteroloji",
     "difficulty": "medium"
   }
 ]

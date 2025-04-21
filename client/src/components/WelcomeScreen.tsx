@@ -1,100 +1,68 @@
-import { Clock, AlertTriangle, Zap } from 'lucide-react';
+import { Clock, AlertTriangle, Zap, BookOpen } from 'lucide-react';
 import { useGameState } from '@/hooks/useGameState';
-import { Difficulty } from '@/lib/types';
+import { Section } from '@/lib/types';
+import { Button } from '@/components/ui/button';
 
 export default function WelcomeScreen() {
-  const { startGame } = useGameState();
+  const { selectSection } = useGameState();
   
-  const handleDifficultySelect = (difficulty: Difficulty) => {
-    startGame(difficulty);
+  const handleSectionSelect = (section: Section) => {
+    selectSection(section);
   };
   
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 sm:p-8">
-      <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6">TUS Quiz Oyunu</h1>
-      <p className="text-gray-600 mb-8 text-center">Tıpta Uzmanlık Sınavı için bilgilerinizi test edin</p>
+    <div className="container max-w-3xl mx-auto p-4 flex flex-col items-center justify-center min-h-[80vh]">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
+          TUS Quiz Oyunu
+        </h1>
+        <p className="text-xl text-gray-600 mb-8">
+          Tıpta Uzmanlık Sınavı için bilgilerinizi test edin
+        </p>
+      </div>
       
-      <div className="space-y-6">
-        <h2 className="text-xl font-semibold">Zorluk Seviyesini Seçin</h2>
-        
-        {/* Difficulty selection cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {/* Easy mode */}
-          <div 
-            className="bg-blue-50 border-2 border-blue-200 hover:border-blue-500 rounded-lg p-4 cursor-pointer transition-all"
-            onClick={() => handleDifficultySelect('easy')}
-          >
-            <h3 className="font-bold text-lg text-blue-700 mb-2">Kolay</h3>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li className="flex items-center">
-                <Clock className="h-4 w-4 mr-1 text-blue-500" />
-                Soru başına 120 saniye
-              </li>
-              <li className="flex items-center">
-                <AlertTriangle className="h-4 w-4 mr-1 text-blue-500" />
-                Hata başına +120s ceza
-              </li>
-              <li className="flex items-center">
-                <Zap className="h-4 w-4 mr-1 text-blue-500" />
-                Yeni başlayanlar için
-              </li>
-            </ul>
+      <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+        <div className="p-6">
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-gray-800 mb-2">
+              Çalışmaya Başlayın
+            </h2>
+            <p className="text-gray-600">
+              Sınav hazırlığınız için uygun bölümü seçin ve bilgilerinizi test edin.
+            </p>
           </div>
           
-          {/* Medium mode */}
-          <div 
-            className="bg-amber-50 border-2 border-amber-200 hover:border-amber-500 rounded-lg p-4 cursor-pointer transition-all"
-            onClick={() => handleDifficultySelect('medium')}
-          >
-            <h3 className="font-bold text-lg text-amber-700 mb-2">Orta</h3>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li className="flex items-center">
-                <Clock className="h-4 w-4 mr-1 text-amber-500" />
-                Soru başına 60 saniye
-              </li>
-              <li className="flex items-center">
-                <AlertTriangle className="h-4 w-4 mr-1 text-amber-500" />
-                Hata başına +60s ceza
-              </li>
-              <li className="flex items-center">
-                <Zap className="h-4 w-4 mr-1 text-amber-500" />
-                Orta seviye öğrenciler için
-              </li>
-            </ul>
-          </div>
-          
-          {/* Expert mode */}
-          <div 
-            className="bg-red-50 border-2 border-red-200 hover:border-red-500 rounded-lg p-4 cursor-pointer transition-all"
-            onClick={() => handleDifficultySelect('expert')}
-          >
-            <h3 className="font-bold text-lg text-red-700 mb-2">Uzman</h3>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li className="flex items-center">
-                <Clock className="h-4 w-4 mr-1 text-red-500" />
-                Soru başına 30 saniye
-              </li>
-              <li className="flex items-center">
-                <AlertTriangle className="h-4 w-4 mr-1 text-red-500" />
-                Hata başına +30s ceza
-              </li>
-              <li className="flex items-center">
-                <Zap className="h-4 w-4 mr-1 text-red-500" />
-                Sınava hazır öğrenciler için
-              </li>
-            </ul>
+          <div className="space-y-4">
+            <Button 
+              onClick={() => handleSectionSelect('klinik')}
+              size="lg"
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-500 hover:from-blue-700 hover:to-indigo-600 text-white font-medium"
+            >
+              <BookOpen className="mr-2 h-5 w-5" />
+              Klinik Tıp
+            </Button>
+            
+            <Button 
+              onClick={() => handleSectionSelect('preklinik')}
+              size="lg"
+              className="w-full bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white font-medium"
+            >
+              <BookOpen className="mr-2 h-5 w-5" />
+              Preklinik
+            </Button>
           </div>
         </div>
-        
-        <div className="mt-8 text-sm text-gray-500">
-          <h3 className="font-semibold mb-2">Oyun Kuralları:</h3>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>Cevaplayabildiğiniz kadar soruyu yanıtlayın</li>
-            <li>5 yanlış cevaptan sonra oyun biter</li>
-            <li>Sorular süre dolmadan cevaplanmalıdır</li>
-            <li>Düşük puan daha iyidir</li>
-          </ul>
-        </div>
+      </div>
+      
+      <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md">
+        <h3 className="font-semibold mb-3 text-gray-800">Oyun Kuralları:</h3>
+        <ul className="list-disc pl-5 space-y-2 text-gray-600">
+          <li>Cevaplayabildiğiniz kadar soruyu yanıtlayın</li>
+          <li>5 yanlış cevaptan sonra oyun biter</li>
+          <li>Sorular süre dolmadan cevaplanmalıdır</li>
+          <li>Cevap süreleri zorluk seviyesine göre değişir</li>
+          <li>Düşük puan daha iyidir</li>
+        </ul>
       </div>
     </div>
   );
