@@ -1,92 +1,152 @@
 [
   {
     "id": 1,
-    "text": "Aşağıdaki hormonlardan hangisi hipofiz ön lobundan salgılanmaz?",
+    "text": "Aşağıdakilerden hangisi hücre iskeleti elemanlarından değildir?",
     "options": [
-      "Büyüme hormonu (GH)",
-      "Prolaktin",
-      "Adrenokortikotropik hormon (ACTH)",
-      "Antidiüretik hormon (ADH)",
-      "Tiroid stimüle edici hormon (TSH)"
+      "Mikrofilamentler",
+      "Mikrotübüller",
+      "Ara filamentler",
+      "Ribozomlar",
+      "Aktin filamentleri"
     ],
-    "correctAnswer": "D",
-    "explanation": "Antidiüretik hormon (ADH) hipofiz ön lobundan değil, hipotalamustan sentezlenir ve hipofiz arka lobundan salgılanır. Diğer seçeneklerdeki hormonların tümü hipofiz ön lobundan salgılanır.",
-    "category": "Fizyoloji",
-    "difficulty": "easy"
-  },
-  {
-    "id": 2,
-    "text": "Hücre içi sinyal iletimine aracılık eden ikincil mesajcı hangisidir?",
-    "options": [
-      "G proteini",
-      "Siklik AMP (cAMP)",
-      "Reseptör tirozin kinaz",
-      "İyon kanalları",
-      "Nükleer reseptörler"
-    ],
-    "correctAnswer": "B",
-    "explanation": "Siklik AMP (cAMP), hücre dışı bir sinyalin hücre içinde aktarılmasını sağlayan ikincil mesajcıdır. G proteini, reseptör tirozin kinaz ve iyon kanalları sinyal iletiminde görev alır ancak bunlar ikincil mesajcı değildir.",
-    "category": "Biyokimya",
-    "difficulty": "medium"
-  },
-  {
-    "id": 3,
-    "text": "DNA replikasyonunda aşağıdaki enzimlerden hangisi görev almaz?",
-    "options": [
-      "DNA polimeraz",
-      "DNA helikaz",
-      "RNA primaz",
-      "DNA ligaz",
-      "RNA polimeraz III"
-    ],
-    "correctAnswer": "E",
-    "explanation": "RNA polimeraz III, DNA replikasyonunda görev almaz. Bu enzim, tRNA ve 5S rRNA gibi küçük RNA'ların transkripsiyonunda görev alır. DNA replikasyonunda DNA polimeraz, DNA helikaz, RNA primaz ve DNA ligaz gibi enzimler görev alır.",
-    "category": "Moleküler Biyoloji",
-    "difficulty": "medium"
-  },
-  {
-    "id": 4,
-    "text": "Hangisi granülositik seri hücrelerinden değildir?",
-    "options": [
-      "Nötrofil",
-      "Eozinofil",
-      "Bazofil",
-      "Monosit",
-      "Metamiyelosit"
-    ],
-    "correctAnswer": "D",
-    "explanation": "Monosit, granülositik seriden değil, monositik seriden bir hücredir. Nötrofil, eozinofil, bazofil ve bunların öncül hücreleri (myeloblast, promyelosit, myelosit, metamiyelosit, band) granülositik seriye aittir.",
+    "correctAnswer": "Ribozomlar",
+    "explanation": "Ribozomlar, protein sentezinde görev alan organellerdir ve hücre iskeletinin bir parçası değildir. Mikrofilamentler, mikrotübüller ve ara filamentler hücre iskeletini oluşturan yapılardır.",
     "category": "Histoloji",
     "difficulty": "easy"
   },
   {
-    "id": 5,
-    "text": "COVID-19'a neden olan SARS-CoV-2'nin yapısında bulunan aşağıdaki proteinlerden hangisi virüsün konak hücreye girişinde rol oynar?",
+    "id": 2,
+    "text": "Aşağıdakilerden hangisi primer kültür hücrelerinin özelliklerinden değildir?",
     "options": [
-      "Nükleokapsid proteini",
-      "Spike (S) proteini",
-      "Envelope (E) proteini",
-      "Membran (M) proteini",
-      "RNA polimeraz proteini"
+      "Ömürleri sınırlıdır",
+      "Ölümsüzleşmiş (immortalized) hücrelerdir",
+      "Orijinal dokudan alınan hücrelerdir",
+      "Diferansiye özelliklerini büyük oranda korurlar",
+      "Heterojen hücre popülasyonu içerebilirler"
     ],
-    "correctAnswer": "B",
-    "explanation": "Spike (S) proteini, SARS-CoV-2'nin konak hücreye girişini sağlayan proteindir. Bu protein, konak hücre yüzeyindeki ACE2 reseptörüne bağlanarak virüsün hücreye girişini sağlar.",
+    "correctAnswer": "Ölümsüzleşmiş (immortalized) hücrelerdir",
+    "explanation": "Primer kültür hücreleri, orijinal dokudan izole edilir ve sınırlı bir yaşam süresine sahiptir. Ölümsüzleşme, sürekli pasajlanabilen ve sınırsız bölünme yeteneği kazanmış hücre hatlarının özelliğidir, primer kültür hücrelerine ait değildir.",
+    "category": "Hücre Biyolojisi",
+    "difficulty": "medium"
+  },
+  {
+    "id": 3,
+    "text": "Aşağıdaki yapılardan hangisi limbik sistemin bir parçası değildir?",
+    "options": [
+      "Amigdala",
+      "Hipokampus",
+      "Talamus",
+      "Forniks",
+      "Singulat girus"
+    ],
+    "correctAnswer": "Talamus",
+    "explanation": "Talamus, duyu bilgilerini kortekse ileten bir ara istasyon görevi görür ve limbik sistemin bir parçası değildir. Amigdala, hipokampus, forniks ve singulat girus limbik sistem yapılarıdır ve duygusal işlemleme, bellek ve motivasyonla ilgilidir.",
+    "category": "Nöroanatomi",
+    "difficulty": "medium"
+  },
+  {
+    "id": 4,
+    "text": "Aşağıdaki antibiyotiklerden hangisi protein sentezini 30S ribozomal alt birimini hedef alarak inhibe eder?",
+    "options": [
+      "Eritromisin",
+      "Kloramfenikol",
+      "Streptomisin",
+      "Linezolid",
+      "Klindamisin"
+    ],
+    "correctAnswer": "Streptomisin",
+    "explanation": "Streptomisin, 30S ribozomal alt birime bağlanarak protein sentezini inhibe eden bir aminoglikozid antibiyotiktir. Eritromisin, klindamisin ve linezolid 50S alt birimi hedeflerken, kloramfenikol peptidil transferaz aktivitesini inhibe eder.",
+    "category": "Farmakoloji",
+    "difficulty": "medium"
+  },
+  {
+    "id": 5,
+    "text": "DNA replikasyonu sırasında lagging zincirde sentezlenen kısa DNA parçalarına ne ad verilir?",
+    "options": [
+      "Nükleozomlar",
+      "Okazaki fragmentleri",
+      "Primer dizileri",
+      "Ekzonlar",
+      "Promoter bölgeleri"
+    ],
+    "correctAnswer": "Okazaki fragmentleri",
+    "explanation": "DNA replikasyonu sırasında lagging (geriden gelen) zincirin sentezi, kısa DNA parçaları (Okazaki fragmentleri) şeklinde gerçekleşir. Bu fragmentler daha sonra DNA ligaz enzimi tarafından birleştirilir.",
+    "category": "Moleküler Biyoloji",
+    "difficulty": "easy"
+  },
+  {
+    "id": 6,
+    "text": "Aşağıdakilerden hangisi glikoliz sırasında meydana gelmez?",
+    "options": [
+      "Fruktoz-6-fosfat oluşumu",
+      "ATP üretimi",
+      "NADH üretimi",
+      "Oksidatif fosforilasyon",
+      "Pirüvat oluşumu"
+    ],
+    "correctAnswer": "Oksidatif fosforilasyon",
+    "explanation": "Oksidatif fosforilasyon, mitokondride gerçekleşen bir süreçtir ve elektron taşıma zincirini içerir. Glikoliz, sitoplazmada gerçekleşen anaerobik bir süreçtir ve oksidatif fosforilasyon bu sürecin bir parçası değildir.",
+    "category": "Biyokimya",
+    "difficulty": "medium"
+  },
+  {
+    "id": 7,
+    "text": "Aşağıdaki enzimlerden hangisi immunoglobulin G'nin (IgG) Fc bölgesini tanıyarak patojenleri opsonize eder?",
+    "options": [
+      "Kompleman C3",
+      "Lizozim",
+      "Proteaz",
+      "Perforin",
+      "Granzim"
+    ],
+    "correctAnswer": "Kompleman C3",
+    "explanation": "Kompleman C3, IgG'nin Fc bölgesine bağlanarak kompleman sistemini aktive eder. Bu aktivasyon patojenlerin opsonizasyonuna ve fagositozuna yol açar. Lizozim bir antimikrobiyal enzim, proteaz protein yıkımında, perforin ve granzim ise sitotoksik T hücrelerinin hedefleri öldürmesinde rol oynar.",
+    "category": "İmmünoloji",
+    "difficulty": "expert"
+  },
+  {
+    "id": 8,
+    "text": "Aşağıdaki hormonlardan hangisi kan kalsiyum seviyesini düşürür?",
+    "options": [
+      "Parathormon",
+      "D vitamini",
+      "Kalsitonin",
+      "Kortizol",
+      "Aldosteron"
+    ],
+    "correctAnswer": "Kalsitonin",
+    "explanation": "Kalsitonin, tiroid bezinin C hücreleri tarafından salgılanan ve kan kalsiyum seviyesini düşüren bir hormondur. Parathormon ve D vitamini kan kalsiyum seviyesini artırırken, kortizol ve aldosteron kalsiyum metabolizması üzerinde doğrudan etki göstermez.",
+    "category": "Fizyoloji",
+    "difficulty": "easy"
+  },
+  {
+    "id": 9,
+    "text": "Gram negatif bakterilerin hücre duvarında bulunan ve endotoksin aktivitesi gösteren yapı hangisidir?",
+    "options": [
+      "Peptidoglikan",
+      "Lipopolisakkarit (LPS)",
+      "Teikoik asit",
+      "Mikolik asit",
+      "Flagellin"
+    ],
+    "correctAnswer": "Lipopolisakkarit (LPS)",
+    "explanation": "Lipopolisakkarit (LPS), gram negatif bakterilerin dış membranında bulunan ve endotoksin aktivitesi gösteren bir yapıdır. Septik şok dahil güçlü inflamatuar yanıtlara neden olabilir. Peptidoglikan hem gram pozitif hem de gram negatif bakterilerde bulunur, teikoik asit gram pozitif bakterilere özgüdür, mikolik asit mikobakterilerde bulunur, flagellin ise flagellaların yapısal proteinidir.",
     "category": "Mikrobiyoloji",
     "difficulty": "medium"
   },
   {
-    "id": 6,
-    "text": "Krebs (Sitrik asit) döngüsünde oksidatif fosforilasyon için en çok NADH üretimi hangi aşamada gerçekleşir?",
+    "id": 10,
+    "text": "Embriyonik gelişim sırasında notokorddan türeyen yapı hangisidir?",
     "options": [
-      "Sitrat oluşumu",
-      "İzositrat dehidrogenaz reaksiyonu",
-      "α-ketoglutarat dehidrogenaz reaksiyonu",
-      "Süksinat dehidrogenaz reaksiyonu",
-      "Malat dehidrogenaz reaksiyonu"
+      "Kas dokusu",
+      "Sinir dokusu",
+      "İntervertebral disk nükleus pulposusu",
+      "Dermis",
+      "Karaciğer"
     ],
-    "correctAnswer": "C",
-    "explanation": "α-ketoglutarat dehidrogenaz reaksiyonu, Krebs döngüsünde en çok NADH üretiminin gerçekleştiği aşamadır. Bu reaksiyonda α-ketoglutarat, CoA ve NAD+ kullanılarak süksinil-CoA ve NADH üretilir.",
-    "category": "Biyokimya",
+    "correctAnswer": "İntervertebral disk nükleus pulposusu",
+    "explanation": "Notokord, embriyonik gelişimde aksiyel iskeletin öncüsüdür ve gelişim sırasında intervertebral disklerin merkezi kısmını (nükleus pulposus) oluşturur. Kas dokusu mezodermden, sinir dokusu ektodermden, dermis paraksiyel mezodermden, karaciğer ise endodermden köken alır.",
+    "category": "Embriyoloji",
     "difficulty": "expert"
   }
 ]

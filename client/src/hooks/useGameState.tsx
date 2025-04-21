@@ -26,7 +26,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       return {
         ...initialState,
         section: action.payload,
-        currentScreen: 'section'
+        currentScreen: 'difficulty'
       };
       
     case 'SET_DIFFICULTY':

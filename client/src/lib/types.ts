@@ -12,7 +12,7 @@ export interface Question {
 }
 
 export interface GameState {
-  currentScreen: 'welcome' | 'section' | 'game' | 'feedback' | 'result';
+  currentScreen: 'welcome' | 'section' | 'difficulty' | 'game' | 'feedback' | 'result';
   section: Section | null;
   difficulty: Difficulty | null;
   questions: Question[];
