@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "text": "Kardiyak iskeminin en hassas belirteci hangisidir?",
+    "options": [
+      "Troponin I",
+      "CK-MB",
+      "LDH",
+      "AST",
+      "Miyoglobin"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Troponin I, kardiyak iskeminin en hassas ve spesifik belirtecidir. Myokard hasarından sonra 3-12 saat içinde yükselir ve 5-10 gün yüksek kalabilir.",
+    "category": "Kardiyoloji",
+    "difficulty": "medium"
+  },
+  {
+    "id": 2,
+    "text": "Aşağıdakilerden hangisi atriyal fibrilasyon tedavisinde kullanılan bir ilaç değildir?",
+    "options": [
+      "Amiodaron",
+      "Propranolol",
+      "Digoksin",
+      "Verapamil",
+      "Hydralazin"
+    ],
+    "correctAnswer": "E",
+    "explanation": "Hydralazin bir vazodilatördür ve atriyal fibrilasyon tedavisinde kullanılmaz. Hipertansiyon tedavisinde kullanılır. Diğer ilaçlar ise atriyal fibrilasyonda hız kontrolü veya ritim kontrolü için kullanılabilir.",
+    "category": "Kardiyoloji",
+    "difficulty": "medium"
+  },
+  {
+    "id": 3,
+    "text": "Hipertiroidi tedavisinde kullanılan propiltiourasil (PTU) hangi mekanizma ile etki gösterir?",
+    "options": [
+      "Tiroid hormon reseptörlerini bloke eder",
+      "Tiroid peroksidazı inhibe eder",
+      "TSH reseptörlerini bloke eder",
+      "Deiodinaz enzimini aktive eder",
+      "Tiroglobulini parçalar"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Propiltiourasil (PTU), tiroid hormon sentezinde önemli bir enzim olan tiroid peroksidazı inhibe ederek etki gösterir. Bu enzim tirozin kalıntılarının iyodinasyonunu ve iyodotirozinlerin birleşmesini katalize eder.",
+    "category": "Endokrinoloji",
+    "difficulty": "easy"
+  },
+  {
+    "id": 4,
+    "text": "Acil servise şiddetli karın ağrısı ile başvuran bir hastada, Murphy işareti pozitif ise hangi tanı düşünülmelidir?",
+    "options": [
+      "Akut apandisit",
+      "Akut kolesistit",
+      "Akut pankreatit",
+      "Renal kolik",
+      "Mezenter iskemi"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Murphy işareti, sağ üst kadranda derin inspiryumda ağrı nedeniyle hastanın nefesini tutması olarak tanımlanır ve akut kolesistit için karakteristiktir.",
+    "category": "Genel Cerrahi",
+    "difficulty": "easy"
+  },
+  {
+    "id": 5,
+    "text": "Diabetik ketoasidoz tedavisinde aşağıdakilerden hangisi uygun değildir?",
+    "options": [
+      "İntravenöz sıvı replasmanı",
+      "İntravenöz insülin infüzyonu",
+      "Potasyum replasmanı",
+      "Bikarbonat tedavisi (pH>7.0 ise)",
+      "Hiperglisemiyi hızla düzeltmek için agresif insülin tedavisi"
+    ],
+    "correctAnswer": "E",
+    "explanation": "Diabetik ketoasidozda kan şekerini çok hızlı düşürmek serebral ödem riskini artırır. Kan şekeri saatte 50-100 mg/dL'den fazla düşürülmemelidir. Bikarbonat tedavisi genellikle pH<7.0 olduğunda düşünülür.",
+    "category": "Endokrinoloji",
+    "difficulty": "medium"
+  },
+  {
+    "id": 6,
+    "text": "Kronik böbrek yetmezliğinde aşağıdakilerden hangisi görülmez?",
+    "options": [
+      "Hiperkalemi",
+      "Metabolik asidoz",
+      "Hipofosfatemi",
+      "Hipokalsemi",
+      "Anemi"
+    ],
+    "correctAnswer": "C",
+    "explanation": "Kronik böbrek yetmezliğinde fosfat atılımı bozulduğu için hiperfosfatemi görülür, hipofosfatemi değil. Renal fonksiyon bozukluğu ilerledikçe fosfor birikimine bağlı olarak serum fosfor seviyesi yükselir.",
+    "category": "Nefroloji",
+    "difficulty": "medium"
+  }
+]

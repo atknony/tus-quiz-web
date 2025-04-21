@@ -33,6 +33,7 @@ export const insertQuestionSchema = createInsertSchema(questions).omit({
 export const games = pgTable("games", {
   id: serial("id").primaryKey(),
   difficulty: text("difficulty").notNull(),
+  section: text("section").notNull(),
   correctAnswers: integer("correct_answers").notNull(),
   wrongAnswers: integer("wrong_answers").notNull(),
   totalTime: integer("total_time").notNull(),

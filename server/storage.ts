@@ -249,11 +249,12 @@ export interface IStorage {
   // Question methods
   getQuestions(): Promise<Question[]>;
   getQuestion(id: number): Promise<Question | undefined>;
+  getQuestionsBySection(section: string): Promise<Question[]>;
   createQuestion(question: InsertQuestion): Promise<Question>;
   
   // Game methods
   saveGame(game: InsertGame): Promise<Game>;
-  getTopScores(difficulty?: string): Promise<Game[]>;
+  getTopScores(difficulty?: string, section?: string): Promise<Game[]>;
 }
 
 // In-memory storage implementation
@@ -306,6 +307,19 @@ export class MemStorage implements IStorage {
   async getQuestion(id: number): Promise<Question | undefined> {
     return this.questionsList.get(id);
   }
+
+  async getQuestionsBySection(section: string): Promise<Question[]> {
+    try {
+      // Load questions from appropriate JSON file
+      const jsonPath = `./data/${section.toLowerCase()}.json`;
+      const data = require(jsonPath);
+      return data;
+    } catch (error) {
+      console.error(`Error loading questions for section ${section}:`, error);
+      // If there's an error, return empty list
+      return [];
+    }
+  }
   
   async createQuestion(insertQuestion: InsertQuestion): Promise<Question> {
     const id = this.questionCurrentId++;
@@ -322,11 +336,15 @@ export class MemStorage implements IStorage {
     return game;
   }
   
-  async getTopScores(difficulty?: string): Promise<Game[]> {
+  async getTopScores(difficulty?: string, section?: string): Promise<Game[]> {
     let games = Array.from(this.gamesList.values());
     
     if (difficulty) {
       games = games.filter(game => game.difficulty === difficulty);
+    }
+    
+    if (section) {
+      games = games.filter(game => game.section === section);
     }
     
     // Sort by finalScore (lower is better)
