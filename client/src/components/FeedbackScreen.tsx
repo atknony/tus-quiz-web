@@ -18,7 +18,7 @@ export default function FeedbackScreen() {
       <div className="p-4 text-white">
         <div className={`${isCorrect ? 'bg-green-500' : 'bg-red-500'} p-4 rounded-t-lg`}>
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-lg">{isCorrect ? 'Correct Answer' : 'Incorrect Answer'}</h3>
+            <h3 className="font-bold text-lg">{isCorrect ? 'Doğru Cevap' : 'Yanlış Cevap'}</h3>
             <div className="flex items-center">
               <Clock className="h-5 w-5 mr-1" />
               <span className="font-mono">{formatTime(feedbackTimeRemaining)}</span>
@@ -55,14 +55,14 @@ export default function FeedbackScreen() {
                 {isCorrectAnswer && (
                   <div className="mt-1 text-sm text-green-700">
                     <Check className="h-5 w-5 inline mr-1" />
-                    Correct Answer
+                    Doğru Cevap
                   </div>
                 )}
                 
                 {isSelectedAnswer && !isCorrectAnswer && (
                   <div className="mt-1 text-sm text-red-700">
                     <X className="h-5 w-5 inline mr-1" />
-                    Your Answer
+                    Sizin Cevabınız
                   </div>
                 )}
               </div>
@@ -74,7 +74,7 @@ export default function FeedbackScreen() {
       {currentQuestion.explanation && (
         <div className="p-4 bg-gray-50 border-t">
           <div className="text-sm text-gray-600">
-            <p className="font-semibold mb-1">Explanation:</p>
+            <p className="font-semibold mb-1">Açıklama:</p>
             <p>{currentQuestion.explanation}</p>
           </div>
         </div>

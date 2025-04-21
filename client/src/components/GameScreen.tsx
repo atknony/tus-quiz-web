@@ -30,15 +30,15 @@ export default function GameScreen() {
       {/* Game header with stats */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
         <div>
-          <h2 className="text-xl font-bold">{getDifficultyName(difficulty)} Mode</h2>
+          <h2 className="text-xl font-bold">{getDifficultyName(difficulty)} Modu</h2>
           <p className="text-sm text-gray-600">
-            <span>{correctAnswers}</span> correct | 
-            <span className="text-red-600"> {wrongAnswers}</span>/5 incorrect
+            <span>{correctAnswers}</span> doğru | 
+            <span className="text-red-600"> {wrongAnswers}</span>/5 yanlış
           </p>
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-sm font-medium">
-            <div className="text-gray-500 mb-1">Total Time</div>
+            <div className="text-gray-500 mb-1">Toplam Süre</div>
             <div className="font-mono text-lg">{formatTime(state.totalTime)}</div>
           </div>
           
@@ -65,7 +65,7 @@ export default function GameScreen() {
         </div>
         
         <div className="flex justify-between items-center p-4 border-b">
-          <div className="font-semibold text-sm text-gray-500">Question <span>{currentQuestionIndex + 1}</span></div>
+          <div className="font-semibold text-sm text-gray-500">Soru <span>{currentQuestionIndex + 1}</span></div>
           <div className="flex items-center gap-1 font-mono text-lg">
             <Clock className="h-5 w-5 text-blue-500" />
             <span>{formatTime(timeRemaining)}</span>

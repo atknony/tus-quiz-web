@@ -64,6 +64,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
           totalTime: state.totalTime + state.currentQuestionTime,
           selectedAnswer: action.payload,
           isTimerRunning: false,
+          feedbackTimeRemaining: 5, // Reduce feedback time to 5 seconds for correct answers
           currentScreen: state.currentScreen === 'game' ? 'feedback' : state.currentScreen
         };
       } else {
@@ -76,6 +77,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
           totalTime: state.totalTime + state.currentQuestionTime,
           selectedAnswer: action.payload,
           isTimerRunning: false,
+          feedbackTimeRemaining: 15, // Keep 15 seconds for incorrect answers
           gameOver: gameOver,
           currentScreen: gameOver ? 'result' : 'feedback'
         };
@@ -115,6 +117,17 @@ function gameReducer(state: GameState, action: GameAction): GameState {
           return {
             ...state,
             currentScreen: 'result',
+            feedbackTimeRemaining: 0
+          };
+        }
+        
+        // Check if we've reached the end of all questions
+        if (state.currentQuestionIndex >= state.questions.length - 1) {
+          return {
+            ...state,
+            currentScreen: 'result',
+            gameOver: true,
+            isTimerRunning: false,
             feedbackTimeRemaining: 0
           };
         }
@@ -223,7 +236,11 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     try {
       const response = await apiRequest('GET', '/api/questions', undefined);
       const data = await response.json();
-      dispatch({ type: 'SET_QUESTIONS', payload: data });
+      
+      // Shuffle the questions randomly
+      const shuffledQuestions = [...data].sort(() => Math.random() - 0.5);
+      
+      dispatch({ type: 'SET_QUESTIONS', payload: shuffledQuestions });
     } catch (error) {
       console.error('Failed to fetch questions:', error);
       // If there's an error, we could load some local questions

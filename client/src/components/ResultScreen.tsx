@@ -20,58 +20,58 @@ export default function ResultScreen() {
   
   return (
     <div className="bg-white rounded-lg shadow-md p-6 sm:p-8">
-      <h2 className="text-2xl font-bold text-center mb-2">Game Over</h2>
-      <p className="text-center text-gray-600 mb-6">You reached the maximum number of incorrect answers</p>
+      <h2 className="text-2xl font-bold text-center mb-2">Oyun Bitti</h2>
+      <p className="text-center text-gray-600 mb-6">Maksimum yanlış cevap sayısına ulaştınız</p>
       
       <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6">
-        <h3 className="text-lg font-bold text-center text-blue-800 mb-4">Final Score</h3>
+        <h3 className="text-lg font-bold text-center text-blue-800 mb-4">Son Skor</h3>
         
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-600">Total Questions:</span>
+          <span className="text-gray-600">Toplam Soru:</span>
           <span className="font-bold">{totalQuestions}</span>
         </div>
         
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-600">Correct Answers:</span>
+          <span className="text-gray-600">Doğru Cevaplar:</span>
           <span className="font-bold text-green-600">{correctAnswers}</span>
         </div>
         
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-600">Incorrect Answers:</span>
+          <span className="text-gray-600">Yanlış Cevaplar:</span>
           <span className="font-bold text-red-600">{wrongAnswers}</span>
         </div>
         
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-600">Answer Time:</span>
+          <span className="text-gray-600">Cevaplama Süresi:</span>
           <span className="font-bold font-mono">{formatTime(totalTime)}</span>
         </div>
         
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-600">Penalty Time:</span>
+          <span className="text-gray-600">Ceza Süresi:</span>
           <span className="font-bold font-mono text-red-600">{penaltyTime}</span>
         </div>
         
         <div className="border-t border-blue-200 mt-4 pt-4 flex justify-between items-center">
-          <span className="text-gray-800 font-semibold">Final Score:</span>
+          <span className="text-gray-800 font-semibold">Son Skor:</span>
           <span className="font-bold text-xl font-mono">{formatTime(finalScore)}</span>
         </div>
       </div>
       
       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
-        <h3 className="text-lg font-bold text-center mb-3">Performance Summary</h3>
+        <h3 className="text-lg font-bold text-center mb-3">Performans Özeti</h3>
         
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-600">Difficulty Level:</span>
+          <span className="text-gray-600">Zorluk Seviyesi:</span>
           <span className="font-medium">{getDifficultyName(state.difficulty)}</span>
         </div>
         
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-600">Accuracy Rate:</span>
+          <span className="text-gray-600">Doğruluk Oranı:</span>
           <span className="font-medium">{accuracyRate}</span>
         </div>
         
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-600">Average Time per Question:</span>
+          <span className="text-gray-600">Soru Başına Ortalama Süre:</span>
           <span className="font-medium font-mono">{avgTimePerQuestion}</span>
         </div>
       </div>
@@ -81,13 +81,13 @@ export default function ResultScreen() {
           className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg font-medium transition-colors"
           onClick={playAgain}
         >
-          Play Again
+          Tekrar Oyna
         </button>
         <button 
           className="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-6 rounded-lg font-medium transition-colors"
           onClick={returnToMenu}
         >
-          Change Difficulty
+          Zorluk Seviyesini Değiştir
         </button>
       </div>
     </div>
