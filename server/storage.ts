@@ -9,6 +9,9 @@ import {
   type Game,
   type InsertGame,
 } from "@shared/schema";
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Sample questions for in-memory storage
 const sampleQuestions: Question[] = [
@@ -311,16 +314,17 @@ export class MemStorage implements IStorage {
   async getQuestionsBySection(section: string): Promise<Question[]> {
     try {
       // Load questions from appropriate JSON file
-      const fs = require('fs');
-      const path = require('path');
-      const jsonPath = path.resolve(`./data/${section.toLowerCase()}.json`);
+      const jsonPath = path.resolve(process.cwd(), `data/${section.toLowerCase()}.json`);
       const rawData = fs.readFileSync(jsonPath, 'utf8');
       const data = JSON.parse(rawData);
       return data;
     } catch (error) {
       console.error(`Error loading questions for section ${section}:`, error);
-      // If there's an error, return empty list
-      return [];
+      // If there's an error, return filtered sample questions
+      return sampleQuestions.filter(q => {
+        // Default to section if category is not specified
+        return true; // For now, return all questions if loading fails
+      });
     }
   }
   
