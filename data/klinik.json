@@ -1,152 +1,257 @@
 [
   {
     "id": 1,
-    "text": "Hipertansif bir hastada aşağıdaki ilaçlardan hangisi kontrendikedir?",
+    "text": "Trafik kazası sonucu orbitanın medial duvarında kırık tespit edilen bir hastada, kırık hattının aşağıdaki kemik yapılardan hangisinden geçmesi en az olasıdır?",
     "options": [
-      "ACE inhibitörleri",
-      "Beta blokerler",
-      "Kalsiyum kanal blokerleri", 
-      "MAO inhibitörleri",
-      "Anjiyotensin reseptör blokerleri"
+      "Crista lacrimalis anterior",
+      "Crista lacrimalis posterior",
+      "Lamina perpendicularis (os ethmoidale)",
+      "Processus frontalis (Maxilla)",
+      "Corpus ossis sphenoidalis"
     ],
-    "correctAnswer": "MAO inhibitörleri",
-    "explanation": "MAO inhibitörleri, hipertansif krizlere neden olabilir ve hipertansif hastalarda kontrendikedir.",
-    "category": "Kardiyoloji",
+    "correctAnswer": "Corpus ossis sphenoidalis",
+    "explanation": null,
+    "category": "Klinik",
     "difficulty": "medium"
   },
   {
-    "id": 2,
-    "text": "Aşağıdaki enfeksiyon hastalıklarından hangisi vertikal bulaşla anneden bebeğe geçer?",
-    "options": [
-      "Hepatit A",
-      "İnfluenza",
-      "Tüberküloz",
-      "Rubella",
-      "Rotavirüs"
-    ],
-    "correctAnswer": "Rubella",
-    "explanation": "Rubella (kızamıkçık) enfeksiyonu, özellikle gebeliğin ilk trimesterinde vertikal bulaşla fetüse geçerek konjenital rubella sendromuna neden olabilir.",
-    "category": "Enfeksiyon",
-    "difficulty": "easy"
-  },
-  {
     "id": 3,
-    "text": "Aşağıdakilerden hangisi tiroid maligniteleri arasında en sık görülendir?",
+    "text": "Solunum sıkıntısı şikâyetiyle başvuran bir hastanın toraks görüntülenmesinde bifurcatio tracheae’nin alt komşuluğundaki lenf nodülleri tarafından bası altında olduğu izleniyor. Bu hastada izlenen nodüller aşağıdakilerden hangisidir?",
     "options": [
-      "Papiller karsinom",
-      "Foliküler karsinom",
-      "Medüller karsinom",
-      "Anaplastik karsinom",
-      "Lenfoma"
+      "Nodi lymphoidei bronchopulmonales",
+      "Nodi lymphoidei intrapulmonales",
+      "Nodi lymphoidei paratracheales",
+      "Nodi lymphoidei intercostales",
+      "Nodi lymphoidei tracheobronchiales"
     ],
-    "correctAnswer": "Papiller karsinom",
-    "explanation": "Papiller karsinom, tiroid maligniteleri arasında en sık görülen türdür ve tüm tiroid kanserlerinin yaklaşık %80'ini oluşturur.",
-    "category": "Endokrinoloji",
+    "correctAnswer": "Nodi lymphoidei tracheobronchiales",
+    "explanation": null,
+    "category": "Klinik",
     "difficulty": "medium"
   },
   {
     "id": 4,
-    "text": "Akut pankreatit tedavisinde aşağıdakilerden hangisi yanlıştır?",
+    "text": "\"Lisfranc hattı\" olarak da bilinen ve distal ayak amputasyonlarının yapıldığı eklem hattı aşağıdakilerden hangisidir?",
     "options": [
-      "Sıvı resüsitasyonu",
-      "Antibiyotik profilaksisi",
-      "Ağrı kontrolü",
-      "Oral alımın kesilmesi",
-      "Erken enteral beslenme"
+      "Articulatio tarsi transversa",
+      "Articulationes tarsometatarsales",
+      "Articulatio calcaneocuboidea",
+      "Articulatio talocalcaneonavicularis",
+      "Articulatio talocalcanea"
     ],
-    "correctAnswer": "Antibiyotik profilaksisi",
-    "explanation": "Akut pankreatitte rutin antibiyotik profilaksisi önerilmez. Sadece enfekte nekroz şüphesi veya kanıtı durumunda antibiyotik tedavisi gereklidir.",
-    "category": "Gastroenteroloji",
-    "difficulty": "expert"
+    "correctAnswer": "Articulationes tarsometatarsales",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
   },
   {
     "id": 5,
-    "text": "Aşağıdakilerden hangisi kronik obstrüktif akciğer hastalığı (KOAH) tedavisinde kullanılan bir bronkodilatör değildir?",
+    "text": "Arteria labyrinthi ile ilgili aşağıdaki ifadelerden hangileri doğrudur?",
     "options": [
-      "Salbutamol",
-      "Tiotropium",
-      "Budesonid",
-      "Formoterol",
-      "İndakaterol"
+      "I ve III",
+      "I, II ve III",
+      "II, III ve IV",
+      "I, II ve IV",
+      "I, II, III ve IV"
     ],
-    "correctAnswer": "Budesonid",
-    "explanation": "Budesonid bir inhale kortikosteroiddir, bronkodilatör değildir. Diğer seçenekler (salbutamol, tiotropium, formoterol ve indakaterol) bronkodilatör etkili ilaçlardır.",
-    "category": "Göğüs Hastalıkları",
+    "correctAnswer": "I, II, III ve IV",
+    "explanation": null,
+    "category": "Klinik",
     "difficulty": "medium"
   },
   {
     "id": 6,
-    "text": "Gebelikte aşağıdaki antibiyotiklerden hangisinin kullanımı kontrendikedir?",
+    "text": "Musculus stapedius ve musculus tensor tympani’ye etki ederek işitmede etkili olan sinirler aşağıdakilerden hangisinde birlikte verilmiştir?",
     "options": [
-      "Amoksisilin",
-      "Eritromisin",
-      "Azitromisin",
-      "Gentamisin",
-      "Tetrasiklin"
+      "Nervus maxillaris – Nervus mandibularis",
+      "Nervus mandibularis – Nervus vagus",
+      "Nervus facialis – Nervus mandibularis",
+      "Nervus facialis – Nervus vagus",
+      "Nervus vagus – Nervus accessorius"
     ],
-    "correctAnswer": "Tetrasiklin",
-    "explanation": "Tetrasiklin, gebelikte kontrendikedir çünkü fetüste diş gelişimi sırasında diş minesinde kalıcı renk değişikliğine ve kemik gelişiminin inhibisyonuna neden olabilir.",
-    "category": "Kadın Hastalıkları ve Doğum",
-    "difficulty": "easy"
+    "correctAnswer": "Nervus facialis – Nervus vagus",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
   },
   {
     "id": 7,
-    "text": "Alzheimer hastalığının farmakolojik tedavisinde aşağıdaki ilaç gruplarından hangisi kullanılır?",
+    "text": "Sella turcica bölgesindeki bir lezyonun aşağıdaki yapılardan hangisini etkilemesi en az olasıdır?",
     "options": [
-      "Dopamin agonistleri",
-      "Kolinesteraz inhibitörleri",
-      "Beta blokerler",
-      "Kalsiyum kanal blokerleri",
-      "Proton pompa inhibitörleri"
+      "Arteria carotis interna",
+      "Nervus trochlearis",
+      "Nervus ophthalmicus",
+      "Nervus abducens",
+      "Nervus mandibularis"
     ],
-    "correctAnswer": "Kolinesteraz inhibitörleri",
-    "explanation": "Kolinesteraz inhibitörleri (donepezil, rivastigmin, galantamin) Alzheimer hastalığının tedavisinde kullanılan birinci basamak ilaçlardır. Kolinerjik transmisyonu artırarak hafıza ve kognitif fonksiyonları iyileştirirler.",
-    "category": "Nöroloji",
+    "correctAnswer": "Nervus mandibularis",
+    "explanation": null,
+    "category": "Klinik",
     "difficulty": "medium"
   },
   {
     "id": 8,
-    "text": "Aşağıdaki durumlardan hangisinde trombolitik tedavi kontrendikedir?",
+    "text": "Karpal tünel sendromunda aşağıdaki fizik muayene bulgularından hangisinin görülmesi beklenmez?",
     "options": [
-      "Akut miyokard enfarktüsü",
-      "Pulmoner emboli",
-      "İskemik inme (ilk 4.5 saat içinde)",
-      "Aktif internal kanama",
-      "Akut periferik arter tıkanıklığı"
+      "Başparmak fleksiyon kusuru",
+      "Başparmak abduksiyon kusuru",
+      "Başparmak oppozisyon kusuru",
+      "İkinci parmak palmar yüzde duyu kaybı",
+      "Hipotenar bölgede duyu kaybı"
     ],
-    "correctAnswer": "Aktif internal kanama",
-    "explanation": "Aktif internal kanama, trombolitik tedavi için kesin kontrendikasyondur çünkü trombolitikler kanamanın şiddetlenmesine ve hayatı tehdit eden durumlara yol açabilir.",
-    "category": "Acil Tıp",
+    "correctAnswer": "Hipotenar bölgede duyu kaybı",
+    "explanation": null,
+    "category": "Klinik",
     "difficulty": "medium"
   },
   {
     "id": 9,
-    "text": "Kronik böbrek yetmezliği olan hastalarda aşağıdaki elektrolit bozukluklarından hangisi en sık görülür?",
+    "text": "Medulla spinalis’te columna intermediolateralis’den çıkan preganglionik sempatik lifler aşağıdaki anatomik yapılardan hangisiyle truncus sympathicus’a iletilir?",
     "options": [
-      "Hiponatremi",
-      "Hiperkalemi",
-      "Hipokalsemi",
-      "Hipomagnezemi",
-      "Hiperkloremi"
+      "Ramus posterior (dorsalis) nervus spinalis",
+      "Radix posterior nervus spinalis",
+      "Nervus erigentes",
+      "Ramus communicans albus",
+      "Ramus communicans griseous"
     ],
-    "correctAnswer": "Hiperkalemi",
-    "explanation": "Kronik böbrek yetmezliğinde böbreklerin potasyum atılımı bozulur ve bu durum hiperkalemiye yol açar. Hiperkalemi, bu hastalarda en sık görülen ve en tehlikeli elektrolit bozukluğudur.",
-    "category": "Nefroloji",
+    "correctAnswer": "Ramus communicans albus",
+    "explanation": null,
+    "category": "Klinik",
     "difficulty": "medium"
   },
   {
     "id": 10,
-    "text": "Aşağıdakilerden hangisi karaciğer sirozu komplikasyonları arasında yer almaz?",
+    "text": "Göğüs ön duvarından delici bıçak yaralanması ile gelen bir hastada, yaralanmanın akciğer orta lobunu zedelemesi için en olası lokalizasyon aşağıdakilerden hangisidir?",
     "options": [
-      "Özofagus varisleri",
-      "Hepatorenal sendrom",
-      "Hepatik ensefalopati",
-      "Asit",
-      "Pankreatit"
+      "Sağ paravertebral çizgide T7 vertebra seviyesinde",
+      "Sağ parasternal çizgide angulus sterni hizasında",
+      "Sol paravertebral çizgide T4 vertebra seviyesinde",
+      "Sağ parasternal çizgide 4. ve 6. kostalar arasında",
+      "Sağ midaksiller çizgide 9. ve 10. kostalar arasında"
     ],
-    "correctAnswer": "Pankreatit",
-    "explanation": "Pankreatit, karaciğer sirozunun bir komplikasyonu değildir. Diğer seçenekler (özofagus varisleri, hepatorenal sendrom, hepatik ensefalopati ve asit) karaciğer sirozunun bilinen komplikasyonlarıdır.",
-    "category": "Gastroenteroloji",
+    "correctAnswer": "Sağ parasternal çizgide 4. ve 6. kostalar arasında",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 18,
+    "text": "İntervertebral diskin nukleus pulposus bölümü aşağıdaki embriyonik yapılardan hangisinden gelişir?",
+    "options": [
+      "Nöral krista",
+      "Nöral ektoderm",
+      "Notokord",
+      "Somit",
+      "Endoderm"
+    ],
+    "correctAnswer": "Notokord",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 19,
+    "text": "Embriyolojik gelişim sürecinde meydana gelen gastrulasyon nasıl tanımlanır?",
+    "options": [
+      "Blastokist implantasyonunun tamamlanması",
+      "İki tabakalı embriyon diskinin baş-kuyruk ekseninde büyümesi",
+      "Embriyonun baş-kuyruk yönünde bükülmesi",
+      "Embriyoblastlardan iki tabakalı embriyon diskinin oluşumu",
+      "Embriyon diskinin üç tabakalı hâle dönüşmesi"
+    ],
+    "correctAnswer": "Embriyon diskinin üç tabakalı hâle dönüşmesi",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 20,
+    "text": "Aşağıdaki hücrelerden hangisi hipofiz bezinin arka lobunda bulunur?",
+    "options": [
+      "Pinealosit",
+      "Pituist",
+      "Kromofob hücre",
+      "Oksifil hücre",
+      "Foliküller hücre"
+    ],
+    "correctAnswer": "Pituist",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 22,
+    "text": "Olfaktör epitelde bulunan nöronlar hangi tiptir?",
+    "options": [
+      "Psödounipolar",
+      "İnternöron",
+      "Motor",
+      "Multipolar",
+      "Bipolar"
+    ],
+    "correctAnswer": "Bipolar",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 23,
+    "text": "Aşağıdaki hormonlardan hangisinin hücre içi sinyal iletimindeki temel etki mekanizması, membrandaki reseptörüne bağlanarak hücre içi guanilil siklaz-cGMP ikinci haberci yolakını aktive etmektir?",
+    "options": [
+      "Atrial natriüretik peptid",
+      "Adrenalin",
+      "Anjiyotensin II",
+      "Antidiüretik hormon",
+      "Asetilkolin"
+    ],
+    "correctAnswer": "Atrial natriüretik peptid",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 24,
+    "text": "Myastenia gravis hastalığı ile ilgili aşağıdaki ifadelerden hangisi doğrudur?",
+    "options": [
+      "Sinir-kas kavşağında presinaptik voltaj kapılı kalsiyum kanallarına karşı antikor olması",
+      "Sinir-kas kavşağında presinaptik nörotransmiter salgılanmasını engelleyen nörotoksin olması",
+      "Çizgili kasta distrofin proteininin bulunmaması",
+      "Bazal gangliyonlarda dopaminerjik nöron ve reseptörlerin kaybı",
+      "Sinir-kas kavşağında postsinaptik asetilkolin reseptörlerine karşı antikor olması"
+    ],
+    "correctAnswer": "Sinir-kas kavşağında postsinaptik asetilkolin reseptörlerine karşı antikor olması",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 25,
+    "text": "Dördüncü kalp sesi ventriküler döngünün hangi evresinde oluşur?",
+    "options": [
+      "Doluş evresinin ilk 1/3’lük döneminde",
+      "Eş hacimli kasılma döneminin öncesinde",
+      "Eş hacimli gevşeme döneminde",
+      "Eş hacimli kasılma döneminde",
+      "Fırlatma döneminde"
+    ],
+    "correctAnswer": "Doluş evresinin ilk 1/3’lük döneminde",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 26,
+    "text": "Normal solunumdaki akciğerlerin inspirasyon ve ekspirasyonu sırasında oluşan ve atmosferden hava giriş çıkışı sağlayan basınç değişimleriyle ilgili aşağıdaki ifadelerden hangisi doğrudur?",
+    "options": [
+      "İnspirasyon oluşması için intraplevral basınç istirahattaki değerine göre daha negatif olur.",
+      "İnspirasyon oluşması için intraplevral basınç atmosferik basınca eşit olmalıdır.",
+      "Ekspirasyon oluşması için alveoler basınç atmosferik basınçtan pozitife doğru artar ve intraplevral basınç farkı daha negatif olur.",
+      "Ekspirasyon oluşması için alveoler basınç pozitiften atmosferik basınç değerine doğru düşerken intraplevral basınç değişmez.",
+      "Transpulmoner basınç olarak tanımlanan alveol basıncı ile visseral - parietal plevra arası basınç farkı arttığında akciğer volümü azalır."
+    ],
+    "correctAnswer": "İnspirasyon oluşması için intraplevral basınç istirahattaki değerine göre daha negatif olur.",
+    "explanation": null,
+    "category": "Klinik",
     "difficulty": "medium"
   }
 ]

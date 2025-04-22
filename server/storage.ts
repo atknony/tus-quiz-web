@@ -311,8 +311,11 @@ export class MemStorage implements IStorage {
   async getQuestionsBySection(section: string): Promise<Question[]> {
     try {
       // Load questions from appropriate JSON file
-      const jsonPath = `./data/${section.toLowerCase()}.json`;
-      const data = require(jsonPath);
+      const fs = require('fs');
+      const path = require('path');
+      const jsonPath = path.resolve(`./data/${section.toLowerCase()}.json`);
+      const rawData = fs.readFileSync(jsonPath, 'utf8');
+      const data = JSON.parse(rawData);
       return data;
     } catch (error) {
       console.error(`Error loading questions for section ${section}:`, error);
