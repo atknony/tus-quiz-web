@@ -79,6 +79,16 @@ export default function FeedbackScreen() {
           </div>
         </div>
       )}
+      
+      {/* Skip Button */}
+      <div className="p-4 flex justify-center border-t">
+        <button
+          onClick={() => skipFeedback()}
+          className="py-2 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+        >
+          Geç
+        </button>
+      </div>
     </div>
   );
 }
