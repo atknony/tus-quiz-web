@@ -42,11 +42,11 @@ export function formatTime(seconds: number): string {
 }
 
 /**
- * Calculate final score (total time + penalties)
+ * Calculate final score (only total time without penalties)
  */
 export function calculateFinalScore(state: GameState): number {
-  const penaltySeconds = state.wrongAnswers * getPenaltyTime(state.difficulty);
-  return state.totalTime + penaltySeconds;
+  // Removed penalty system as per requirements
+  return state.totalTime;
 }
 
 /**

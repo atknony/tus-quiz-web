@@ -1,257 +1,146 @@
 [
   {
     "id": 1,
-    "text": "Trafik kazası sonucu orbitanın medial duvarında kırık tespit edilen bir hastada, kırık hattının aşağıdaki kemik yapılardan hangisinden geçmesi en az olasıdır?",
+    "text": "Aşağıdakilerden hangisi hücre iskeleti elemanlarından değildir?",
     "options": [
-      "Crista lacrimalis anterior",
-      "Crista lacrimalis posterior",
-      "Lamina perpendicularis (os ethmoidale)",
-      "Processus frontalis (Maxilla)",
-      "Corpus ossis sphenoidalis"
+      "Mikrofilamentler",
+      "Mikrotübüller",
+      "Ara filamentler",
+      "Ribozomlar",
+      "Aktin filamentleri"
     ],
-    "correctAnswer": "Corpus ossis sphenoidalis",
-    "explanation": null,
-    "category": "Klinik",
+    "correctAnswer": "D",
+    "explanation": "Ribozomlar, protein sentezinde görev alan organellerdir ve hücre iskeletinin bir parçası değildir. Mikrofilamentler, mikrotübüller ve ara filamentler hücre iskeletini oluşturan yapılardır.",
+    "category": "Histoloji",
+    "difficulty": "easy"
+  },
+  {
+    "id": 2,
+    "text": "Aşağıdakilerden hangisi primer kültür hücrelerinin özelliklerinden değildir?",
+    "options": [
+      "Ömürleri sınırlıdır",
+      "Ölümsüzleşmiş (immortalized) hücrelerdir",
+      "Orijinal dokudan alınan hücrelerdir",
+      "Diferansiye özelliklerini büyük oranda korurlar",
+      "Heterojen hücre popülasyonu içerebilirler"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Primer kültür hücreleri, orijinal dokudan izole edilir ve sınırlı bir yaşam süresine sahiptir. Ölümsüzleşme, sürekli pasajlanabilen ve sınırsız bölünme yeteneği kazanmış hücre hatlarının özelliğidir, primer kültür hücrelerine ait değildir.",
+    "category": "Hücre Biyolojisi",
     "difficulty": "medium"
   },
   {
     "id": 3,
-    "text": "Solunum sıkıntısı şikâyetiyle başvuran bir hastanın toraks görüntülenmesinde bifurcatio tracheae’nin alt komşuluğundaki lenf nodülleri tarafından bası altında olduğu izleniyor. Bu hastada izlenen nodüller aşağıdakilerden hangisidir?",
+    "text": "Aşağıdaki yapılardan hangisi limbik sistemin bir parçası değildir?",
     "options": [
-      "Nodi lymphoidei bronchopulmonales",
-      "Nodi lymphoidei intrapulmonales",
-      "Nodi lymphoidei paratracheales",
-      "Nodi lymphoidei intercostales",
-      "Nodi lymphoidei tracheobronchiales"
+      "Amigdala",
+      "Hipokampus",
+      "Talamus",
+      "Forniks",
+      "Singulat girus"
     ],
-    "correctAnswer": "Nodi lymphoidei tracheobronchiales",
-    "explanation": null,
-    "category": "Klinik",
+    "correctAnswer": "C",
+    "explanation": "Talamus, duyu bilgilerini kortekse ileten bir ara istasyon görevi görür ve limbik sistemin bir parçası değildir. Amigdala, hipokampus, forniks ve singulat girus limbik sistem yapılarıdır ve duygusal işlemleme, bellek ve motivasyonla ilgilidir.",
+    "category": "Nöroanatomi",
     "difficulty": "medium"
   },
   {
     "id": 4,
-    "text": "\"Lisfranc hattı\" olarak da bilinen ve distal ayak amputasyonlarının yapıldığı eklem hattı aşağıdakilerden hangisidir?",
+    "text": "Aşağıdaki antibiyotiklerden hangisi protein sentezini 30S ribozomal alt birimini hedef alarak inhibe eder?",
     "options": [
-      "Articulatio tarsi transversa",
-      "Articulationes tarsometatarsales",
-      "Articulatio calcaneocuboidea",
-      "Articulatio talocalcaneonavicularis",
-      "Articulatio talocalcanea"
+      "Eritromisin",
+      "Kloramfenikol",
+      "Streptomisin",
+      "Linezolid",
+      "Klindamisin"
     ],
-    "correctAnswer": "Articulationes tarsometatarsales",
-    "explanation": null,
-    "category": "Klinik",
+    "correctAnswer": "C",
+    "explanation": "Streptomisin, 30S ribozomal alt birime bağlanarak protein sentezini inhibe eden bir aminoglikozid antibiyotiktir. Eritromisin, klindamisin ve linezolid 50S alt birimi hedeflerken, kloramfenikol peptidil transferaz aktivitesini inhibe eder.",
+    "category": "Farmakoloji",
     "difficulty": "medium"
   },
   {
     "id": 5,
-    "text": "Arteria labyrinthi ile ilgili aşağıdaki ifadelerden hangileri doğrudur?",
+    "text": "DNA replikasyonu sırasında lagging zincirde sentezlenen kısa DNA parçalarına ne ad verilir?",
     "options": [
-      "I ve III",
-      "I, II ve III",
-      "II, III ve IV",
-      "I, II ve IV",
-      "I, II, III ve IV"
+      "Nükleozomlar",
+      "Okazaki fragmentleri",
+      "Primer dizileri",
+      "Ekzonlar",
+      "Promoter bölgeleri"
     ],
-    "correctAnswer": "I, II, III ve IV",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
+    "correctAnswer": "B",
+    "explanation": "DNA replikasyonu sırasında lagging (geriden gelen) zincirin sentezi, kısa DNA parçaları (Okazaki fragmentleri) şeklinde gerçekleşir. Bu fragmentler daha sonra DNA ligaz enzimi tarafından birleştirilir.",
+    "category": "Moleküler Biyoloji",
+    "difficulty": "easy"
   },
   {
     "id": 6,
-    "text": "Musculus stapedius ve musculus tensor tympani’ye etki ederek işitmede etkili olan sinirler aşağıdakilerden hangisinde birlikte verilmiştir?",
+    "text": "Aşağıdakilerden hangisi glikoliz sırasında meydana gelmez?",
     "options": [
-      "Nervus maxillaris – Nervus mandibularis",
-      "Nervus mandibularis – Nervus vagus",
-      "Nervus facialis – Nervus mandibularis",
-      "Nervus facialis – Nervus vagus",
-      "Nervus vagus – Nervus accessorius"
+      "Fruktoz-6-fosfat oluşumu",
+      "ATP üretimi",
+      "NADH üretimi",
+      "Oksidatif fosforilasyon",
+      "Pirüvat oluşumu"
     ],
-    "correctAnswer": "Nervus facialis – Nervus vagus",
-    "explanation": null,
-    "category": "Klinik",
+    "correctAnswer": "D",
+    "explanation": "Oksidatif fosforilasyon, mitokondride gerçekleşen bir süreçtir ve elektron taşıma zincirini içerir. Glikoliz, sitoplazmada gerçekleşen anaerobik bir süreçtir ve oksidatif fosforilasyon bu sürecin bir parçası değildir.",
+    "category": "Biyokimya",
     "difficulty": "medium"
   },
   {
     "id": 7,
-    "text": "Sella turcica bölgesindeki bir lezyonun aşağıdaki yapılardan hangisini etkilemesi en az olasıdır?",
-    "options": [
-      "Arteria carotis interna",
-      "Nervus trochlearis",
-      "Nervus ophthalmicus",
-      "Nervus abducens",
-      "Nervus mandibularis"
-    ],
-    "correctAnswer": "Nervus mandibularis",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
+    "text": "Aşağıdaki enzimlerden hangisi immunoglobulin G'nin (IgG) Fc bölgesini tanıyarak patojenleri opsonize eder?",
+    "options": ["Kompleman C3", "Lizozim", "Proteaz", "Perforin", "Granzim"],
+    "correctAnswer": "A",
+    "explanation": "Kompleman C3, IgG'nin Fc bölgesine bağlanarak kompleman sistemini aktive eder. Bu aktivasyon patojenlerin opsonizasyonuna ve fagositozuna yol açar. Lizozim bir antimikrobiyal enzim, proteaz protein yıkımında, perforin ve granzim ise sitotoksik T hücrelerinin hedefleri öldürmesinde rol oynar.",
+    "category": "İmmünoloji",
+    "difficulty": "expert"
   },
   {
     "id": 8,
-    "text": "Karpal tünel sendromunda aşağıdaki fizik muayene bulgularından hangisinin görülmesi beklenmez?",
+    "text": "Aşağıdaki hormonlardan hangisi kan kalsiyum seviyesini düşürür?",
     "options": [
-      "Başparmak fleksiyon kusuru",
-      "Başparmak abduksiyon kusuru",
-      "Başparmak oppozisyon kusuru",
-      "İkinci parmak palmar yüzde duyu kaybı",
-      "Hipotenar bölgede duyu kaybı"
+      "Parathormon",
+      "D vitamini",
+      "Kalsitonin",
+      "Kortizol",
+      "Aldosteron"
     ],
-    "correctAnswer": "Hipotenar bölgede duyu kaybı",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
+    "correctAnswer": "C",
+    "explanation": "Kalsitonin, tiroid bezinin C hücreleri tarafından salgılanan ve kan kalsiyum seviyesini düşüren bir hormondur. Parathormon ve D vitamini kan kalsiyum seviyesini artırırken, kortizol ve aldosteron kalsiyum metabolizması üzerinde doğrudan etki göstermez.",
+    "category": "Fizyoloji",
+    "difficulty": "easy"
   },
   {
     "id": 9,
-    "text": "Medulla spinalis’te columna intermediolateralis’den çıkan preganglionik sempatik lifler aşağıdaki anatomik yapılardan hangisiyle truncus sympathicus’a iletilir?",
+    "text": "Gram negatif bakterilerin hücre duvarında bulunan ve endotoksin aktivitesi gösteren yapı hangisidir?",
     "options": [
-      "Ramus posterior (dorsalis) nervus spinalis",
-      "Radix posterior nervus spinalis",
-      "Nervus erigentes",
-      "Ramus communicans albus",
-      "Ramus communicans griseous"
+      "Peptidoglikan",
+      "Lipopolisakkarit (LPS)",
+      "Teikoik asit",
+      "Mikolik asit",
+      "Flagellin"
     ],
-    "correctAnswer": "Ramus communicans albus",
-    "explanation": null,
-    "category": "Klinik",
+    "correctAnswer": "B",
+    "explanation": "Lipopolisakkarit (LPS), gram negatif bakterilerin dış membranında bulunan ve endotoksin aktivitesi gösteren bir yapıdır. Septik şok dahil güçlü inflamatuar yanıtlara neden olabilir. Peptidoglikan hem gram pozitif hem de gram negatif bakterilerde bulunur, teikoik asit gram pozitif bakterilere özgüdür, mikolik asit mikobakterilerde bulunur, flagellin ise flagellaların yapısal proteinidir.",
+    "category": "Mikrobiyoloji",
     "difficulty": "medium"
   },
   {
     "id": 10,
-    "text": "Göğüs ön duvarından delici bıçak yaralanması ile gelen bir hastada, yaralanmanın akciğer orta lobunu zedelemesi için en olası lokalizasyon aşağıdakilerden hangisidir?",
+    "text": "Embriyonik gelişim sırasında notokorddan türeyen yapı hangisidir?",
     "options": [
-      "Sağ paravertebral çizgide T7 vertebra seviyesinde",
-      "Sağ parasternal çizgide angulus sterni hizasında",
-      "Sol paravertebral çizgide T4 vertebra seviyesinde",
-      "Sağ parasternal çizgide 4. ve 6. kostalar arasında",
-      "Sağ midaksiller çizgide 9. ve 10. kostalar arasında"
+      "Kas dokusu",
+      "Sinir dokusu",
+      "İntervertebral disk nükleus pulposusu",
+      "Dermis",
+      "Karaciğer"
     ],
-    "correctAnswer": "Sağ parasternal çizgide 4. ve 6. kostalar arasında",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 18,
-    "text": "İntervertebral diskin nukleus pulposus bölümü aşağıdaki embriyonik yapılardan hangisinden gelişir?",
-    "options": [
-      "Nöral krista",
-      "Nöral ektoderm",
-      "Notokord",
-      "Somit",
-      "Endoderm"
-    ],
-    "correctAnswer": "Notokord",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 19,
-    "text": "Embriyolojik gelişim sürecinde meydana gelen gastrulasyon nasıl tanımlanır?",
-    "options": [
-      "Blastokist implantasyonunun tamamlanması",
-      "İki tabakalı embriyon diskinin baş-kuyruk ekseninde büyümesi",
-      "Embriyonun baş-kuyruk yönünde bükülmesi",
-      "Embriyoblastlardan iki tabakalı embriyon diskinin oluşumu",
-      "Embriyon diskinin üç tabakalı hâle dönüşmesi"
-    ],
-    "correctAnswer": "Embriyon diskinin üç tabakalı hâle dönüşmesi",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 20,
-    "text": "Aşağıdaki hücrelerden hangisi hipofiz bezinin arka lobunda bulunur?",
-    "options": [
-      "Pinealosit",
-      "Pituist",
-      "Kromofob hücre",
-      "Oksifil hücre",
-      "Foliküller hücre"
-    ],
-    "correctAnswer": "Pituist",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 22,
-    "text": "Olfaktör epitelde bulunan nöronlar hangi tiptir?",
-    "options": [
-      "Psödounipolar",
-      "İnternöron",
-      "Motor",
-      "Multipolar",
-      "Bipolar"
-    ],
-    "correctAnswer": "Bipolar",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 23,
-    "text": "Aşağıdaki hormonlardan hangisinin hücre içi sinyal iletimindeki temel etki mekanizması, membrandaki reseptörüne bağlanarak hücre içi guanilil siklaz-cGMP ikinci haberci yolakını aktive etmektir?",
-    "options": [
-      "Atrial natriüretik peptid",
-      "Adrenalin",
-      "Anjiyotensin II",
-      "Antidiüretik hormon",
-      "Asetilkolin"
-    ],
-    "correctAnswer": "Atrial natriüretik peptid",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 24,
-    "text": "Myastenia gravis hastalığı ile ilgili aşağıdaki ifadelerden hangisi doğrudur?",
-    "options": [
-      "Sinir-kas kavşağında presinaptik voltaj kapılı kalsiyum kanallarına karşı antikor olması",
-      "Sinir-kas kavşağında presinaptik nörotransmiter salgılanmasını engelleyen nörotoksin olması",
-      "Çizgili kasta distrofin proteininin bulunmaması",
-      "Bazal gangliyonlarda dopaminerjik nöron ve reseptörlerin kaybı",
-      "Sinir-kas kavşağında postsinaptik asetilkolin reseptörlerine karşı antikor olması"
-    ],
-    "correctAnswer": "Sinir-kas kavşağında postsinaptik asetilkolin reseptörlerine karşı antikor olması",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 25,
-    "text": "Dördüncü kalp sesi ventriküler döngünün hangi evresinde oluşur?",
-    "options": [
-      "Doluş evresinin ilk 1/3’lük döneminde",
-      "Eş hacimli kasılma döneminin öncesinde",
-      "Eş hacimli gevşeme döneminde",
-      "Eş hacimli kasılma döneminde",
-      "Fırlatma döneminde"
-    ],
-    "correctAnswer": "Doluş evresinin ilk 1/3’lük döneminde",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 26,
-    "text": "Normal solunumdaki akciğerlerin inspirasyon ve ekspirasyonu sırasında oluşan ve atmosferden hava giriş çıkışı sağlayan basınç değişimleriyle ilgili aşağıdaki ifadelerden hangisi doğrudur?",
-    "options": [
-      "İnspirasyon oluşması için intraplevral basınç istirahattaki değerine göre daha negatif olur.",
-      "İnspirasyon oluşması için intraplevral basınç atmosferik basınca eşit olmalıdır.",
-      "Ekspirasyon oluşması için alveoler basınç atmosferik basınçtan pozitife doğru artar ve intraplevral basınç farkı daha negatif olur.",
-      "Ekspirasyon oluşması için alveoler basınç pozitiften atmosferik basınç değerine doğru düşerken intraplevral basınç değişmez.",
-      "Transpulmoner basınç olarak tanımlanan alveol basıncı ile visseral - parietal plevra arası basınç farkı arttığında akciğer volümü azalır."
-    ],
-    "correctAnswer": "İnspirasyon oluşması için intraplevral basınç istirahattaki değerine göre daha negatif olur.",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
+    "correctAnswer": "C",
+    "explanation": "Notokord, embriyonik gelişimde aksiyel iskeletin öncüsüdür ve gelişim sırasında intervertebral disklerin merkezi kısmını (nükleus pulposus) oluşturur. Kas dokusu mezodermden, sinir dokusu ektodermden, dermis paraksiyel mezodermden, karaciğer ise endodermden köken alır.",
+    "category": "Embriyoloji",
+    "difficulty": "expert"
   }
 ]
