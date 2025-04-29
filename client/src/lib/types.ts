@@ -33,6 +33,8 @@ export type GameAction =
   | { type: 'SET_QUESTIONS'; payload: Question[] }
   | { type: 'NEXT_QUESTION' }
   | { type: 'SELECT_ANSWER'; payload: string }
+  | { type: 'SHOW_ANSWER' }
+  | { type: 'SKIP_FEEDBACK' }
   | { type: 'TICK_TIMER'; payload: number }
   | { type: 'TICK_FEEDBACK_TIMER'; payload: number }
   | { type: 'SET_SCREEN'; payload: GameState['currentScreen'] }

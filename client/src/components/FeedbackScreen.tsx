@@ -3,7 +3,7 @@ import { useGameState } from '@/hooks/useGameState';
 import { formatTime } from '@/lib/gameLogic';
 
 export default function FeedbackScreen() {
-  const { state } = useGameState();
+  const { state, skipFeedback } = useGameState();
   const { questions, currentQuestionIndex, selectedAnswer, feedbackTimeRemaining } = state;
   
   const currentQuestion = questions[currentQuestionIndex];

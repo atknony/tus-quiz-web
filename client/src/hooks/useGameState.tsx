@@ -61,6 +61,23 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         feedbackTimeRemaining: 15
       };
     
+    case 'SHOW_ANSWER': {
+      // Count this as a wrong answer
+      const newWrongAnswers = state.wrongAnswers + 1;
+      const gameOver = newWrongAnswers >= 5;
+      
+      return {
+        ...state,
+        wrongAnswers: newWrongAnswers,
+        totalTime: state.totalTime + state.currentQuestionTime,
+        selectedAnswer: state.questions[state.currentQuestionIndex]?.correctAnswer, // Set selected to correct answer
+        isTimerRunning: false,
+        feedbackTimeRemaining: 15, // Keep 15 seconds for incorrect answers
+        gameOver: gameOver,
+        currentScreen: gameOver ? 'result' : 'feedback'
+      };
+    }
+    
     case 'SELECT_ANSWER': {
       const isCorrect = state.questions[state.currentQuestionIndex]?.correctAnswer === action.payload;
       
@@ -113,6 +130,37 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       return {
         ...state,
         currentQuestionTime: newTime
+      };
+    }
+    
+    case 'SKIP_FEEDBACK': {
+      if (state.gameOver) {
+        return {
+          ...state,
+          currentScreen: 'result',
+          feedbackTimeRemaining: 0
+        };
+      }
+      
+      // Check if we've reached the end of all questions
+      if (state.currentQuestionIndex >= state.questions.length - 1) {
+        return {
+          ...state,
+          currentScreen: 'result',
+          gameOver: true,
+          isTimerRunning: false,
+          feedbackTimeRemaining: 0
+        };
+      }
+      
+      return {
+        ...state,
+        currentScreen: 'game',
+        currentQuestionIndex: state.currentQuestionIndex + 1,
+        currentQuestionTime: 0,
+        selectedAnswer: null,
+        isTimerRunning: true,
+        feedbackTimeRemaining: 15
       };
     }
     
@@ -186,6 +234,8 @@ type GameStateContextType = {
   selectSection: (section: Section) => void;
   startGame: (difficulty: Difficulty) => void;
   checkAnswer: (answer: string) => void;
+  showAnswer: () => void;
+  skipFeedback: () => void;
   playAgain: () => void;
   returnToMenu: () => void;
 };
@@ -269,6 +319,16 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'SELECT_ANSWER', payload: answer });
   };
   
+  // Show answer function
+  const showAnswer = () => {
+    dispatch({ type: 'SHOW_ANSWER' });
+  };
+  
+  // Skip feedback function
+  const skipFeedback = () => {
+    dispatch({ type: 'SKIP_FEEDBACK' });
+  };
+  
   // Play again function
   const playAgain = async () => {
     if (state.difficulty && state.section) {
@@ -288,7 +348,9 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
         dispatch,
         selectSection,
         startGame, 
-        checkAnswer, 
+        checkAnswer,
+        showAnswer,
+        skipFeedback,
         playAgain, 
         returnToMenu 
       }}

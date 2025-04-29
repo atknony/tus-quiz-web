@@ -3,7 +3,7 @@ import { useGameState } from '@/hooks/useGameState';
 import { getDifficultyName, getMaxTime, formatTime } from '@/lib/gameLogic';
 
 export default function GameScreen() {
-  const { state, checkAnswer } = useGameState();
+  const { state, checkAnswer, showAnswer } = useGameState();
   const { difficulty, questions, currentQuestionIndex, correctAnswers, wrongAnswers, currentQuestionTime } = state;
   
   const currentQuestion = questions[currentQuestionIndex];
@@ -87,6 +87,16 @@ export default function GameScreen() {
                 <span>{option}</span>
               </button>
             ))}
+          </div>
+          
+          {/* Cevabı Göster button */}
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={() => showAnswer()}
+              className="py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg transition-colors"
+            >
+              Cevabı Göster
+            </button>
           </div>
         </div>
       </div>
