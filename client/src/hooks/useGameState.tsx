@@ -70,7 +70,8 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         ...state,
         wrongAnswers: newWrongAnswers,
         totalTime: state.totalTime + state.currentQuestionTime,
-        selectedAnswer: state.questions[state.currentQuestionIndex]?.correctAnswer, // Set selected to correct answer
+        // Important: Don't set selectedAnswer to the correct answer
+        // Instead we'll handle this visually in the GameScreen component
         isTimerRunning: false,
         feedbackTimeRemaining: 15, // Keep 15 seconds for incorrect answers
         gameOver: gameOver,
@@ -331,8 +332,32 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
   
   // Play again function
   const playAgain = async () => {
-    if (state.difficulty && state.section) {
-      await startGame(state.difficulty);
+    // First reset the game state completely
+    dispatch({ type: 'RESET_GAME' });
+    
+    // If we have section and difficulty info, restart with those settings
+    if (state.section) {
+      dispatch({ type: 'SET_SECTION', payload: state.section });
+      
+      if (state.difficulty) {
+        try {
+          // Get fresh questions for the selected section
+          const endpoint = state.section ? `/api/questions/${state.section}` : '/api/questions';
+          const response = await apiRequest('GET', endpoint, undefined);
+          const data = await response.json();
+          
+          // Shuffle the questions freshly
+          const shuffledQuestions = [...data].sort(() => Math.random() - 0.5);
+          
+          // Set difficulty and then questions (in that order)
+          dispatch({ type: 'SET_DIFFICULTY', payload: state.difficulty });
+          dispatch({ type: 'SET_QUESTIONS', payload: shuffledQuestions });
+        } catch (error) {
+          console.error('Failed to fetch questions:', error);
+          // If there's an error, reset to welcome screen
+          dispatch({ type: 'RESET_GAME' });
+        }
+      }
     }
   };
   

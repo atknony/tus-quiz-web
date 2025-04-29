@@ -17,19 +17,12 @@ export function getMaxTime(difficulty: Difficulty | null): number {
 }
 
 /**
- * Get penalty time per wrong answer based on difficulty
+ * Penalty system removed as per requirements
+ * Returns 0 for all difficulties
  */
 export function getPenaltyTime(difficulty: Difficulty | null): number {
-  switch (difficulty) {
-    case 'easy':
-      return 120;
-    case 'medium':
-      return 60;
-    case 'expert':
-      return 30;
-    default:
-      return 60;
-  }
+  // Always return 0 as penalty system is removed
+  return 0;
 }
 
 /**

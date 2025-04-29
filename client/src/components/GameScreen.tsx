@@ -77,16 +77,28 @@ export default function GameScreen() {
           
           {/* Answer options */}
           <div className="space-y-3">
-            {currentQuestion.options.map((option, index) => (
-              <button 
-                key={index}
-                className="w-full text-left p-3 border-2 border-gray-200 rounded-lg hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                onClick={() => handleAnswerClick(option, index)}
-              >
-                <span className="font-medium mr-2">{String.fromCharCode(65 + index)}.</span>
-                <span>{option}</span>
-              </button>
-            ))}
+            {currentQuestion.options.map((option, index) => {
+              // Get the letter for this option
+              const optionLetter = String.fromCharCode(65 + index);
+              
+              // Check if this is the correct answer (for highlighting when "Cevabı Göster" is clicked)
+              const isCorrectAnswer = optionLetter === currentQuestion.correctAnswer;
+              
+              return (
+                <button 
+                  key={index}
+                  className={`w-full text-left p-3 border-2 ${
+                    state.currentScreen === 'feedback' && isCorrectAnswer 
+                      ? 'border-green-500 bg-green-50' 
+                      : 'border-gray-200 hover:border-blue-400'
+                  } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all`}
+                  onClick={() => handleAnswerClick(option, index)}
+                >
+                  <span className="font-medium mr-2">{optionLetter}.</span>
+                  <span>{option}</span>
+                </button>
+              );
+            })}
           </div>
           
           {/* Cevabı Göster button */}

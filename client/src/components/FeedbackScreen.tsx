@@ -13,12 +13,17 @@ export default function FeedbackScreen() {
     return null;
   }
   
+  // This will check if the user clicked "Cevabı Göster" or actually answered
+  const userClickedShowAnswer = selectedAnswer === null || selectedAnswer === undefined;
+  
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
       <div className="p-4 text-white">
-        <div className={`${isCorrect ? 'bg-green-500' : 'bg-red-500'} p-4 rounded-t-lg`}>
+        <div className={`${userClickedShowAnswer ? 'bg-gray-700' : isCorrect ? 'bg-green-500' : 'bg-red-500'} p-4 rounded-t-lg`}>
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-lg">{isCorrect ? 'Doğru Cevap' : 'Yanlış Cevap'}</h3>
+            <h3 className="font-bold text-lg">
+              {userClickedShowAnswer ? 'Doğru Cevap Gösteriliyor' : isCorrect ? 'Doğru Cevap' : 'Yanlış Cevap'}
+            </h3>
             <div className="flex items-center">
               <Clock className="h-5 w-5 mr-1" />
               <span className="font-mono">{formatTime(feedbackTimeRemaining)}</span>
@@ -59,7 +64,7 @@ export default function FeedbackScreen() {
                   </div>
                 )}
                 
-                {isSelectedAnswer && !isCorrectAnswer && (
+                {isSelectedAnswer && !isCorrectAnswer && !userClickedShowAnswer && (
                   <div className="mt-1 text-sm text-red-700">
                     <X className="h-5 w-5 inline mr-1" />
                     Sizin Cevabınız

@@ -2098,5 +2098,335 @@
     "explanation": null,
     "category": "Preklinik",
     "difficulty": "medium"
+  },
+  {
+    "id": 151,
+    "text": "Aşağıdaki kaslardan hangisi elin intrinsic (iç) kasları arasında yer alır?",
+    "options": [
+      "M. flexor digitorum superficialis",
+      "M. flexor carpi radialis",
+      "M. lumbricales",
+      "M. extensor digitorum",
+      "M. brachioradialis"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 152,
+    "text": "Aşağıdaki kemiklerden hangisi os coxae’nin bir parçası değildir?",
+    "options": [
+      "Os ilium",
+      "Os ischii",
+      "Os pubis",
+      "Os sacrum",
+      "Os acetabulum"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 153,
+    "text": "Aşağıdakilerden hangisi pelvis duvarının bir parçası değildir?",
+    "options": [
+      "Os sacrum",
+      "Os ilium",
+      "M. obturator internus",
+      "M. piriformis",
+      "Os coccygis"
+    ],
+    "correctAnswer": "C",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 154,
+    "text": "Aşağıdaki kaslardan hangisi trochanter major’a yapışır?",
+    "options": [
+      "M. gluteus minimus",
+      "M. iliopsoas",
+      "M. tensor fasciae latae",
+      "M. rectus femoris",
+      "M. adductor magnus"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 155,
+    "text": "Aşağıdaki kaslardan hangisi uyluğun fleksiyonuna yardım eder?",
+    "options": [
+      "M. gluteus medius",
+      "M. gluteus maximus",
+      "M. biceps femoris (caput longum)",
+      "M. iliopsoas",
+      "M. semimembranosus"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 156,
+    "text": "Aşağıdakilerden hangisi uyluk ön bölge kasları arasında yer almaz?",
+    "options": [
+      "M. sartorius",
+      "M. quadriceps femoris",
+      "M. iliopsoas",
+      "M. tensor fasciae latae",
+      "M. gracilis"
+    ],
+    "correctAnswer": "C",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 157,
+    "text": "Aşağıdaki kaslardan hangisi pes anserinus’a katılmaz?",
+    "options": [
+      "M. sartorius",
+      "M. gracilis",
+      "M. semitendinosus",
+      "M. semimembranosus",
+      "M. biceps femoris"
+    ],
+    "correctAnswer": "E",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 158,
+    "text": "Aşağıdaki kaslardan hangisi uyluk arka grup kaslarından biridir?",
+    "options": [
+      "M. rectus femoris",
+      "M. sartorius",
+      "M. adductor magnus",
+      "M. vastus lateralis",
+      "M. semitendinosus"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 159,
+    "text": "Aşağıdakilerden hangisi crus (baldır) bölgesinin posterior bölgesinde yer alan kaslardan biri değildir?",
+    "options": [
+      "M. gastrocnemius",
+      "M. soleus",
+      "M. tibialis posterior",
+      "M. flexor hallucis longus",
+      "M. extensor digitorum longus"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 160,
+    "text": "Aşağıdaki kaslardan hangisi ayak tabanında yer almaz?",
+    "options": [
+      "M. flexor digitorum brevis",
+      "M. abductor hallucis",
+      "M. quadratus plantae",
+      "M. lumbricales",
+      "M. extensor digitorum brevis"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 161,
+    "text": "Aşağıdakilerden hangisi ayak bileği eklemine plantar fleksiyon yaptırır?",
+    "options": [
+      "M. tibialis anterior",
+      "M. extensor hallucis longus",
+      "M. peroneus longus",
+      "M. extensor digitorum longus",
+      "M. tibialis posterior"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 162,
+    "text": "Aşağıdaki yapılar ve anatomik ilişkilerinden hangisi yanlıştır?",
+    "options": [
+      "N. ischiadicus - Foramen infrapiriforme’den geçer",
+      "A. femoralis - Canalis adductorius’tan geçer",
+      "V. saphena magna - Hiatus saphenus’tan geçer",
+      "N. obturatorius - Canalis obturatorius’tan geçer",
+      "A. poplitea - Lig. inguinale’nin altından geçer"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 163,
+    "text": "Aşağıdaki yapılardan hangisi fossa poplitea’nın içinde yer alır?",
+    "options": [
+      "N. femoralis",
+      "A. tibialis anterior",
+      "V. saphena parva",
+      "M. gracilis",
+      "M. sartorius"
+    ],
+    "correctAnswer": "C",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 164,
+    "text": "Aşağıdaki yapılardan hangisi ayakta bulunan arcus plantaris profundus’un bir parçası değildir?",
+    "options": [
+      "A. plantaris lateralis",
+      "A. plantaris medialis",
+      "A. metatarsales plantares",
+      "Rami perforantes",
+      "A. digitalis plantares"
+    ],
+    "correctAnswer": "C",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 165,
+    "text": "Aşağıdaki yapılardan hangisi ayak sırtında bulunur?",
+    "options": [
+      "M. flexor digitorum brevis",
+      "M. quadratus plantae",
+      "M. abductor hallucis",
+      "M. extensor digitorum brevis",
+      "M. adductor hallucis"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 166,
+    "text": "Aşağıdaki sinirlerden hangisi ayakta sadece motor innervasyon sağlar?",
+    "options": [
+      "N. plantaris medialis",
+      "N. plantaris lateralis",
+      "N. suralis",
+      "N. saphenus",
+      "N. cutaneus dorsalis medialis"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 167,
+    "text": "Aşağıdakilerden hangisi ayakta arcus plantaris profundus’u oluşturan arterlerden biridir?",
+    "options": [
+      "A. tibialis posterior",
+      "A. tibialis anterior",
+      "A. dorsalis pedis",
+      "A. plantaris medialis",
+      "A. plantaris lateralis"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 168,
+    "text": "Aşağıdaki kaslardan hangisi parmakların fleksiyonuna yardımcı olur?",
+    "options": [
+      "M. extensor digitorum longus",
+      "M. tibialis posterior",
+      "M. peroneus brevis",
+      "M. flexor digitorum longus",
+      "M. extensor hallucis brevis"
+    ],
+    "correctAnswer": "C",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 169,
+    "text": "Aşağıdaki yapılardan hangisi ayakta dış longitudinal arkı destekler?",
+    "options": [
+      "Lig. plantare longum",
+      "Lig. calcaneonaviculare plantare",
+      "Lig. deltoideum",
+      "Lig. talofibulare anterius",
+      "Lig. collaterale mediale"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 170,
+    "text": "Aşağıdakilerden hangisi ayakta extensor digitorum brevis kasının siniriyle doğru eşleşmiştir?",
+    "options": [
+      "N. tibialis",
+      "N. peroneus superficialis",
+      "N. peroneus profundus",
+      "N. suralis",
+      "N. saphenus"
+    ],
+    "correctAnswer": "C",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 171,
+    "text": "Aşağıdaki yapılardan hangisi ayakta medial longitudinal arkın pasif desteğinde görev almaz?",
+    "options": [
+      "Lig. calcaneonaviculare plantare",
+      "Aponeurosis plantaris",
+      "Lig. plantare longum",
+      "Lig. talocalcaneum interosseum",
+      "Os naviculare"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 172,
+    "text": "Aşağıdaki kaslardan hangisi ayakta hallux’un abduksiyonuna katılır?",
+    "options": [
+      "M. abductor digiti minimi",
+      "M. flexor hallucis brevis",
+      "M. flexor digitorum brevis",
+      "M. adductor hallucis",
+      "M. abductor hallucis"
+    ],
+    "correctAnswer": "E",
+    "explanation": null,
+    "category": "Preklinik",
+    "difficulty": "medium"
   }
 ]
