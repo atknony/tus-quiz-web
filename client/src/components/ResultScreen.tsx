@@ -6,7 +6,6 @@ import {
   calculateFinalScore, 
   calculateAccuracyRate, 
   calculateAvgTimePerQuestion, 
-  getPenaltyTimeFormatted, 
   getDifficultyName 
 } from '@/lib/gameLogic';
 
@@ -20,7 +19,6 @@ export default function ResultScreen() {
   const finalScore = calculateFinalScore(state);
   const accuracyRate = calculateAccuracyRate(state);
   const avgTimePerQuestion = calculateAvgTimePerQuestion(state);
-  const penaltyTime = getPenaltyTimeFormatted(state);
   
   const saveScreenshot = async () => {
     if (!resultCardRef.current) return;
@@ -71,10 +69,7 @@ export default function ResultScreen() {
             <span className="font-bold font-mono">{formatTime(totalTime)}</span>
           </div>
           
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-600">Ceza Süresi:</span>
-            <span className="font-bold font-mono text-red-600">{penaltyTime}</span>
-          </div>
+          {/* Penalty time removed as requested */}
           
           <div className="border-t border-blue-200 mt-4 pt-4 flex justify-between items-center">
             <span className="text-gray-800 font-semibold">Son Skor:</span>

@@ -1,6 +1,5 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
-import { useGameState } from "@/hooks/useGameState";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
@@ -8,7 +7,7 @@ import WelcomeScreen from "@/components/WelcomeScreen";
 import GameScreen from "@/components/GameScreen";
 import FeedbackScreen from "@/components/FeedbackScreen";
 import ResultScreen from "@/components/ResultScreen";
-import { GameStateProvider } from "@/hooks/useGameState";
+import { useGameState, GameStateProvider } from "@/hooks/useGameState";
 
 function Router() {
   return (
