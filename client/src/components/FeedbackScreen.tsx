@@ -3,8 +3,8 @@ import { useGameState } from '@/hooks/useGameState';
 import { formatTime } from '@/lib/gameLogic';
 
 export default function FeedbackScreen() {
-  const { state, skipFeedback } = useGameState();
-  const { questions, currentQuestionIndex, selectedAnswer, feedbackTimeRemaining } = state;
+  const { state, skipFeedback, finishExam } = useGameState();
+  const { questions, currentQuestionIndex, selectedAnswer, feedbackTimeRemaining, gameOver } = state;
   
   const currentQuestion = questions[currentQuestionIndex];
   const isCorrect = selectedAnswer === currentQuestion?.correctAnswer;
@@ -85,14 +85,23 @@ export default function FeedbackScreen() {
         </div>
       )}
       
-      {/* Skip Button */}
+      {/* Action Buttons */}
       <div className="p-4 flex justify-center border-t">
-        <button
-          onClick={() => skipFeedback()}
-          className="py-2 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
-        >
-          Geç
-        </button>
+        {gameOver ? (
+          <button
+            onClick={() => finishExam()}
+            className="py-2 px-6 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors"
+          >
+            Sınavı Bitir
+          </button>
+        ) : (
+          <button
+            onClick={() => skipFeedback()}
+            className="py-2 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+          >
+            Geç
+          </button>
+        )}
       </div>
     </div>
   );

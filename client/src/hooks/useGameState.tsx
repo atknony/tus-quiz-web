@@ -169,11 +169,12 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       const newFeedbackTime = state.feedbackTimeRemaining - action.payload;
       
       if (newFeedbackTime <= 0) {
+        // When game is over, we don't automatically navigate away 
+        // User must click "Sınavı Bitir" button to see results
         if (state.gameOver) {
           return {
             ...state,
-            currentScreen: 'result',
-            feedbackTimeRemaining: 0
+            feedbackTimeRemaining: 0 // Just keep the timer at 0
           };
         }
         
