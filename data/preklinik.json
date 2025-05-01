@@ -46,7 +46,7 @@
   },
   {
     "id": 5,
-    "text": "Arteria labyrinthi ile ilgili aşağıdaki ifadelerden hangileri doğrudur?",
+    "text": "I. Arteria cerebelli superior’un dalıdır,II. 8. kafa çifti ile birlikte meatus acusticusinternus’tan geçer,III. Auris interna’yı kanlandırır,IV. Beyin tabanında 7. kafa çifti ile komşuluğu    vardır. Arteria labyrinthi ile ilgili aşağıdaki ifadelerden hangileri doğrudur?",
     "options": [
       "I ve III",
       "I, II ve III",
@@ -415,7 +415,7 @@
   },
   {
     "id": 32,
-    "text": "Yukarıdaki kan parametrelerinden hangilerinin normal değer aralığı cinsiyete göre değişiklik göstermez?\nI. Eritrosit sayısı\nII. Trombosit sayısı\nIII. Hematokrit değeri\nIV. Hemoglobin değeri",
+    "text": "I. Eritrosit sayısı,II. Trombosit sayısı,III. Hematokrit değeri,IV. Hemoglobin değeri.Yukarıdaki kan parametrelerinden hangilerinin normal değer aralığı cinsiyete göre değişiklik göstermez?",
     "options": [
       "Yalnız II",
       "Yalnız III",
@@ -580,7 +580,7 @@
   },
   {
     "id": 46,
-    "text": "\"Lipid raft\" ile ilgili yukarıdaki ifadelerden hangileri doğrudur?\nI. Plazma membranının dış tabakasında yer alır.\nII. Yapısında kolesterol, sfingomiyelin ve glikosfingolipidler bulunur.\nIII. Glikozilfosfatidilinositol bağlı proteinleri içermez.\nIV. Sinyal iletiminde rol oynar.",
+    "text": "I. Plazma membranının dış tabakasında yer alır, II. Yapısında kolesterol, sfingomiyelin ve glikosfingolipidler bulunur, III. Glikozilfosfatidilinositol bağlı proteinleri içermez, IV. Sinyal iletiminde rol oynar.\"Lipid raft\" ile ilgili yukarıdaki ifadelerden hangileri doğrudur?",
     "options": [
       "Yalnız III",
       "I ve II",
@@ -610,7 +610,7 @@
   },
   {
     "id": 48,
-    "text": "Yukarıdaki hormonların karbon atomlarının sayısı dikkate alındığında, büyükten küçüğe doğru sıralama nasıl olmalıdır?\nI. Progesteron\nII. Testosteron\nIII. Östradiol",
+    "text": "I. Progesteron, II. Testosteron, III. Östradiol. Yukarıdaki hormonların karbon atomlarının sayısı dikkate alındığında, büyükten küçüğe doğru sıralama nasıl olmalıdır?",
     "options": [
       "I - II - III",
       "II - I - III",
@@ -738,21 +738,6 @@
     "difficulty": "medium"
   },
   {
-    "id": 57,
-    "text": "Bu iki antibiyotiğin kombine kullanımı ile elde edilen; A, B ve C ile gösterilen sonuçlarla ilgili aşağıdaki açıklamalardan hangisi doğrudur?",
-    "options": [
-      "Etkisiz - Antagonistik - Sinerjik",
-      "Etkisiz - Sinerjik - Antagonistik",
-      "Antagonistik - Sinerjik - Etkisiz",
-      "Antagonistik - Etkisiz - Sinerjik",
-      "Sinerjik - Etkisiz - Antagonistik"
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Klinik",
-    "difficulty": "medium"
-  },
-  {
     "id": 58,
     "text": "VDRL testi ile ilgili aşağıdaki ifadelerden hangisi doğrudur?",
     "options": [
@@ -784,7 +769,7 @@
   },
   {
     "id": 60,
-    "text": "Yukarıdaki bakterilerden hangileri enfeksiyon bölgesinde yalancı zar oluşturabilir?",
+    "text": "I. Corynebacterium diphtheriae, II. Bacillus anthracis, III. Clostridioides difficile, IV. Bordetella pertussis. Yukarıdaki bakterilerden hangileri enfeksiyon bölgesinde yalancı zar oluşturabilir?",
     "options": [
       "I ve IV",
       "I ve III",
@@ -814,7 +799,7 @@
   },
   {
     "id": 62,
-    "text": "Bu tabloya yol açması en olası bakteri aşağıdakilerden hangisidir?",
+    "text": "Daha önce geçirdiği çeşitli enfeksiyonlar nedeniyle antibiyotik tedavileri aldığı öğrenilen 65 yaşındaki kadın hasta, yüksek ateş ve titreme yakınmalarıyla hastaneye yatırılıyor. Hastadan alınan kan kültüründen oksidaz negatif, DNaz pozitif, non-fermenter bir gram negatif basil izole ediliyor. İn vitro duyarlılık testinde etken bakterinin sefalosporinlere, karbapenemlere, aminoglikozitlere ve florokinolonlara dirençli, trimetoprim-sulfametoksazole yüksek tedavi dozunda duyarlı olduğu tespit ediliyor. Bu tabloya yol açması en olası bakteri aşağıdakilerden hangisidir?",
     "options": [
       "Burkholderia cepacia kompleks",
       "Stenotrophomonas maltophilia",
@@ -859,7 +844,7 @@
   },
   {
     "id": 65,
-    "text": "Kronik hepatit C virus enfeksiyonu tanısı almış bir hastada tedavi protokolünü ve süresini belirlemek için, yukarıdaki tetkiklerden hangilerinin birlikte istenmesi en uygundur?",
+    "text": "I. Serotip tayini, II. Genotip tayini, III. Viral yük tayini, IV. Antikor titresi tayini. Kronik hepatit C virus enfeksiyonu tanısı almış bir hastada tedavi protokolünü ve süresini belirlemek için, yukarıdaki tetkiklerden hangilerinin birlikte istenmesi en uygundur?",
     "options": ["I ve III", "II ve III", "I ve II", "II ve IV", "III ve IV"],
     "correctAnswer": "B",
     "explanation": null,
@@ -907,7 +892,7 @@
   },
   {
     "id": 69,
-    "text": "Bu hastada biyopsi örneğinden yapılan kültürde üremesi en olası etken aşağıdakilerden hangisidir?",
+    "text": "Tek bacakta, çok yavaş ilerlemiş olduğu belirtilen, verrüköz, karnabahar benzeri görünümde lezyonlar nedeniyle başvuran hastadan alınan biyopsinin mikroskopik incelemesinde, koyu kahverengi renkli, tomurcuklanma göstermeyen, büyük, kalın duvarlı, enine ve boyuna septumlu, yuvarlak, muriform hücreler görülüyor. Bu hastada biyopsi örneğinden yapılan kültürde üremesi en olası etken aşağıdakilerden hangisidir?",
     "options": [
       "Candida albicans",
       "Aspergillus flavus",
@@ -1045,7 +1030,7 @@
   },
   {
     "id": 79,
-    "text": "Arteriyel trombüsler ile ilgili yukarıdaki ifadelerden hangileri doğrudur?",
+    "text": "I. Zahn çizgileri içerir, II. Sıklıkla oklüziv özelliktedir, III. En sık femoral arterlerde görülür. Arteriyel trombüsler ile ilgili yukarıdaki ifadelerden hangileri doğrudur?",
     "options": [
       "Yalnız I",
       "Yalnız II",
@@ -1075,7 +1060,7 @@
   },
   {
     "id": 81,
-    "text": "Bu lezyonlarda aşağıdaki hücrelerden hangisinin varlığı en az olasıdır?",
+    "text": "Miyokard enfarktüsü geçiren bir hastanın sol anterior desendan ve sol sirkumfleks koroner arterlerinin intimal yüzeyinde; damar lümenini daraltan, sarı-beyaz renkli, yer yer kanamalı kabarık lezyonlar saptanıyor.Bu lezyonlarda aşağıdaki hücrelerden hangisinin varlığı en az olasıdır?",
     "options": [
       "Lenfosit",
       "Makrofaj",
@@ -1090,7 +1075,7 @@
   },
   {
     "id": 82,
-    "text": "Biyopsi incelemesinde aşağıdakilerden hangisinin saptanması en az olasıdır?",
+    "text": "Altmış yedi yaşındaki erkek hasta; giderek artan nefes darlığı, merdiven çıkamama, arada bir gelen kuru öksürük şikâyetleriyle başvuruyor. Siyanotik görünümde olan ve parmaklarında çomaklaşma izlenen hastanın bilgisayarlı tomografisinde; her iki akciğerde özellikle alt lob subplevral alanda retiküler opasite alanları ile traksiyon bronşiektazi görülüyor. Hastaya tanı amaçlı açık akciğer biyopsisi yapılıyor.Biyopsi incelemesinde aşağıdakilerden hangisinin saptanması en az olasıdır?",
     "options": [
       "Parankim kaybı",
       "Granülom oluşumu",
@@ -1135,7 +1120,7 @@
   },
   {
     "id": 85,
-    "text": "Bu olgu için en olası histolojik tanı aşağıdakilerden hangisidir?",
+    "text": "Vajinal kanama şikâyetiyle başvuran 45 yaşındaki hastanın ultrasonografisinde plasentada “kar fırtınası paterni” görülüyor, fetus saptanmıyor. Küretaj materyalinin histolojik incelemesinde, ileri derecede genişlemiş ve hidropik özellikte koryonik villuslar ve bu villusların bir kısmını çepeçevre saran, hafif hücresel atipili trofoblastik hücre proliferasyonu tespit ediliyor. Miyometriyal invazyon görülmüyor.Bu olgu için en olası histolojik tanı aşağıdakilerden hangisidir?",
     "options": [
       "Koryokarsinom",
       "Mol hidatiform",
@@ -1150,7 +1135,7 @@
   },
   {
     "id": 86,
-    "text": "İnvaziv meme kanserlerinin histolojik derecelendirilmesinde kullanılan Nottingham Histolojik Skor Sisteminde yukarıdakilerden hangileri dikkate alınır?",
+    "text": "I. Nükleer pleomorfizm, II. Tübül formasyonu, III. Hücre polarizasyonu. İnvaziv meme kanserlerinin histolojik derecelendirilmesinde kullanılan Nottingham Histolojik Skor Sisteminde yukarıdakilerden hangileri dikkate alınır?",
     "options": [
       "Yalnız I",
       "Yalnız II",
@@ -1165,7 +1150,7 @@
   },
   {
     "id": 87,
-    "text": "Bu lezyon için en olası tanı aşağıdakilerden hangisidir?",
+    "text": "Üç yıldır hipertansiyon nedeniyle tedavi edilen ve bilgisayarlı tomografi incelemesinde sağ adrenal yerleşimli kitle saptanarak opere edilen 47 yaşındaki kadın hastanın adrenalektomi materyalinde; 1,5 cm çapında, iyi sınırlı, sarı renkli bir kitle tespit ediliyor. Kitlenin mikroskopik incelemesinde; kitle içinde kordonlar ve trabeküller oluşturan, intrasitoplazmik yağ içeren ve berrak sitoplazmalı uniform kortikal hücreler izleniyor. İntrasitoplazmik eozinofilik laminer cisimcikler dikkati çekiyor. Kitle dışı adrenal dokuda bir anormallik görülmüyor.Bu lezyon için en olası tanı aşağıdakilerden hangisidir?",
     "options": [
       "Adrenal korteks karsinomu",
       "Aldosteron salgılayan adenom",
@@ -1180,7 +1165,7 @@
   },
   {
     "id": 88,
-    "text": "Bu hasta için en olası tanı aşağıdakilerden hangisidir?",
+    "text": "Elli iki yaşındaki kadın hasta, gövde ve ağız içine yerleşen içi su dolu kabarcıklar ve bunların patlamasıyla ortaya çıkan ağrılı yaralar nedeniyle başvuruyor. Dermatolojik muayenede gövde ve ekstremitelere yerleşen büller ve erozyonlar ile damak ve bukkal mukozada erozyonlar tespit ediliyor. Deri biyopsisinde, epidermiste suprabazal akantolitik bül ve direkt immünofloresan incelemede tüm epidermisi kapsayacak şekilde interselüler IgG birikimi görülüyor.Bu hasta için en olası tanı aşağıdakilerden hangisidir?",
     "options": [
       "Pemfigus vulgaris",
       "Büllöz pemfigoid",
@@ -1210,7 +1195,7 @@
   },
   {
     "id": 90,
-    "text": "Bu lezyonların mikroskopik incelemesinde aşağıdaki bulgulardan hangisinin saptanması en olasıdır?",
+    "text": "Özgeçmişinde 40 yıldır süregelen görme kaybı ve değişken paralizi atakları olan 63 yaşındaki kadın, trafik kazasında eksitus oluyor. Otopsi incelemesinde, beyinde periventriküler beyaz cevherde ve medulla spinalis beyaz cevherinde bir kısmı sklerotik, bir kısmı gri renkte çok sayıda düzensiz şekilli plak saptanıyor. Bu lezyonların mikroskopik incelemesinde aşağıdaki bulgulardan hangisinin saptanması en olasıdır?",
     "options": [
       "Miyelin kaybı",
       "Kapiller damar duvarlarında amiloid birikimi",
@@ -1225,7 +1210,7 @@
   },
   {
     "id": 91,
-    "text": "Bu hastanın mevcut klinik durumunu açıklayan en olası patolojik süreç aşağıdakilerden hangisidir?",
+    "text": "Yirmi beş yaşındaki erkek hasta; ani başlangıçlı şiddetli baş ağrısı, baş dönmesi, bulantı, kusma ve bulanık görme ile acil servise başvuruyor. Hastanın anamnezinden akut promiyelositik lösemi tedavisi altında olduğu öğreniliyor. Bu hastanın mevcut klinik durumunu açıklayan en olası patolojik süreç aşağıdakilerden hangisidir?",
     "options": [
       "Niasin toksisitesi",
       "A vitamini toksisitesi",
@@ -1270,7 +1255,7 @@
   },
   {
     "id": 94,
-    "text": "Kanserin yayılım yolları ile ilgili yukarıdaki eşleştirmelerden hangileri doğrudur?",
+    "text": "I. Vücut boşluklarına direkt implantasyon – Over kanseri, II. Lenfatikler yoluyla yayılım – Meme kanseri, III. Hematojen yol ile yayılım – Beyin tümörü. Kanserin yayılım yolları ile ilgili yukarıdaki eşleştirmelerden hangileri doğrudur?",
     "options": [
       "Yalnız I",
       "Yalnız II",
@@ -1285,7 +1270,7 @@
   },
   {
     "id": 95,
-    "text": "Bu hasta için en olası tanı aşağıdakilerden hangisidir?",
+    "text": "On sekiz yaşındaki kadın hasta solunum sıkıntısı, öksürük ve gece terlemesi şikâyetleriyle başvuruyor. Radyolojik incelemede mediasteni genişleten bir kitle tespit ediliyor. Kitleden alınan kor biyopsinin incelemesinde matür lenfositler, histiyositler, eozinofiller ve plazma hücrelerinden oluşan polimorfik zemin içinde multinükleer veya multilobüler nükleuslu atipik hücreler izleniyor. İmmünhistokimyasal çalışmalarda atipik hücrelerin CD3 ve CD20 ile negatif; Pax5, CD15 ve CD30 ile pozitif boyanma gösterdiği saptanıyor. Bu hasta için en olası tanı aşağıdakilerden hangisidir?",
     "options": [
       "Nodüler sklerozan Hodgkin lenfoma",
       "Lenfoblastik lenfoma",
@@ -1324,7 +1309,7 @@
   },
   {
     "id": 98,
-    "text": "Bu olgunun klinikopatolojik ayırıcı tanısında ön planda düşünülmesi gereken hastalık aşağıdakilerden hangisidir?",
+    "text": "Portal hipertansiyona ikincil semptomlar ile getirilen 14 yaşındaki erkek çocuğun karaciğer biyopsisinde, parankimi düzensiz bir şekilde bölen kalın kollajenöz septalarla genişlemiş portal alanlar ve kenarında safra yollarıyla devamlılık gösteren anormal şekilli safra kanalları izleniyor. Bu olgunun klinikopatolojik ayırıcı tanısında ön planda düşünülmesi gereken hastalık aşağıdakilerden hangisidir?",
     "options": [
       "Wilson hastalığı",
       "Caroli hastalığı",
@@ -1378,286 +1363,268 @@
   },
   {
     "id": 102,
-    "text": "Dopamin agonisti etkisi ile hiperprolaktinemiyi tedavi etmek için aşağıdaki ilaçlardan hangisi kullanılır?",
+    "text": "Aşağıdakilerden hangisinin hem sempatik sistem aktive olduğunda hem de intravenöz yoldan noradrenalin verildiğinde ortaya çıkması en olasıdır?",
     "options": [
-      "Alprostadil",
-      "Minoksidil",
-      "Sildenafil",
-      "Bromokriptin",
-      "Kabergolin"
+      "El ve ayaklarda terlemede azalma",
+      "Refleks taşikardi",
+      "Vagal tonusta azalma",
+      "Miyozis",
+      "Sistolik arter basıncı artışı"
     ],
     "correctAnswer": "E",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 103,
-    "text": "Antihipertansif etkili olmasına karşın hiperglisemi, hiperlipidemi gibi metabolik yan etkileri nedeniyle tercih edilmeyen ilaç grubu aşağıdakilerden hangisidir?",
-    "options": [
-      "ACE inhibitörleri",
-      "Beta blokerler",
-      "Kalsiyum kanal blokerleri",
-      "Alfa-1 blokerler",
-      "AT1 reseptör blokörleri"
-    ],
+    "text": "I. Timolol\nII. Fizostigmin\nIII. Diklofenamid\n\nYukarıdakilerden hangileri kronik açık açılı glokom tedavisinde göz damlası şeklinde kullanılabilir?",
+    "options": ["II ve III", "I ve II", "I ve III", "Yalnız II", "Yalnız III"],
     "correctAnswer": "B",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 104,
-    "text": "H1 reseptör antagonisti olan aşağıdaki ilaçlardan hangisi ‘ikinci kuşak’ antihistaminiktir?",
+    "text": "Geri dönüşümsüz görme kaybı yaptığı için, sadece tedaviye dirençli hastalarda kullanılması uygun görülen antiepileptik ilaç aşağıdakilerden hangisidir?",
     "options": [
-      "Loratadin",
-      "Klorfeniramin",
-      "Hidroksizin",
-      "Difenhidramin",
-      "Dimenhidrinat"
+      "Vigabatrin",
+      "Gabapentin",
+      "Levetirasetam",
+      "Topiramat",
+      "Perampanel"
     ],
     "correctAnswer": "A",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 105,
-    "text": "Triptan grubu ilaçlar migren tedavisinde aşağıdaki hangi reseptörleri aktive ederek etki gösterir?",
-    "options": ["5-HT1A", "5-HT2A", "5-HT1B/1D", "5-HT2C", "5-HT3"],
+    "text": "Anestezi uygulanması planlanan Parkinson hastalarında aşağıdakilerden hangisi kullanılmamalıdır?",
+    "options": [
+      "Difenhidramin",
+      "Atrakurium",
+      "Droperidol",
+      "Propofol",
+      "Atropin"
+    ],
     "correctAnswer": "C",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 106,
-    "text": "Dihidrofolat redüktaz inhibitörlerinden biri olan metotreksatın antidotu aşağıdakilerden hangisidir?",
+    "text": "Merkezi sinir sistemi stimulanı olan metilfenidatın aşağıdaki yan etkilerden hangisine yol açması en az olasıdır?",
     "options": [
-      "Piridoksin",
-      "Lökoverin",
-      "Deferoksamin",
-      "Flumazenil",
-      "Mesna"
+      "İrritabilite",
+      "İştah artışı",
+      "Baş ağrısı",
+      "Çarpıntı",
+      "Uykusuzluk"
     ],
     "correctAnswer": "B",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 107,
-    "text": "Trastuzumab aşağıdaki hangi malignitenin tedavisinde kullanılmaktadır?",
+    "text": "Aşağıdakilerden hangisi migrenin profilaktik tedavisinde kullanılan ilaçlardan değildir?",
     "options": [
-      "Kolon kanseri",
-      "Meme kanseri",
-      "Melanom",
-      "Akciğer küçük hücreli dışı kanser",
-      "Pankreas kanseri"
+      "Propranolol",
+      "Felbamat",
+      "Topiramat",
+      "Verapamil",
+      "Valproik asit"
     ],
     "correctAnswer": "B",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 108,
-    "text": "Glukokortikoid ilaçların, uzun süreli kullanımında ortaya çıkabilecek advers etkiler arasında aşağıdakilerden hangisi yer almaz?",
+    "text": "Aşağıdaki antirromatizmal ilaçlardan hangisinin kullanımı sırasında hasta retinal toksisite açısından takip edilmelidir?",
     "options": [
-      "Osteoporoz",
-      "Hiperglisemi",
-      "Cushingoid görünüm",
-      "Hipotansiyon",
-      "İmmünsupresyon"
+      "Metotreksat",
+      "Leflunomid",
+      "Sülfasalazin",
+      "Hidroksiklorokin",
+      "Azatioprin"
     ],
     "correctAnswer": "D",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 109,
-    "text": "Varfarin kullanımı sırasında INR’nin hedeflenen terapötik aralığın üzerine çıkması durumunda ilk olarak aşağıdakilerden hangisi yapılmalıdır?",
+    "text": "Aşağıdaki ilaçlardan hangisi kronik tromboembolik pulmoner hipertansiyon ve pulmoner arteryel hipertansiyon tedavisinde kullanılan çözünebilir guanilil siklaz aktivatörüdür?",
     "options": [
-      "INR takibi kesilir",
-      "Varfarin dozu azaltılır veya geçici olarak kesilir",
-      "Vitamin K uygulanır",
-      "Taze donmuş plazma verilir",
-      "Protamin sülfat uygulanır"
+      "Prostasilin",
+      "Riosigvat",
+      "Nesiritid",
+      "Ambrisentan",
+      "Aliskiren"
     ],
     "correctAnswer": "B",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 110,
-    "text": "Amiodaronun neden olabileceği en ciddi pulmoner toksisite aşağıdakilerden hangisidir?",
-    "options": [
-      "Bronşiyolit obliterans",
-      "Astım benzeri tablo",
-      "Organize pnömoni",
-      "Plevral effüzyon",
-      "İnterstisyel akciğer hastalığı"
-    ],
+    "text": "Brugada sendromu tanısı konmuş bir hastada 24 saat içerisinde dört kez ventriküler taşikardi atağı gözleniyor.\n\nBu hastanın tedavisi için en uygun antiaritmik ilaç aşağıdakilerden hangisidir?",
+    "options": ["Lidokain", "Verapamil", "Flekainid", "Propafenon", "Kinidin"],
     "correctAnswer": "E",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 111,
-    "text": "Siyanür zehirlenmesinde antidot olarak kullanılan ilaç aşağıdakilerden hangisidir?",
-    "options": [
-      "Dimercaprol",
-      "Hidroksikobalamin",
-      "Deferoksamin",
-      "Atropin",
-      "Pralidoksim"
-    ],
+    "text": "Fraksiyone olmayan heparine bağlı gelişen toksisitede 200 U heparini nötralize etmek için kaç miligram protamin sülfat kullanılmalıdır?",
+    "options": ["1", "2", "5", "10", "20"],
     "correctAnswer": "B",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 112,
-    "text": "Torasemid kullanımı ile ilgili aşağıdaki ifadelerden hangisi doğrudur?",
+    "text": "Aşağıdaki tetrasiklinlerden hangisinin eliminasyon yarılanma ömrü diğerlerine göre daha uzundur?",
     "options": [
-      "Na/K/2Cl ko-transporter inhibitörüdür",
-      "Distal tübülde etkilidir",
-      "K-sparing diüretiktir",
-      "Loop diüretiktir",
-      "Karbonik anhidraz inhibitörüdür"
+      "Tetrasiklin",
+      "Oksitetrasiklin",
+      "Klortetrasiklin",
+      "Demecloksiklin",
+      "Doksisiklin"
     ],
     "correctAnswer": "D",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 113,
-    "text": "Griseofulvinin antifungal etkisini gösterebilmesi için aşağıdaki hangisinin olması zorunludur?",
+    "text": "Aşağıdaki sefalosporin grubu antibiyotiklerden hangisi metisiline dirençli Staphylococcus aureus enfeksiyonlarının tedavisinde kullanılabilir?",
     "options": [
-      "Yeni keratin sentezi",
-      "Lamellar cisimcik sentezi",
-      "Desmosomal yapıların yıkımı",
-      "Melanosom sentezi",
-      "Stratum corneum kalınlaşması"
+      "Sefalorin",
+      "Sefepim",
+      "Seftriakson",
+      "Sefoperazon",
+      "Seftarolin"
     ],
     "correctAnswer": "A",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 114,
-    "text": "Zidovudin tedavisine bağlı en sık görülen yan etki aşağıdakilerden hangisidir?",
+    "text": "Dışkısında Strongyloides stercoralis larvaları saptanmış bir hastanın tedavisi için en uygun seçenek aşağıdakilerden hangisidir?",
     "options": [
-      "Nöropati",
-      "Anemi",
-      "Hepatotoksisite",
-      "Nefrotoksisite",
-      "Pankreatit"
+      "Spiramisin",
+      "İvermektin",
+      "Metronidazol",
+      "Delatmetrin",
+      "Pirimetamin"
     ],
     "correctAnswer": "B",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 115,
-    "text": "Psödomembranöz kolit tedavisinde kullanılan ve oral biyoyararlanımı düşük olan ilaç aşağıdakilerden hangisidir?",
+    "text": "“Immune checkpoint” inhibitörü olan ipilimumab ile ilgili aşağıdaki ifadelerden hangisi doğrudur?",
     "options": [
-      "Vankomisin",
-      "Amoksisilin",
-      "Klaritromisin",
-      "Azitromisin",
-      "Siprofloksasin"
+      "T hücresindeki CTLA-4’e bağlanıp inhibe ederek etki gösterir.",
+      "T hücresindeki PD-1’e bağlanıp inhibe ederek etki gösterir.",
+      "T hücresindeki PD-L1’e bağlanıp aktive ederek etki gösterir.",
+      "T hücresindeki CTLA-4’e bağlanıp aktive ederek etki gösterir.",
+      "T hücresindeki PD-1’e bağlanıp aktive ederek etki gösterir."
     ],
     "correctAnswer": "A",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 116,
-    "text": "Tirotoksik kriz tedavisinde aşağıdaki ilaçlardan hangisi öncelikle kullanılır?",
+    "text": "Öncelikle hepatik glukoneogenezi inhibe ederek hepatik glukoz çıkışını azaltma etkisine sahip oral antidiyabetik ilaç aşağıdakilerden hangisidir?",
     "options": [
-      "Propiltiyourasil",
-      "Metimazol",
-      "Levotiroksin",
-      "Propranolol",
-      "İyot"
+      "Metformin",
+      "Empagliflozin",
+      "Akarboz",
+      "Repaglinid",
+      "Glimepirid"
     ],
     "correctAnswer": "A",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 117,
-    "text": "Gebelikte kullanılan aşağıdaki antikoagülanlardan hangisi teratojenik risk taşımaz?",
+    "text": "Akromegali tedavisinde kullanılan ancak hipofizde mevcut olan adenomun büyümesine sebep olabilen ajan aşağıdakilerden hangisidir?",
     "options": [
-      "Varfarin",
-      "Rivaroksaban",
-      "Enoksaparin",
-      "Dabigatran",
-      "Apiksaban"
+      "Lanreotid",
+      "Oktreotid",
+      "Pegvisomant",
+      "Pasireotid",
+      "Kabergolin"
     ],
     "correctAnswer": "C",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 118,
-    "text": "Aşağıdaki ilaçlardan hangisinin temel kullanım amacı, portal hipertansiyona bağlı özofagus varis kanamalarının önlenmesidir?",
+    "text": "Yüksek dozda sülfonilüre grubu bir ilaç alan hastada aşağıdaki bulgu çiftlerinden hangisinin görülmesi en az olasıdır?",
     "options": [
-      "İzoproterenol",
-      "Dobutamin",
-      "Adenozin",
-      "Propranolol",
-      "Dopamin"
+      "Taşikardi ve hipertansiyon",
+      "Diyare ve nöbet",
+      "Hipoglisemi ve bilinç bulanıklığı",
+      "Midriyazis ve üriner retansiyon",
+      "Mental durum değişikliği ve terleme"
     ],
     "correctAnswer": "D",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 119,
-    "text": "Sistemik lupus eritematozus (SLE) hastalarının tedavisinde kullanılan ve retina toksisitesi riski olan ilaç aşağıdakilerden hangisidir?",
+    "text": "Aşağıdaki diüretik ilaçlardan hangisinin akciğer ödemine neden olması en olasıdır?",
     "options": [
-      "Siklosporin",
-      "Hidroksiklorokin",
-      "Azatioprin",
-      "Metotreksat",
-      "Siklofosfamid"
+      "Furosemid",
+      "Mannitol",
+      "Hidroklorotiazid",
+      "Asetazolamid",
+      "Spironolakton"
     ],
     "correctAnswer": "B",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 120,
-    "text": "Aşağıdaki ilaçlardan hangisi anjiyoödem gelişimini tetikleyebilir?",
-    "options": [
-      "Kalsiyum kanal blokerleri",
-      "Beta blokerler",
-      "Tiyazid diüretikler",
-      "ACE inhibitörleri",
-      "AT1 reseptör blokörleri"
-    ],
+    "text": "Akne vulgaris nedeniyle oral izotretinoin tedavisi alan bir kadın hastaya, ilacın kesilmesinden sonra en az ne kadar süreyle etkili bir yöntemle doğum kontrolü önerilir?",
+    "options": ["1 yıl", "2 yıl", "6 ay", "1 ay", "1 hafta"],
     "correctAnswer": "D",
     "explanation": null,
-    "category": "Klinik",
+    "category": "Preklinik",
     "difficulty": "medium"
   },
   {
     "id": 121,
-    "text": "Bu hastada yaralanmış olması en olası anatomik yapı aşağıdakilerden hangisidir?",
+    "text": "Ağaçtan düşme sonrası, ayağında ağrı ve şişme şikâyetleri nedeniyle acil polikliniğe başvuran hastanın fizik muayenesinde ayak tabanında yaygın ağrısı olduğu ve ayak medial kemerinde çökme olduğu anlaşılıyor. Hastanın lateral ayak bileği grafisinde caput tali’nin inferiora doğru disloke olduğu görülüyor.Bu hastada yaralanmış olması en olası anatomik yapı aşağıdakilerden hangisidir?",
     "options": [
       "Aponeurosis plantaris",
       "Ligamentum calcaneonaviculare plantare",
@@ -1687,7 +1654,7 @@
   },
   {
     "id": 123,
-    "text": "Bu hastada, plexus brachialis bloğu esnasında aşağıdaki sinirlerden hangisinin yaralanmış olması en olasıdır?",
+    "text": "Plexus brachialis bloğu yapılan 68 yaşındaki kadın hastada, işlem sonrasında scapula alata gelişiyor. Fizik muayenede istirahat hâlindeyken scapula’nın eleve ve hafif medial rotasyonda olduğu görülüyor.Bu hastada, plexus brachialis bloğu esnasında aşağıdaki sinirlerden hangisinin yaralanmış olması en olasıdır?",
     "options": [
       "Nervus accessorius",
       "Nervus dorsalis scapulae",
@@ -1702,729 +1669,9 @@
   },
   {
     "id": 124,
-    "text": "Anatomik duruştaki erişkin bir kişide angulus inferior aşağıdaki vertebral düzeylerden hangisindedir?",
+    "text": "Scapula’nın angulus inferior’u fizik muayenede yüzeyel anatomik işaret noktası olarak sıklıkla kullanılır. Anatomik duruştaki erişkin bir kişide angulus inferior aşağıdaki vertebral düzeylerden hangisindedir?",
     "options": ["T3", "T5", "T7", "T9", "T11"],
     "correctAnswer": "C",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 125,
-    "text": "Aşağıdakilerden hangisi articulatio sternoclavicularis ekleminin özelliklerinden biridir?",
-    "options": [
-      "Fibrokartilaj kapsül içeren bir eklemdir.",
-      "Sferoid tipi sinovyal eklemdir.",
-      "Hareketsiz bir eklemdir.",
-      "İki eklem yüzü içerir.",
-      "Diskus articularis içerir."
-    ],
-    "correctAnswer": "E",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 126,
-    "text": "Aşağıdakilerden hangisi articulatio radiocarpalis’in (el bileği eklemi) bir eklem yüzünü oluşturur?",
-    "options": [
-      "Os scaphoideum",
-      "Os pisiforme",
-      "Os trapezium",
-      "Os capitatum",
-      "Os hamatum"
-    ],
-    "correctAnswer": "B",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 127,
-    "text": "Aşağıdaki kaslardan hangisi ön kolun anterior yüzeyinde bulunur?",
-    "options": [
-      "M. anconeus",
-      "M. brachialis",
-      "M. supinator",
-      "M. brachioradialis",
-      "M. extensor carpi radialis longus"
-    ],
-    "correctAnswer": "E",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 128,
-    "text": "Aşağıdaki kaslardan hangisi el bileği eklemini fleksiyon hareketine katkı sağlar?",
-    "options": [
-      "M. extensor carpi ulnaris",
-      "M. flexor carpi radialis",
-      "M. extensor carpi radialis brevis",
-      "M. brachioradialis",
-      "M. extensor digitorum"
-    ],
-    "correctAnswer": "B",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 129,
-    "text": "Aşağıdaki kaslardan hangisi humerusun büyük tüberkülüne yapışır?",
-    "options": [
-      "M. subscapularis",
-      "M. teres major",
-      "M. supraspinatus",
-      "M. coracobrachialis",
-      "M. latissimus dorsi"
-    ],
-    "correctAnswer": "C",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 130,
-    "text": "Aşağıdaki kaslardan hangisi scapula elevasyonundan sorumludur?",
-    "options": [
-      "M. pectoralis minor",
-      "M. trapezius (üst lifler)",
-      "M. serratus anterior",
-      "M. pectoralis major",
-      "M. latissimus dorsi"
-    ],
-    "correctAnswer": "B",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 131,
-    "text": "Aşağıdakilerden hangisi articularis cubiti'nin (dirsek eklemi) eklem yüzlerinden biri değildir?",
-    "options": [
-      "Capitulum humeri",
-      "Trochlea humeri",
-      "Incisura trochlearis",
-      "Caput ulnae",
-      "Fovea articularis radii"
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 132,
-    "text": "Aşağıdaki kaslardan hangisi humerusu iç rotasyona (medial rotasyon) getirir?",
-    "options": [
-      "M. supraspinatus",
-      "M. infraspinatus",
-      "M. subscapularis",
-      "M. teres minor",
-      "M. teres major"
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 133,
-    "text": "Aşağıdaki yapılardan hangisi articulatio humeroulnaris eklemi için doğrudur?",
-    "options": [
-      "Articulatio spheroidea tipi eklemdir.",
-      "Flexion-extension hareketine izin verir.",
-      "Sadece fleksiyon yapar.",
-      "Sadece ekstansiyon yapar.",
-      "Rotation hareketine izin verir."
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 134,
-    "text": "Aşağıdaki kaslardan hangisi abduksiyon hareketinde primer rol oynar?",
-    "options": [
-      "M. subscapularis",
-      "M. infraspinatus",
-      "M. supraspinatus",
-      "M. teres major",
-      "M. teres minor"
-    ],
-    "correctAnswer": "B",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 135,
-    "text": "Aşağıdakilerden hangisi bursa subacromialis'in bir görevidir?",
-    "options": [
-      "Humerusun eksternal rotasyonunu sağlamak",
-      "Humerusun internal rotasyonunu sağlamak",
-      "Humerus başını korakoid çıkıntıya karşı korumak",
-      "Tendonların sürtünmesini azaltmak",
-      "Eklem yüzeylerini yağlamak"
-    ],
-    "correctAnswer": "E",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 136,
-    "text": "Aşağıdaki kaslardan hangisi ulnayı supinasyona getirebilir?",
-    "options": [
-      "M. anconeus",
-      "M. pronator teres",
-      "M. supinator",
-      "M. pronator quadratus",
-      "M. flexor carpi ulnaris"
-    ],
-    "correctAnswer": "C",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 137,
-    "text": "Aşağıdaki yapılar ve sinir eşleştirmelerinden hangisi doğru değildir?",
-    "options": [
-      "M. teres major - N. thoracodorsalis",
-      "M. supraspinatus - N. suprascapularis",
-      "M. biceps brachii - N. musculocutaneus",
-      "M. latissimus dorsi - N. thoracodorsalis",
-      "M. deltoideus - N. axillaris"
-    ],
-    "correctAnswer": "C",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 138,
-    "text": "Aşağıdaki kaslardan hangisinin primer görevi el bileği fleksiyonudur?",
-    "options": [
-      "M. extensor carpi radialis longus",
-      "M. extensor carpi ulnaris",
-      "M. palmaris longus",
-      "M. brachioradialis",
-      "M. extensor digitorum"
-    ],
-    "correctAnswer": "A",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 139,
-    "text": "Aşağıdaki kaslardan hangisi parmakların ekstansiyonuna yardım eder?",
-    "options": [
-      "M. flexor digitorum superficialis",
-      "M. flexor carpi ulnaris",
-      "M. extensor digitorum",
-      "M. palmaris longus",
-      "M. flexor digitorum profundus"
-    ],
-    "correctAnswer": "A",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 140,
-    "text": "Aşağıdaki kaslardan hangisi thenar kas grubuna aittir?",
-    "options": [
-      "M. flexor digiti minimi brevis",
-      "M. adductor pollicis",
-      "M. opponens digiti minimi",
-      "M. opponens pollicis",
-      "M. palmaris brevis"
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 141,
-    "text": "Aşağıdaki kaslardan hangisi humerusun büyük tüberkülüne yapışmaz?",
-    "options": [
-      "M. infraspinatus",
-      "M. supraspinatus",
-      "M. teres minor",
-      "M. subscapularis",
-      "M. deltoideus"
-    ],
-    "correctAnswer": "E",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 142,
-    "text": "Aşağıdakilerden hangisi ön kol ekstansör kasları arasında yer almaz?",
-    "options": [
-      "M. extensor carpi ulnaris",
-      "M. extensor digitorum",
-      "M. extensor pollicis brevis",
-      "M. extensor indicis",
-      "M. palmaris longus"
-    ],
-    "correctAnswer": "B",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 143,
-    "text": "Aşağıdaki yapılardan hangisi fossa cubitalis'in (dirsek çukuru) içeriğinde yer alır?",
-    "options": [
-      "N. radialis",
-      "N. ulnaris",
-      "N. medianus",
-      "N. musculocutaneus",
-      "N. axillaris"
-    ],
-    "correctAnswer": "C",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 144,
-    "text": "Aşağıdaki kaslardan hangisi hem el bileği hem de parmak eklemlerine fleksiyon yaptırır?",
-    "options": [
-      "M. flexor carpi ulnaris",
-      "M. flexor digitorum superficialis",
-      "M. flexor carpi radialis",
-      "M. palmaris longus",
-      "M. pronator teres"
-    ],
-    "correctAnswer": "A",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 145,
-    "text": "Aşağıdaki kaslardan hangisi thenar kas grubu içinde yer almaz?",
-    "options": [
-      "M. abductor pollicis brevis",
-      "M. opponens pollicis",
-      "M. flexor pollicis brevis",
-      "M. adductor pollicis",
-      "M. palmaris brevis"
-    ],
-    "correctAnswer": "B",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 146,
-    "text": "Aşağıdaki kaslardan hangisi nervus ulnaris tarafından innerve edilir?",
-    "options": [
-      "M. opponens pollicis",
-      "M. abductor pollicis brevis",
-      "M. adductor pollicis",
-      "M. flexor pollicis brevis (yüzeyel baş)",
-      "M. palmaris brevis"
-    ],
-    "correctAnswer": "E",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 147,
-    "text": "Aşağıdaki kaslardan hangisi hypothenar kas grubunda yer alır?",
-    "options": [
-      "M. opponens digiti minimi",
-      "M. flexor pollicis brevis",
-      "M. abductor pollicis brevis",
-      "M. opponens pollicis",
-      "M. adductor pollicis"
-    ],
-    "correctAnswer": "C",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 148,
-    "text": "Aşağıdaki sinirlerden hangisi elin dorsal yüzeyinde duyusal innervasyona katılmaz?",
-    "options": [
-      "N. ulnaris",
-      "N. medianus",
-      "N. radialis",
-      "N. musculocutaneus",
-      "N. cutaneus antebrachii posterior"
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 149,
-    "text": "Aşağıdaki kaslardan hangisinin fonksiyonu başparmak fleksiyonudur?",
-    "options": [
-      "M. extensor pollicis brevis",
-      "M. abductor pollicis longus",
-      "M. flexor pollicis longus",
-      "M. opponens pollicis",
-      "M. adductor pollicis"
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 150,
-    "text": "Aşağıdaki yapılardan hangisi canalis carpi’den geçmez?",
-    "options": [
-      "N. medianus",
-      "M. flexor digitorum profundus tendonu",
-      "M. flexor digitorum superficialis tendonu",
-      "M. flexor pollicis longus tendonu",
-      "M. palmaris longus tendonu"
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 151,
-    "text": "Aşağıdaki kaslardan hangisi elin intrinsic (iç) kasları arasında yer alır?",
-    "options": [
-      "M. flexor digitorum superficialis",
-      "M. flexor carpi radialis",
-      "M. lumbricales",
-      "M. extensor digitorum",
-      "M. brachioradialis"
-    ],
-    "correctAnswer": "A",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 152,
-    "text": "Aşağıdaki kemiklerden hangisi os coxae’nin bir parçası değildir?",
-    "options": [
-      "Os ilium",
-      "Os ischii",
-      "Os pubis",
-      "Os sacrum",
-      "Os acetabulum"
-    ],
-    "correctAnswer": "A",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 153,
-    "text": "Aşağıdakilerden hangisi pelvis duvarının bir parçası değildir?",
-    "options": [
-      "Os sacrum",
-      "Os ilium",
-      "M. obturator internus",
-      "M. piriformis",
-      "Os coccygis"
-    ],
-    "correctAnswer": "C",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 154,
-    "text": "Aşağıdaki kaslardan hangisi trochanter major’a yapışır?",
-    "options": [
-      "M. gluteus minimus",
-      "M. iliopsoas",
-      "M. tensor fasciae latae",
-      "M. rectus femoris",
-      "M. adductor magnus"
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 155,
-    "text": "Aşağıdaki kaslardan hangisi uyluğun fleksiyonuna yardım eder?",
-    "options": [
-      "M. gluteus medius",
-      "M. gluteus maximus",
-      "M. biceps femoris (caput longum)",
-      "M. iliopsoas",
-      "M. semimembranosus"
-    ],
-    "correctAnswer": "B",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 156,
-    "text": "Aşağıdakilerden hangisi uyluk ön bölge kasları arasında yer almaz?",
-    "options": [
-      "M. sartorius",
-      "M. quadriceps femoris",
-      "M. iliopsoas",
-      "M. tensor fasciae latae",
-      "M. gracilis"
-    ],
-    "correctAnswer": "C",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 157,
-    "text": "Aşağıdaki kaslardan hangisi pes anserinus’a katılmaz?",
-    "options": [
-      "M. sartorius",
-      "M. gracilis",
-      "M. semitendinosus",
-      "M. semimembranosus",
-      "M. biceps femoris"
-    ],
-    "correctAnswer": "E",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 158,
-    "text": "Aşağıdaki kaslardan hangisi uyluk arka grup kaslarından biridir?",
-    "options": [
-      "M. rectus femoris",
-      "M. sartorius",
-      "M. adductor magnus",
-      "M. vastus lateralis",
-      "M. semitendinosus"
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 159,
-    "text": "Aşağıdakilerden hangisi crus (baldır) bölgesinin posterior bölgesinde yer alan kaslardan biri değildir?",
-    "options": [
-      "M. gastrocnemius",
-      "M. soleus",
-      "M. tibialis posterior",
-      "M. flexor hallucis longus",
-      "M. extensor digitorum longus"
-    ],
-    "correctAnswer": "B",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 160,
-    "text": "Aşağıdaki kaslardan hangisi ayak tabanında yer almaz?",
-    "options": [
-      "M. flexor digitorum brevis",
-      "M. abductor hallucis",
-      "M. quadratus plantae",
-      "M. lumbricales",
-      "M. extensor digitorum brevis"
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 161,
-    "text": "Aşağıdakilerden hangisi ayak bileği eklemine plantar fleksiyon yaptırır?",
-    "options": [
-      "M. tibialis anterior",
-      "M. extensor hallucis longus",
-      "M. peroneus longus",
-      "M. extensor digitorum longus",
-      "M. tibialis posterior"
-    ],
-    "correctAnswer": "B",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 162,
-    "text": "Aşağıdaki yapılar ve anatomik ilişkilerinden hangisi yanlıştır?",
-    "options": [
-      "N. ischiadicus - Foramen infrapiriforme’den geçer",
-      "A. femoralis - Canalis adductorius’tan geçer",
-      "V. saphena magna - Hiatus saphenus’tan geçer",
-      "N. obturatorius - Canalis obturatorius’tan geçer",
-      "A. poplitea - Lig. inguinale’nin altından geçer"
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 163,
-    "text": "Aşağıdaki yapılardan hangisi fossa poplitea’nın içinde yer alır?",
-    "options": [
-      "N. femoralis",
-      "A. tibialis anterior",
-      "V. saphena parva",
-      "M. gracilis",
-      "M. sartorius"
-    ],
-    "correctAnswer": "C",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 164,
-    "text": "Aşağıdaki yapılardan hangisi ayakta bulunan arcus plantaris profundus’un bir parçası değildir?",
-    "options": [
-      "A. plantaris lateralis",
-      "A. plantaris medialis",
-      "A. metatarsales plantares",
-      "Rami perforantes",
-      "A. digitalis plantares"
-    ],
-    "correctAnswer": "C",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 165,
-    "text": "Aşağıdaki yapılardan hangisi ayak sırtında bulunur?",
-    "options": [
-      "M. flexor digitorum brevis",
-      "M. quadratus plantae",
-      "M. abductor hallucis",
-      "M. extensor digitorum brevis",
-      "M. adductor hallucis"
-    ],
-    "correctAnswer": "A",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 166,
-    "text": "Aşağıdaki sinirlerden hangisi ayakta sadece motor innervasyon sağlar?",
-    "options": [
-      "N. plantaris medialis",
-      "N. plantaris lateralis",
-      "N. suralis",
-      "N. saphenus",
-      "N. cutaneus dorsalis medialis"
-    ],
-    "correctAnswer": "A",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 167,
-    "text": "Aşağıdakilerden hangisi ayakta arcus plantaris profundus’u oluşturan arterlerden biridir?",
-    "options": [
-      "A. tibialis posterior",
-      "A. tibialis anterior",
-      "A. dorsalis pedis",
-      "A. plantaris medialis",
-      "A. plantaris lateralis"
-    ],
-    "correctAnswer": "D",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 168,
-    "text": "Aşağıdaki kaslardan hangisi parmakların fleksiyonuna yardımcı olur?",
-    "options": [
-      "M. extensor digitorum longus",
-      "M. tibialis posterior",
-      "M. peroneus brevis",
-      "M. flexor digitorum longus",
-      "M. extensor hallucis brevis"
-    ],
-    "correctAnswer": "C",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 169,
-    "text": "Aşağıdaki yapılardan hangisi ayakta dış longitudinal arkı destekler?",
-    "options": [
-      "Lig. plantare longum",
-      "Lig. calcaneonaviculare plantare",
-      "Lig. deltoideum",
-      "Lig. talofibulare anterius",
-      "Lig. collaterale mediale"
-    ],
-    "correctAnswer": "B",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 170,
-    "text": "Aşağıdakilerden hangisi ayakta extensor digitorum brevis kasının siniriyle doğru eşleşmiştir?",
-    "options": [
-      "N. tibialis",
-      "N. peroneus superficialis",
-      "N. peroneus profundus",
-      "N. suralis",
-      "N. saphenus"
-    ],
-    "correctAnswer": "C",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 171,
-    "text": "Aşağıdaki yapılardan hangisi ayakta medial longitudinal arkın pasif desteğinde görev almaz?",
-    "options": [
-      "Lig. calcaneonaviculare plantare",
-      "Aponeurosis plantaris",
-      "Lig. plantare longum",
-      "Lig. talocalcaneum interosseum",
-      "Os naviculare"
-    ],
-    "correctAnswer": "B",
-    "explanation": null,
-    "category": "Preklinik",
-    "difficulty": "medium"
-  },
-  {
-    "id": 172,
-    "text": "Aşağıdaki kaslardan hangisi ayakta hallux’un abduksiyonuna katılır?",
-    "options": [
-      "M. abductor digiti minimi",
-      "M. flexor hallucis brevis",
-      "M. flexor digitorum brevis",
-      "M. adductor hallucis",
-      "M. abductor hallucis"
-    ],
-    "correctAnswer": "E",
     "explanation": null,
     "category": "Preklinik",
     "difficulty": "medium"

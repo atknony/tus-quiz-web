@@ -75,7 +75,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         isTimerRunning: false,
         feedbackTimeRemaining: 15, // Keep 15 seconds for incorrect answers
         gameOver: gameOver,
-        currentScreen: gameOver ? 'result' : 'feedback'
+        currentScreen: 'feedback' // Always show feedback first, even when game is over
       };
     }
     
@@ -104,7 +104,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
           isTimerRunning: false,
           feedbackTimeRemaining: 15, // Keep 15 seconds for incorrect answers
           gameOver: gameOver,
-          currentScreen: gameOver ? 'result' : 'feedback'
+          currentScreen: 'feedback' // Always show feedback first, even when game is over
         };
       }
     }
@@ -124,7 +124,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
           isTimerRunning: false,
           currentQuestionTime: maxTime,
           gameOver: gameOver,
-          currentScreen: gameOver ? 'result' : 'feedback'
+          currentScreen: 'feedback' // Always show feedback first, even when game is over
         };
       }
       
@@ -223,6 +223,14 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         gameOver: true,
         isTimerRunning: false
       };
+      
+    case 'FINISH_EXAM':
+      return {
+        ...state,
+        currentScreen: 'result',
+        isTimerRunning: false,
+        feedbackTimeRemaining: 0
+      };
     
     default:
       return state;
@@ -237,6 +245,7 @@ type GameStateContextType = {
   checkAnswer: (answer: string) => void;
   showAnswer: () => void;
   skipFeedback: () => void;
+  finishExam: () => void;
   playAgain: () => void;
   returnToMenu: () => void;
 };
@@ -330,6 +339,11 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'SKIP_FEEDBACK' });
   };
   
+  // Finish exam function
+  const finishExam = () => {
+    dispatch({ type: 'FINISH_EXAM' });
+  };
+  
   // Play again function
   const playAgain = async () => {
     // First reset the game state completely
@@ -376,6 +390,7 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
         checkAnswer,
         showAnswer,
         skipFeedback,
+        finishExam,
         playAgain, 
         returnToMenu 
       }}

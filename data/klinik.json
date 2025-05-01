@@ -99,6 +99,21 @@
     "difficulty": "expert"
   },
   {
+    "id": 32,
+    "text": "Yukarıdaki kan parametrelerinden hangilerinin normal değer aralığı cinsiyete göre değişiklik göstermez?\nI. Eritrosit sayısı\nII. Trombosit sayısı\nIII. Hematokrit değeri\nIV. Hemoglobin değeri",
+    "options": [
+      "Yalnız II",
+      "Yalnız III",
+      "Yalnız II ve III",
+      "I, II ve IV",
+      "II, III ve IV"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
     "id": 8,
     "text": "Aşağıdaki hormonlardan hangisi kan kalsiyum seviyesini düşürür?",
     "options": [
@@ -142,5 +157,284 @@
     "explanation": "Notokord, embriyonik gelişimde aksiyel iskeletin öncüsüdür ve gelişim sırasında intervertebral disklerin merkezi kısmını (nükleus pulposus) oluşturur. Kas dokusu mezodermden, sinir dokusu ektodermden, dermis paraksiyel mezodermden, karaciğer ise endodermden köken alır.",
     "category": "Embriyoloji",
     "difficulty": "expert"
+  },
+  {
+    "id": 102,
+    "text": "Dopamin agonisti etkisi ile hiperprolaktinemiyi tedavi etmek için aşağıdaki ilaçlardan hangisi kullanılır?",
+    "options": [
+      "Alprostadil",
+      "Minoksidil",
+      "Sildenafil",
+      "Bromokriptin",
+      "Kabergolin"
+    ],
+    "correctAnswer": "E",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 103,
+    "text": "I. Timolol, II. Fizostigmin, III. DiklorfenamidAntihipertansif etkili olmasına karşın hiperglisemi, hiperlipidemi gibi metabolik yan etkileri nedeniyle tercih edilmeyen ilaç grubu aşağıdakilerden hangisidir?",
+    "options": [
+      "ACE inhibitörleri",
+      "Beta blokerler",
+      "Kalsiyum kanal blokerleri",
+      "Alfa-1 blokerler",
+      "AT1 reseptör blokörleri"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 104,
+    "text": "H1 reseptör antagonisti olan aşağıdaki ilaçlardan hangisi ‘ikinci kuşak’ antihistaminiktir?",
+    "options": [
+      "Loratadin",
+      "Klorfeniramin",
+      "Hidroksizin",
+      "Difenhidramin",
+      "Dimenhidrinat"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 105,
+    "text": "Triptan grubu ilaçlar migren tedavisinde aşağıdaki hangi reseptörleri aktive ederek etki gösterir?",
+    "options": ["5-HT1A", "5-HT2A", "5-HT1B/1D", "5-HT2C", "5-HT3"],
+    "correctAnswer": "C",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 106,
+    "text": "Dihidrofolat redüktaz inhibitörlerinden biri olan metotreksatın antidotu aşağıdakilerden hangisidir?",
+    "options": [
+      "Piridoksin",
+      "Lökoverin",
+      "Deferoksamin",
+      "Flumazenil",
+      "Mesna"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 107,
+    "text": "Trastuzumab aşağıdaki hangi malignitenin tedavisinde kullanılmaktadır?",
+    "options": [
+      "Kolon kanseri",
+      "Meme kanseri",
+      "Melanom",
+      "Akciğer küçük hücreli dışı kanser",
+      "Pankreas kanseri"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 108,
+    "text": "Glukokortikoid ilaçların, uzun süreli kullanımında ortaya çıkabilecek advers etkiler arasında aşağıdakilerden hangisi yer almaz?",
+    "options": [
+      "Osteoporoz",
+      "Hiperglisemi",
+      "Cushingoid görünüm",
+      "Hipotansiyon",
+      "İmmünsupresyon"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 109,
+    "text": "Varfarin kullanımı sırasında INR’nin hedeflenen terapötik aralığın üzerine çıkması durumunda ilk olarak aşağıdakilerden hangisi yapılmalıdır?",
+    "options": [
+      "INR takibi kesilir",
+      "Varfarin dozu azaltılır veya geçici olarak kesilir",
+      "Vitamin K uygulanır",
+      "Taze donmuş plazma verilir",
+      "Protamin sülfat uygulanır"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 110,
+    "text": "Amiodaronun neden olabileceği en ciddi pulmoner toksisite aşağıdakilerden hangisidir?",
+    "options": [
+      "Bronşiyolit obliterans",
+      "Astım benzeri tablo",
+      "Organize pnömoni",
+      "Plevral effüzyon",
+      "İnterstisyel akciğer hastalığı"
+    ],
+    "correctAnswer": "E",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 111,
+    "text": "Siyanür zehirlenmesinde antidot olarak kullanılan ilaç aşağıdakilerden hangisidir?",
+    "options": [
+      "Dimercaprol",
+      "Hidroksikobalamin",
+      "Deferoksamin",
+      "Atropin",
+      "Pralidoksim"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 112,
+    "text": "Torasemid kullanımı ile ilgili aşağıdaki ifadelerden hangisi doğrudur?",
+    "options": [
+      "Na/K/2Cl ko-transporter inhibitörüdür",
+      "Distal tübülde etkilidir",
+      "K-sparing diüretiktir",
+      "Loop diüretiktir",
+      "Karbonik anhidraz inhibitörüdür"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 113,
+    "text": "Griseofulvinin antifungal etkisini gösterebilmesi için aşağıdaki hangisinin olması zorunludur?",
+    "options": [
+      "Yeni keratin sentezi",
+      "Lamellar cisimcik sentezi",
+      "Desmosomal yapıların yıkımı",
+      "Melanosom sentezi",
+      "Stratum corneum kalınlaşması"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 114,
+    "text": "Zidovudin tedavisine bağlı en sık görülen yan etki aşağıdakilerden hangisidir?",
+    "options": [
+      "Nöropati",
+      "Anemi",
+      "Hepatotoksisite",
+      "Nefrotoksisite",
+      "Pankreatit"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 115,
+    "text": "Psödomembranöz kolit tedavisinde kullanılan ve oral biyoyararlanımı düşük olan ilaç aşağıdakilerden hangisidir?",
+    "options": [
+      "Vankomisin",
+      "Amoksisilin",
+      "Klaritromisin",
+      "Azitromisin",
+      "Siprofloksasin"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 116,
+    "text": "Tirotoksik kriz tedavisinde aşağıdaki ilaçlardan hangisi öncelikle kullanılır?",
+    "options": [
+      "Propiltiyourasil",
+      "Metimazol",
+      "Levotiroksin",
+      "Propranolol",
+      "İyot"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 117,
+    "text": "Gebelikte kullanılan aşağıdaki antikoagülanlardan hangisi teratojenik risk taşımaz?",
+    "options": [
+      "Varfarin",
+      "Rivaroksaban",
+      "Enoksaparin",
+      "Dabigatran",
+      "Apiksaban"
+    ],
+    "correctAnswer": "C",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 118,
+    "text": "Aşağıdaki ilaçlardan hangisinin temel kullanım amacı, portal hipertansiyona bağlı özofagus varis kanamalarının önlenmesidir?",
+    "options": [
+      "İzoproterenol",
+      "Dobutamin",
+      "Adenozin",
+      "Propranolol",
+      "Dopamin"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 119,
+    "text": "Sistemik lupus eritematozus (SLE) hastalarının tedavisinde kullanılan ve retina toksisitesi riski olan ilaç aşağıdakilerden hangisidir?",
+    "options": [
+      "Siklosporin",
+      "Hidroksiklorokin",
+      "Azatioprin",
+      "Metotreksat",
+      "Siklofosfamid"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 120,
+    "text": "Aşağıdaki ilaçlardan hangisi anjiyoödem gelişimini tetikleyebilir?",
+    "options": [
+      "Kalsiyum kanal blokerleri",
+      "Beta blokerler",
+      "Tiyazid diüretikler",
+      "ACE inhibitörleri",
+      "AT1 reseptör blokörleri"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
   }
 ]

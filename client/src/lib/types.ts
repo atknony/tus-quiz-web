@@ -39,4 +39,5 @@ export type GameAction =
   | { type: 'TICK_FEEDBACK_TIMER'; payload: number }
   | { type: 'SET_SCREEN'; payload: GameState['currentScreen'] }
   | { type: 'RESET_GAME' }
-  | { type: 'END_GAME' };
+  | { type: 'END_GAME' }
+  | { type: 'FINISH_EXAM' };
