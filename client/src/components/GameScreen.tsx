@@ -5,13 +5,12 @@ import { getDifficultyName, getMaxTime, formatTime } from '@/lib/gameLogic';
 export default function GameScreen() {
   const { state, checkAnswer, showAnswer } = useGameState();
   const { difficulty, questions, currentQuestionIndex, correctAnswers, wrongAnswers, currentQuestionTime } = state;
-  
+
   const currentQuestion = questions[currentQuestionIndex];
   const maxTime = getMaxTime(difficulty);
   const timePercentage = (currentQuestionTime / maxTime) * 100;
   const timeRemaining = maxTime - currentQuestionTime;
-  
-  // If no questions are loaded or currentQuestion is undefined, show a loading state
+
   if (!currentQuestion) {
     return (
       <div className="flex justify-center items-center h-40">
@@ -19,15 +18,15 @@ export default function GameScreen() {
       </div>
     );
   }
-  
-  const handleAnswerClick = (option: string, index: number) => {
-    const answer = String.fromCharCode(65 + index); // Convert index to A, B, C, D, E
+
+  const handleAnswerClick = (index: number) => {
+    const answer = String.fromCharCode(65 + index); // A, B, C...
     checkAnswer(answer);
   };
-  
+
   return (
     <>
-      {/* Game header with stats */}
+      {/* Üst istatistik alanı */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
         <div>
           <h2 className="text-xl font-bold">{getDifficultyName(difficulty)} Modu</h2>
@@ -41,8 +40,6 @@ export default function GameScreen() {
             <div className="text-gray-500 mb-1">Toplam Süre</div>
             <div className="font-mono text-lg">{formatTime(state.totalTime)}</div>
           </div>
-          
-          {/* Wrong answers progress indicator */}
           <div className="flex gap-1">
             {Array(5).fill(0).map((_, i) => (
               <div 
@@ -53,17 +50,16 @@ export default function GameScreen() {
           </div>
         </div>
       </div>
-      
-      {/* Question card */}
+
+      {/* Soru kartı */}
       <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
-        {/* Timer */}
         <div className="relative h-2 bg-gray-100">
           <div 
             className="absolute left-0 top-0 h-full bg-blue-500 transition-all duration-1000"
             style={{ width: `${100 - timePercentage}%` }}
           />
         </div>
-        
+
         <div className="flex justify-between items-center p-4 border-b">
           <div className="font-semibold text-sm text-gray-500">Soru <span>{currentQuestionIndex + 1}</span></div>
           <div className="flex items-center gap-1 font-mono text-lg">
@@ -71,37 +67,33 @@ export default function GameScreen() {
             <span>{formatTime(timeRemaining)}</span>
           </div>
         </div>
-        
+
         <div className="p-5">
           <p className="text-lg mb-6">{currentQuestion.text}</p>
-          
-          {/* Answer options */}
+
+          {/* Django'dan gelen choices alanı */}
           <div className="space-y-3">
-            {currentQuestion.options.map((option, index) => {
-              // Get the letter for this option
+            {currentQuestion.choices.map((choice: any, index: number) => {
               const optionLetter = String.fromCharCode(65 + index);
-              
-              // Check if this is the correct answer (for highlighting when "Cevabı Göster" is clicked)
-              const isCorrectAnswer = optionLetter === currentQuestion.correctAnswer;
-              
+              const isCorrectAnswer = choice.is_correct;
+
               return (
                 <button 
-                  key={index}
+                  key={choice.id}
                   className={`w-full text-left p-3 border-2 ${
                     state.currentScreen === 'feedback' && isCorrectAnswer 
                       ? 'border-green-500 bg-green-50' 
                       : 'border-gray-200 hover:border-blue-400'
                   } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all`}
-                  onClick={() => handleAnswerClick(option, index)}
+                  onClick={() => handleAnswerClick(index)}
                 >
                   <span className="font-medium mr-2">{optionLetter}.</span>
-                  <span>{option}</span>
+                  <span>{choice.text}</span>
                 </button>
               );
             })}
           </div>
-          
-          {/* Cevabı Göster button */}
+
           <div className="mt-6 flex justify-center">
             <button
               onClick={() => showAnswer()}

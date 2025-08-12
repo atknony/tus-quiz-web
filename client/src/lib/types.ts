@@ -1,14 +1,14 @@
-export type Difficulty = 'easy' | 'medium' | 'expert';
+export type Difficulty = 'easy' | 'medium' | 'expert' | 'kolay' | 'orta' | 'zor';
 export type Section = 'klinik' | 'preklinik';
 
 export interface Question {
   id: number;
   text: string;
   options: string[];
-  correctAnswer: string;
-  explanation: string;
+  correctAnswer: string; // Backend'te correct_answer geliyorsa API tarafında camelCase'e çeviririz
+  explanation: string | null;
   category?: string;
-  difficulty?: string;
+  difficulty?: Difficulty;
 }
 
 export interface GameState {
