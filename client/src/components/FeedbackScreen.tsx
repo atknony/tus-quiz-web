@@ -5,19 +5,17 @@ import { formatTime } from '@/lib/gameLogic';
 export default function FeedbackScreen() {
   const { state, skipFeedback, finishExam } = useGameState();
   const { questions, currentQuestionIndex, selectedAnswer, feedbackTimeRemaining, gameOver } = state;
-
-  const currentQuestion: any = questions[currentQuestionIndex];
-  if (!currentQuestion) return null;
-
-  // Django: choices: [{ id, text, is_correct }]
-  const choices = currentQuestion.choices ?? [];
-  const correctIdx = choices.findIndex((c: any) => c.is_correct);
-  const correctLetter = correctIdx >= 0 ? String.fromCharCode(65 + correctIdx) : '';
-  const isCorrect = selectedAnswer === correctLetter;
-
-  // "Cevabı Göster" tuşlandıysa selectedAnswer null/undefined kalır
-  const userClickedShowAnswer = selectedAnswer == null;
-
+  
+  const currentQuestion = questions[currentQuestionIndex];
+  const isCorrect = selectedAnswer === currentQuestion?.correctAnswer;
+  
+  if (!currentQuestion) {
+    return null;
+  }
+  
+  // This will check if the user clicked "Cevabı Göster" or actually answered
+  const userClickedShowAnswer = selectedAnswer === null || selectedAnswer === undefined;
+  
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
       <div className="p-4 text-white">
@@ -33,38 +31,39 @@ export default function FeedbackScreen() {
           </div>
         </div>
       </div>
-
+      
       <div className="p-5">
         <p className="text-lg mb-6">{currentQuestion.text}</p>
-
-        {/* Seçenekler: Django'dan gelen choices */}
+        
+        {/* Answer options with correct highlighted */}
         <div className="space-y-3">
-          {choices.map((choice: any, index: number) => {
+          {currentQuestion.options.map((option, index) => {
             const optionLetter = String.fromCharCode(65 + index);
             const isSelectedAnswer = optionLetter === selectedAnswer;
-            const isCorrectAnswer = choice.is_correct === true;
-
+            const isCorrectAnswer = optionLetter === currentQuestion.correctAnswer;
+            
             let className = "w-full text-left p-3 border-2 rounded-lg";
+            
             if (isCorrectAnswer) {
               className += " bg-green-50 border-green-500";
-            } else if (isSelectedAnswer && !isCorrectAnswer && !userClickedShowAnswer) {
+            } else if (isSelectedAnswer) {
               className += " bg-red-50 border-red-500";
             } else {
               className += " border-gray-200";
             }
-
+            
             return (
-              <div key={choice.id ?? index} className={className}>
+              <div key={index} className={className}>
                 <span className="font-medium mr-2">{optionLetter}.</span>
-                <span>{choice.text}</span>
-
+                <span>{option}</span>
+                
                 {isCorrectAnswer && (
                   <div className="mt-1 text-sm text-green-700">
                     <Check className="h-5 w-5 inline mr-1" />
                     Doğru Cevap
                   </div>
                 )}
-
+                
                 {isSelectedAnswer && !isCorrectAnswer && !userClickedShowAnswer && (
                   <div className="mt-1 text-sm text-red-700">
                     <X className="h-5 w-5 inline mr-1" />
@@ -76,8 +75,8 @@ export default function FeedbackScreen() {
           })}
         </div>
       </div>
-
-      {!!currentQuestion.explanation && (
+      
+      {currentQuestion.explanation && (
         <div className="p-4 bg-gray-50 border-t">
           <div className="text-sm text-gray-600">
             <p className="font-semibold mb-1">Açıklama:</p>
@@ -85,12 +84,11 @@ export default function FeedbackScreen() {
           </div>
         </div>
       )}
-
+      
       {/* Action Buttons */}
       <div className="p-4 flex justify-center border-t">
         {gameOver ? (
           <button
-            type="button"
             onClick={() => finishExam()}
             className="py-2 px-6 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors"
           >
@@ -98,7 +96,6 @@ export default function FeedbackScreen() {
           </button>
         ) : (
           <button
-            type="button"
             onClick={() => skipFeedback()}
             className="py-2 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
           >

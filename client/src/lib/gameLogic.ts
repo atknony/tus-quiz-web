@@ -6,13 +6,10 @@ import { Difficulty, GameState } from "./types";
 export function getMaxTime(difficulty: Difficulty | null): number {
   switch (difficulty) {
     case 'easy':
-    case 'kolay':
       return 120;
     case 'medium':
-    case 'orta':
       return 60;
     case 'expert':
-    case 'zor':
       return 30;
     default:
       return 60;
@@ -21,8 +18,10 @@ export function getMaxTime(difficulty: Difficulty | null): number {
 
 /**
  * Penalty system removed as per requirements
+ * Returns 0 for all difficulties
  */
 export function getPenaltyTime(difficulty: Difficulty | null): number {
+  // Always return 0 as penalty system is removed
   return 0;
 }
 
@@ -39,6 +38,7 @@ export function formatTime(seconds: number): string {
  * Calculate final score (only total time without penalties)
  */
 export function calculateFinalScore(state: GameState): number {
+  // Removed penalty system as per requirements
   return state.totalTime;
 }
 
@@ -78,17 +78,11 @@ export function getPenaltyTimeFormatted(state: GameState): string {
 export function getDifficultyName(difficulty: Difficulty | null): string {
   switch (difficulty) {
     case 'easy':
-      return 'Kolay';
+      return 'Easy';
     case 'medium':
-      return 'Orta';
+      return 'Medium';
     case 'expert':
-      return 'Zor';
-    case 'kolay':
-      return 'Kolay';
-    case 'orta':
-      return 'Orta';
-    case 'zor':
-      return 'Zor';
+      return 'Expert';
     default:
       return '';
   }
@@ -100,13 +94,10 @@ export function getDifficultyName(difficulty: Difficulty | null): string {
 export function getDifficultyColorClass(difficulty: Difficulty | null): string {
   switch (difficulty) {
     case 'easy':
-    case 'kolay':
       return 'blue';
     case 'medium':
-    case 'orta':
       return 'amber';
     case 'expert':
-    case 'zor':
       return 'red';
     default:
       return 'blue';

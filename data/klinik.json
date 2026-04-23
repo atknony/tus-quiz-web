@@ -1,0 +1,440 @@
+[
+  {
+    "id": 1,
+    "text": "Aşağıdakilerden hangisi hücre iskeleti elemanlarından değildir?",
+    "options": [
+      "Mikrofilamentler",
+      "Mikrotübüller",
+      "Ara filamentler",
+      "Ribozomlar",
+      "Aktin filamentleri"
+    ],
+    "correctAnswer": "D",
+    "explanation": "Ribozomlar, protein sentezinde görev alan organellerdir ve hücre iskeletinin bir parçası değildir. Mikrofilamentler, mikrotübüller ve ara filamentler hücre iskeletini oluşturan yapılardır.",
+    "category": "Histoloji",
+    "difficulty": "easy"
+  },
+  {
+    "id": 2,
+    "text": "Aşağıdakilerden hangisi primer kültür hücrelerinin özelliklerinden değildir?",
+    "options": [
+      "Ömürleri sınırlıdır",
+      "Ölümsüzleşmiş (immortalized) hücrelerdir",
+      "Orijinal dokudan alınan hücrelerdir",
+      "Diferansiye özelliklerini büyük oranda korurlar",
+      "Heterojen hücre popülasyonu içerebilirler"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Primer kültür hücreleri, orijinal dokudan izole edilir ve sınırlı bir yaşam süresine sahiptir. Ölümsüzleşme, sürekli pasajlanabilen ve sınırsız bölünme yeteneği kazanmış hücre hatlarının özelliğidir, primer kültür hücrelerine ait değildir.",
+    "category": "Hücre Biyolojisi",
+    "difficulty": "medium"
+  },
+  {
+    "id": 3,
+    "text": "Aşağıdaki yapılardan hangisi limbik sistemin bir parçası değildir?",
+    "options": [
+      "Amigdala",
+      "Hipokampus",
+      "Talamus",
+      "Forniks",
+      "Singulat girus"
+    ],
+    "correctAnswer": "C",
+    "explanation": "Talamus, duyu bilgilerini kortekse ileten bir ara istasyon görevi görür ve limbik sistemin bir parçası değildir. Amigdala, hipokampus, forniks ve singulat girus limbik sistem yapılarıdır ve duygusal işlemleme, bellek ve motivasyonla ilgilidir.",
+    "category": "Nöroanatomi",
+    "difficulty": "medium"
+  },
+  {
+    "id": 4,
+    "text": "Aşağıdaki antibiyotiklerden hangisi protein sentezini 30S ribozomal alt birimini hedef alarak inhibe eder?",
+    "options": [
+      "Eritromisin",
+      "Kloramfenikol",
+      "Streptomisin",
+      "Linezolid",
+      "Klindamisin"
+    ],
+    "correctAnswer": "C",
+    "explanation": "Streptomisin, 30S ribozomal alt birime bağlanarak protein sentezini inhibe eden bir aminoglikozid antibiyotiktir. Eritromisin, klindamisin ve linezolid 50S alt birimi hedeflerken, kloramfenikol peptidil transferaz aktivitesini inhibe eder.",
+    "category": "Farmakoloji",
+    "difficulty": "medium"
+  },
+  {
+    "id": 5,
+    "text": "DNA replikasyonu sırasında lagging zincirde sentezlenen kısa DNA parçalarına ne ad verilir?",
+    "options": [
+      "Nükleozomlar",
+      "Okazaki fragmentleri",
+      "Primer dizileri",
+      "Ekzonlar",
+      "Promoter bölgeleri"
+    ],
+    "correctAnswer": "B",
+    "explanation": "DNA replikasyonu sırasında lagging (geriden gelen) zincirin sentezi, kısa DNA parçaları (Okazaki fragmentleri) şeklinde gerçekleşir. Bu fragmentler daha sonra DNA ligaz enzimi tarafından birleştirilir.",
+    "category": "Moleküler Biyoloji",
+    "difficulty": "easy"
+  },
+  {
+    "id": 6,
+    "text": "Aşağıdakilerden hangisi glikoliz sırasında meydana gelmez?",
+    "options": [
+      "Fruktoz-6-fosfat oluşumu",
+      "ATP üretimi",
+      "NADH üretimi",
+      "Oksidatif fosforilasyon",
+      "Pirüvat oluşumu"
+    ],
+    "correctAnswer": "D",
+    "explanation": "Oksidatif fosforilasyon, mitokondride gerçekleşen bir süreçtir ve elektron taşıma zincirini içerir. Glikoliz, sitoplazmada gerçekleşen anaerobik bir süreçtir ve oksidatif fosforilasyon bu sürecin bir parçası değildir.",
+    "category": "Biyokimya",
+    "difficulty": "medium"
+  },
+  {
+    "id": 7,
+    "text": "Aşağıdaki enzimlerden hangisi immunoglobulin G'nin (IgG) Fc bölgesini tanıyarak patojenleri opsonize eder?",
+    "options": ["Kompleman C3", "Lizozim", "Proteaz", "Perforin", "Granzim"],
+    "correctAnswer": "A",
+    "explanation": "Kompleman C3, IgG'nin Fc bölgesine bağlanarak kompleman sistemini aktive eder. Bu aktivasyon patojenlerin opsonizasyonuna ve fagositozuna yol açar. Lizozim bir antimikrobiyal enzim, proteaz protein yıkımında, perforin ve granzim ise sitotoksik T hücrelerinin hedefleri öldürmesinde rol oynar.",
+    "category": "İmmünoloji",
+    "difficulty": "expert"
+  },
+  {
+    "id": 32,
+    "text": "Yukarıdaki kan parametrelerinden hangilerinin normal değer aralığı cinsiyete göre değişiklik göstermez?\nI. Eritrosit sayısı\nII. Trombosit sayısı\nIII. Hematokrit değeri\nIV. Hemoglobin değeri",
+    "options": [
+      "Yalnız II",
+      "Yalnız III",
+      "Yalnız II ve III",
+      "I, II ve IV",
+      "II, III ve IV"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 8,
+    "text": "Aşağıdaki hormonlardan hangisi kan kalsiyum seviyesini düşürür?",
+    "options": [
+      "Parathormon",
+      "D vitamini",
+      "Kalsitonin",
+      "Kortizol",
+      "Aldosteron"
+    ],
+    "correctAnswer": "C",
+    "explanation": "Kalsitonin, tiroid bezinin C hücreleri tarafından salgılanan ve kan kalsiyum seviyesini düşüren bir hormondur. Parathormon ve D vitamini kan kalsiyum seviyesini artırırken, kortizol ve aldosteron kalsiyum metabolizması üzerinde doğrudan etki göstermez.",
+    "category": "Fizyoloji",
+    "difficulty": "easy"
+  },
+  {
+    "id": 9,
+    "text": "Gram negatif bakterilerin hücre duvarında bulunan ve endotoksin aktivitesi gösteren yapı hangisidir?",
+    "options": [
+      "Peptidoglikan",
+      "Lipopolisakkarit (LPS)",
+      "Teikoik asit",
+      "Mikolik asit",
+      "Flagellin"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Lipopolisakkarit (LPS), gram negatif bakterilerin dış membranında bulunan ve endotoksin aktivitesi gösteren bir yapıdır. Septik şok dahil güçlü inflamatuar yanıtlara neden olabilir. Peptidoglikan hem gram pozitif hem de gram negatif bakterilerde bulunur, teikoik asit gram pozitif bakterilere özgüdür, mikolik asit mikobakterilerde bulunur, flagellin ise flagellaların yapısal proteinidir.",
+    "category": "Mikrobiyoloji",
+    "difficulty": "medium"
+  },
+  {
+    "id": 10,
+    "text": "Embriyonik gelişim sırasında notokorddan türeyen yapı hangisidir?",
+    "options": [
+      "Kas dokusu",
+      "Sinir dokusu",
+      "İntervertebral disk nükleus pulposusu",
+      "Dermis",
+      "Karaciğer"
+    ],
+    "correctAnswer": "C",
+    "explanation": "Notokord, embriyonik gelişimde aksiyel iskeletin öncüsüdür ve gelişim sırasında intervertebral disklerin merkezi kısmını (nükleus pulposus) oluşturur. Kas dokusu mezodermden, sinir dokusu ektodermden, dermis paraksiyel mezodermden, karaciğer ise endodermden köken alır.",
+    "category": "Embriyoloji",
+    "difficulty": "expert"
+  },
+  {
+    "id": 102,
+    "text": "Dopamin agonisti etkisi ile hiperprolaktinemiyi tedavi etmek için aşağıdaki ilaçlardan hangisi kullanılır?",
+    "options": [
+      "Alprostadil",
+      "Minoksidil",
+      "Sildenafil",
+      "Bromokriptin",
+      "Kabergolin"
+    ],
+    "correctAnswer": "E",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 103,
+    "text": "I. Timolol, II. Fizostigmin, III. DiklorfenamidAntihipertansif etkili olmasına karşın hiperglisemi, hiperlipidemi gibi metabolik yan etkileri nedeniyle tercih edilmeyen ilaç grubu aşağıdakilerden hangisidir?",
+    "options": [
+      "ACE inhibitörleri",
+      "Beta blokerler",
+      "Kalsiyum kanal blokerleri",
+      "Alfa-1 blokerler",
+      "AT1 reseptör blokörleri"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 104,
+    "text": "H1 reseptör antagonisti olan aşağıdaki ilaçlardan hangisi ‘ikinci kuşak’ antihistaminiktir?",
+    "options": [
+      "Loratadin",
+      "Klorfeniramin",
+      "Hidroksizin",
+      "Difenhidramin",
+      "Dimenhidrinat"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 105,
+    "text": "Triptan grubu ilaçlar migren tedavisinde aşağıdaki hangi reseptörleri aktive ederek etki gösterir?",
+    "options": ["5-HT1A", "5-HT2A", "5-HT1B/1D", "5-HT2C", "5-HT3"],
+    "correctAnswer": "C",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 106,
+    "text": "Dihidrofolat redüktaz inhibitörlerinden biri olan metotreksatın antidotu aşağıdakilerden hangisidir?",
+    "options": [
+      "Piridoksin",
+      "Lökoverin",
+      "Deferoksamin",
+      "Flumazenil",
+      "Mesna"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 107,
+    "text": "Trastuzumab aşağıdaki hangi malignitenin tedavisinde kullanılmaktadır?",
+    "options": [
+      "Kolon kanseri",
+      "Meme kanseri",
+      "Melanom",
+      "Akciğer küçük hücreli dışı kanser",
+      "Pankreas kanseri"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 108,
+    "text": "Glukokortikoid ilaçların, uzun süreli kullanımında ortaya çıkabilecek advers etkiler arasında aşağıdakilerden hangisi yer almaz?",
+    "options": [
+      "Osteoporoz",
+      "Hiperglisemi",
+      "Cushingoid görünüm",
+      "Hipotansiyon",
+      "İmmünsupresyon"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 109,
+    "text": "Varfarin kullanımı sırasında INR’nin hedeflenen terapötik aralığın üzerine çıkması durumunda ilk olarak aşağıdakilerden hangisi yapılmalıdır?",
+    "options": [
+      "INR takibi kesilir",
+      "Varfarin dozu azaltılır veya geçici olarak kesilir",
+      "Vitamin K uygulanır",
+      "Taze donmuş plazma verilir",
+      "Protamin sülfat uygulanır"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 110,
+    "text": "Amiodaronun neden olabileceği en ciddi pulmoner toksisite aşağıdakilerden hangisidir?",
+    "options": [
+      "Bronşiyolit obliterans",
+      "Astım benzeri tablo",
+      "Organize pnömoni",
+      "Plevral effüzyon",
+      "İnterstisyel akciğer hastalığı"
+    ],
+    "correctAnswer": "E",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 111,
+    "text": "Siyanür zehirlenmesinde antidot olarak kullanılan ilaç aşağıdakilerden hangisidir?",
+    "options": [
+      "Dimercaprol",
+      "Hidroksikobalamin",
+      "Deferoksamin",
+      "Atropin",
+      "Pralidoksim"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 112,
+    "text": "Torasemid kullanımı ile ilgili aşağıdaki ifadelerden hangisi doğrudur?",
+    "options": [
+      "Na/K/2Cl ko-transporter inhibitörüdür",
+      "Distal tübülde etkilidir",
+      "K-sparing diüretiktir",
+      "Loop diüretiktir",
+      "Karbonik anhidraz inhibitörüdür"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 113,
+    "text": "Griseofulvinin antifungal etkisini gösterebilmesi için aşağıdaki hangisinin olması zorunludur?",
+    "options": [
+      "Yeni keratin sentezi",
+      "Lamellar cisimcik sentezi",
+      "Desmosomal yapıların yıkımı",
+      "Melanosom sentezi",
+      "Stratum corneum kalınlaşması"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 114,
+    "text": "Zidovudin tedavisine bağlı en sık görülen yan etki aşağıdakilerden hangisidir?",
+    "options": [
+      "Nöropati",
+      "Anemi",
+      "Hepatotoksisite",
+      "Nefrotoksisite",
+      "Pankreatit"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 115,
+    "text": "Psödomembranöz kolit tedavisinde kullanılan ve oral biyoyararlanımı düşük olan ilaç aşağıdakilerden hangisidir?",
+    "options": [
+      "Vankomisin",
+      "Amoksisilin",
+      "Klaritromisin",
+      "Azitromisin",
+      "Siprofloksasin"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 116,
+    "text": "Tirotoksik kriz tedavisinde aşağıdaki ilaçlardan hangisi öncelikle kullanılır?",
+    "options": [
+      "Propiltiyourasil",
+      "Metimazol",
+      "Levotiroksin",
+      "Propranolol",
+      "İyot"
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 117,
+    "text": "Gebelikte kullanılan aşağıdaki antikoagülanlardan hangisi teratojenik risk taşımaz?",
+    "options": [
+      "Varfarin",
+      "Rivaroksaban",
+      "Enoksaparin",
+      "Dabigatran",
+      "Apiksaban"
+    ],
+    "correctAnswer": "C",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 118,
+    "text": "Aşağıdaki ilaçlardan hangisinin temel kullanım amacı, portal hipertansiyona bağlı özofagus varis kanamalarının önlenmesidir?",
+    "options": [
+      "İzoproterenol",
+      "Dobutamin",
+      "Adenozin",
+      "Propranolol",
+      "Dopamin"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 119,
+    "text": "Sistemik lupus eritematozus (SLE) hastalarının tedavisinde kullanılan ve retina toksisitesi riski olan ilaç aşağıdakilerden hangisidir?",
+    "options": [
+      "Siklosporin",
+      "Hidroksiklorokin",
+      "Azatioprin",
+      "Metotreksat",
+      "Siklofosfamid"
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  },
+  {
+    "id": 120,
+    "text": "Aşağıdaki ilaçlardan hangisi anjiyoödem gelişimini tetikleyebilir?",
+    "options": [
+      "Kalsiyum kanal blokerleri",
+      "Beta blokerler",
+      "Tiyazid diüretikler",
+      "ACE inhibitörleri",
+      "AT1 reseptör blokörleri"
+    ],
+    "correctAnswer": "D",
+    "explanation": null,
+    "category": "Klinik",
+    "difficulty": "medium"
+  }
+]
