@@ -4,6 +4,15 @@ import { apiRequest } from '@/lib/queryClient';
 import { GameState, GameAction, Difficulty, Section, Question } from '@/lib/types';
 import { getMaxTime } from '@/lib/gameLogic';
 
+function fisherYatesShuffle<T>(arr: T[]): T[] {
+  const result = [...arr];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
 const initialState: GameState = {
   currentScreen: 'welcome',
   section: null,
@@ -311,11 +320,11 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
       // Get questions for the selected section
       const endpoint = state.section ? `/api/questions/${state.section}` : '/api/questions';
       const response = await apiRequest('GET', endpoint, undefined);
-      const data = await response.json();
-      
+      const data: Question[] = await response.json();
+
       // Shuffle the questions randomly
-      const shuffledQuestions = [...data].sort(() => Math.random() - 0.5);
-      
+      const shuffledQuestions = fisherYatesShuffle(data);
+
       dispatch({ type: 'SET_QUESTIONS', payload: shuffledQuestions });
     } catch (error) {
       console.error('Failed to fetch questions:', error);
@@ -359,10 +368,10 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
           // Get fresh questions for the selected section
           const endpoint = state.section ? `/api/questions/${state.section}` : '/api/questions';
           const response = await apiRequest('GET', endpoint, undefined);
-          const data = await response.json();
-          
+          const data: Question[] = await response.json();
+
           // Shuffle the questions freshly
-          const shuffledQuestions = [...data].sort(() => Math.random() - 0.5);
+          const shuffledQuestions = fisherYatesShuffle(data);
           
           // Set difficulty and then questions (in that order)
           dispatch({ type: 'SET_DIFFICULTY', payload: state.difficulty });
