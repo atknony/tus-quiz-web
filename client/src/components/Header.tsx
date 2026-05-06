@@ -1,29 +1,17 @@
-import { useState } from "react";
 import { LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useGameState } from "@/hooks/useGameState";
-import AuthModal from "@/components/auth/AuthModal";
+import { useAuthModal } from "@/hooks/useAuthModal";
 
 const GAMEPLAY_SCREENS = new Set(["game", "feedback", "result"]);
 
 export default function Header() {
   const { user, isLoading, logout } = useAuth();
   const { state } = useGameState();
-  const [modalOpen, setModalOpen] = useState(false);
-  const [defaultTab, setDefaultTab] = useState<"login" | "register">("login");
+  const { open: openModal } = useAuthModal();
 
   const isPlaying = GAMEPLAY_SCREENS.has(state.currentScreen);
-
-  const openLogin = () => {
-    setDefaultTab("login");
-    setModalOpen(true);
-  };
-
-  const openRegister = () => {
-    setDefaultTab("register");
-    setModalOpen(true);
-  };
 
   return (
     <header className="flex items-center justify-end gap-2 mb-4 min-h-[36px]">
@@ -43,16 +31,15 @@ export default function Header() {
           </div>
         ) : !isPlaying ? (
           <>
-            <Button variant="outline" size="sm" onClick={openLogin}>
+            <Button variant="outline" size="sm" onClick={() => openModal('login')}>
               Giriş Yap
             </Button>
-            <Button size="sm" onClick={openRegister}>
+            <Button size="sm" onClick={() => openModal('register')}>
               Kayıt Ol
             </Button>
           </>
         ) : null
       )}
-      <AuthModal open={modalOpen} onOpenChange={setModalOpen} defaultTab={defaultTab} />
     </header>
   );
 }

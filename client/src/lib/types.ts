@@ -11,6 +11,11 @@ export interface AuthUser {
 
 export type Difficulty = 'easy' | 'medium' | 'expert';
 export type Section = 'klinik' | 'preklinik';
+export type GameMode = 'practice' | 'competitive';
+export type GameStatus = 'abandoned' | 'completed';
+
+export interface CategoryStats { correct: number; wrong: number }
+export type CategoryPerformance = Record<string, CategoryStats>;
 
 export interface Question {
   id: number;
@@ -23,7 +28,9 @@ export interface Question {
 }
 
 export interface GameState {
-  currentScreen: 'welcome' | 'game' | 'feedback' | 'result';
+  currentScreen: 'mode' | 'welcome' | 'game' | 'feedback' | 'result';
+  mode: GameMode | null;
+  gameId: number | null;
   section: Section | null;
   difficulty: Difficulty | null;
   questions: Question[];
@@ -36,9 +43,14 @@ export interface GameState {
   isTimerRunning: boolean;
   feedbackTimeRemaining: number;
   gameOver: boolean;
+  currentStreak: number;
+  maxStreak: number;
+  categoryPerformance: CategoryPerformance;
 }
 
-export type GameAction = 
+export type GameAction =
+  | { type: 'SET_MODE'; payload: GameMode }
+  | { type: 'SET_GAME_ID'; payload: number }
   | { type: 'SET_SECTION'; payload: Section }
   | { type: 'SET_DIFFICULTY'; payload: Difficulty }
   | { type: 'SET_QUESTIONS'; payload: Question[] }
@@ -50,5 +62,6 @@ export type GameAction =
   | { type: 'TICK_FEEDBACK_TIMER'; payload: number }
   | { type: 'SET_SCREEN'; payload: GameState['currentScreen'] }
   | { type: 'RESET_GAME' }
+  | { type: 'PLAY_AGAIN' }
   | { type: 'END_GAME' }
   | { type: 'FINISH_EXAM' };

@@ -11,9 +11,10 @@ import {
   games,
   type Game,
   type InsertGame,
+  type GameSnapshot,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and } from "drizzle-orm";
 
 export interface IStorage {
   // Users
@@ -37,6 +38,12 @@ export interface IStorage {
 
   // Games / scores
   saveGame(game: InsertGame): Promise<Game>;
+  createGame(game: InsertGame): Promise<Game>;
+  updateGame(id: number, userId: number, data: GameSnapshot): Promise<Game | undefined>;
+  completeGame(id: number, userId: number, data: GameSnapshot): Promise<Game | undefined>;
+  getGameById(id: number): Promise<Game | undefined>;
+  getGamesByUserId(userId: number, limit?: number): Promise<Game[]>;
+  getLeaderboard(opts?: { difficulty?: string; section?: string; limit?: number }): Promise<Array<Game & { username: string }>>;
   getTopScores(difficulty?: string, section?: string): Promise<Game[]>;
 }
 
@@ -111,6 +118,61 @@ export class PostgresStorage implements IStorage {
 
   async saveGame(insertGame: InsertGame): Promise<Game> {
     return db.insert(games).values(insertGame).returning().then(r => r[0]);
+  }
+
+  async createGame(insertGame: InsertGame): Promise<Game> {
+    return db.insert(games).values(insertGame).returning().then(r => r[0]);
+  }
+
+  async updateGame(id: number, userId: number, data: GameSnapshot): Promise<Game | undefined> {
+    const { correctAnswers, wrongAnswers, totalTime, finalScore, maxStreak, totalQuestionsAnswered, categoryPerformance } = data;
+    const accuracyRate = totalQuestionsAnswered > 0 ? (correctAnswers / totalQuestionsAnswered) * 100 : 0;
+    const avgTimePerQuestion = totalQuestionsAnswered > 0 ? totalTime / totalQuestionsAnswered : 0;
+    return db
+      .update(games)
+      .set({ correctAnswers, wrongAnswers, totalTime, finalScore, maxStreak, totalQuestionsAnswered, accuracyRate, avgTimePerQuestion, categoryPerformance })
+      .where(and(eq(games.id, id), eq(games.userId, userId)))
+      .returning()
+      .then(r => r[0]);
+  }
+
+  async completeGame(id: number, userId: number, data: GameSnapshot): Promise<Game | undefined> {
+    const { correctAnswers, wrongAnswers, totalTime, finalScore, maxStreak, totalQuestionsAnswered, categoryPerformance } = data;
+    const accuracyRate = totalQuestionsAnswered > 0 ? (correctAnswers / totalQuestionsAnswered) * 100 : 0;
+    const avgTimePerQuestion = totalQuestionsAnswered > 0 ? totalTime / totalQuestionsAnswered : 0;
+    return db
+      .update(games)
+      .set({ correctAnswers, wrongAnswers, totalTime, finalScore, maxStreak, totalQuestionsAnswered, accuracyRate, avgTimePerQuestion, categoryPerformance, status: "completed", completedAt: new Date() })
+      .where(and(eq(games.id, id), eq(games.userId, userId)))
+      .returning()
+      .then(r => r[0]);
+  }
+
+  async getGameById(id: number): Promise<Game | undefined> {
+    return db.select().from(games).where(eq(games.id, id)).limit(1).then(r => r[0]);
+  }
+
+  async getGamesByUserId(userId: number, limit = 100): Promise<Game[]> {
+    return db.select().from(games)
+      .where(eq(games.userId, userId))
+      .orderBy(desc(games.startedAt))
+      .limit(limit);
+  }
+
+  async getLeaderboard(opts: { difficulty?: string; section?: string; limit?: number } = {}): Promise<Array<Game & { username: string }>> {
+    const { difficulty, section, limit = 50 } = opts;
+    const rows = await db
+      .select({ game: games, username: users.username })
+      .from(games)
+      .innerJoin(users, eq(games.userId, users.id))
+      .where(and(
+        eq(games.status, "completed"),
+        difficulty ? eq(games.difficulty, difficulty) : undefined,
+        section ? eq(games.section, section) : undefined,
+      ))
+      .orderBy(desc(games.finalScore))
+      .limit(limit);
+    return rows.map(r => ({ ...r.game, username: r.username }));
   }
 
   async getTopScores(difficulty?: string, section?: string): Promise<Game[]> {

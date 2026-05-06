@@ -1,7 +1,6 @@
 import { createContext, useContext, useReducer, ReactNode, useEffect, useRef } from 'react';
-import { useLocation } from 'wouter';
 import { apiRequest } from '@/lib/queryClient';
-import { GameState, GameAction, Difficulty, Section, Question } from '@/lib/types';
+import { GameState, GameAction, GameMode, Difficulty, Section, Question, CategoryPerformance } from '@/lib/types';
 import { getMaxTime } from '@/lib/gameLogic';
 
 function fisherYatesShuffle<T>(arr: T[]): T[] {
@@ -13,8 +12,15 @@ function fisherYatesShuffle<T>(arr: T[]): T[] {
   return result;
 }
 
+function updateCategory(perf: CategoryPerformance, category: string, field: 'correct' | 'wrong'): CategoryPerformance {
+  const existing = perf[category] ?? { correct: 0, wrong: 0 };
+  return { ...perf, [category]: { ...existing, [field]: existing[field] + 1 } };
+}
+
 const initialState: GameState = {
-  currentScreen: 'welcome',
+  currentScreen: 'mode',
+  mode: null,
+  gameId: null,
   section: null,
   difficulty: null,
   questions: [],
@@ -26,143 +32,153 @@ const initialState: GameState = {
   selectedAnswer: null,
   isTimerRunning: false,
   feedbackTimeRemaining: 15,
-  gameOver: false
+  gameOver: false,
+  currentStreak: 0,
+  maxStreak: 0,
+  categoryPerformance: {},
 };
 
 function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
+    case 'SET_MODE':
+      return {
+        ...state,
+        mode: action.payload,
+        currentScreen: 'welcome',
+      };
+
+    case 'SET_GAME_ID':
+      return {
+        ...state,
+        gameId: action.payload,
+      };
+
     case 'SET_SECTION':
       return {
         ...initialState,
-        section: action.payload
+        mode: state.mode,
+        currentScreen: 'welcome',
+        section: action.payload,
       };
-      
+
     case 'SET_DIFFICULTY':
       return {
         ...state,
         difficulty: action.payload,
-        currentScreen: 'game'
+        currentScreen: 'game',
       };
-    
+
     case 'SET_QUESTIONS':
       return {
         ...state,
         questions: action.payload,
-        isTimerRunning: true
+        isTimerRunning: true,
       };
-    
+
     case 'NEXT_QUESTION':
       if (state.currentQuestionIndex >= state.questions.length - 1) {
         return {
           ...state,
           currentScreen: 'result',
           gameOver: true,
-          isTimerRunning: false
+          isTimerRunning: false,
         };
       }
-      
       return {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         currentQuestionTime: 0,
         selectedAnswer: null,
         isTimerRunning: true,
-        feedbackTimeRemaining: 15
+        feedbackTimeRemaining: 15,
       };
-    
+
     case 'SHOW_ANSWER': {
-      // Count this as a wrong answer
-      const newWrongAnswers = state.wrongAnswers + 1;
-      const gameOver = newWrongAnswers >= 5;
-      
+      const q = state.questions[state.currentQuestionIndex];
+      const category = q?.category ?? 'Genel';
+      const newWrong = state.wrongAnswers + 1;
       return {
         ...state,
-        wrongAnswers: newWrongAnswers,
+        wrongAnswers: newWrong,
         totalTime: state.totalTime + state.currentQuestionTime,
-        // Important: Don't set selectedAnswer to the correct answer
-        // Instead we'll handle this visually in the GameScreen component
         isTimerRunning: false,
-        feedbackTimeRemaining: 15, // Keep 15 seconds for incorrect answers
-        gameOver: gameOver,
-        currentScreen: 'feedback' // Always show feedback first, even when game is over
+        feedbackTimeRemaining: 15,
+        gameOver: newWrong >= 5,
+        currentScreen: 'feedback',
+        currentStreak: 0,
+        categoryPerformance: updateCategory(state.categoryPerformance, category, 'wrong'),
       };
     }
-    
+
     case 'SELECT_ANSWER': {
-      const isCorrect = state.questions[state.currentQuestionIndex]?.correctAnswer === action.payload;
-      
+      const q = state.questions[state.currentQuestionIndex];
+      const category = q?.category ?? 'Genel';
+      const isCorrect = q?.correctAnswer === action.payload;
+
       if (isCorrect) {
+        const newStreak = state.currentStreak + 1;
         return {
           ...state,
           correctAnswers: state.correctAnswers + 1,
           totalTime: state.totalTime + state.currentQuestionTime,
           selectedAnswer: action.payload,
           isTimerRunning: false,
-          feedbackTimeRemaining: 5, // Reduce feedback time to 5 seconds for correct answers
-          currentScreen: state.currentScreen === 'game' ? 'feedback' : state.currentScreen
+          feedbackTimeRemaining: 5,
+          currentScreen: state.currentScreen === 'game' ? 'feedback' : state.currentScreen,
+          currentStreak: newStreak,
+          maxStreak: Math.max(state.maxStreak, newStreak),
+          categoryPerformance: updateCategory(state.categoryPerformance, category, 'correct'),
         };
       } else {
-        const newWrongAnswers = state.wrongAnswers + 1;
-        const gameOver = newWrongAnswers >= 5;
-        
+        const newWrong = state.wrongAnswers + 1;
         return {
           ...state,
-          wrongAnswers: newWrongAnswers,
+          wrongAnswers: newWrong,
           totalTime: state.totalTime + state.currentQuestionTime,
           selectedAnswer: action.payload,
           isTimerRunning: false,
-          feedbackTimeRemaining: 15, // Keep 15 seconds for incorrect answers
-          gameOver: gameOver,
-          currentScreen: 'feedback' // Always show feedback first, even when game is over
+          feedbackTimeRemaining: 15,
+          gameOver: newWrong >= 5,
+          currentScreen: 'feedback',
+          currentStreak: 0,
+          categoryPerformance: updateCategory(state.categoryPerformance, category, 'wrong'),
         };
       }
     }
-    
+
     case 'TICK_TIMER': {
       const newTime = state.currentQuestionTime + action.payload;
       const maxTime = getMaxTime(state.difficulty);
-      
+
       if (newTime >= maxTime) {
-        const newWrongAnswers = state.wrongAnswers + 1;
-        const gameOver = newWrongAnswers >= 5;
-        
+        const q = state.questions[state.currentQuestionIndex];
+        const category = q?.category ?? 'Genel';
+        const newWrong = state.wrongAnswers + 1;
         return {
           ...state,
-          wrongAnswers: newWrongAnswers,
+          wrongAnswers: newWrong,
           totalTime: state.totalTime + maxTime,
           isTimerRunning: false,
           currentQuestionTime: maxTime,
-          gameOver: gameOver,
-          currentScreen: 'feedback' // Always show feedback first, even when game is over
+          gameOver: newWrong >= 5,
+          currentScreen: 'feedback',
+          currentStreak: 0,
+          categoryPerformance: updateCategory(state.categoryPerformance, category, 'wrong'),
         };
       }
-      
       return {
         ...state,
-        currentQuestionTime: newTime
+        currentQuestionTime: newTime,
       };
     }
-    
+
     case 'SKIP_FEEDBACK': {
       if (state.gameOver) {
-        return {
-          ...state,
-          currentScreen: 'result',
-          feedbackTimeRemaining: 0
-        };
+        return { ...state, currentScreen: 'result', feedbackTimeRemaining: 0 };
       }
-      
-      // Check if we've reached the end of all questions
       if (state.currentQuestionIndex >= state.questions.length - 1) {
-        return {
-          ...state,
-          currentScreen: 'result',
-          gameOver: true,
-          isTimerRunning: false,
-          feedbackTimeRemaining: 0
-        };
+        return { ...state, currentScreen: 'result', gameOver: true, isTimerRunning: false, feedbackTimeRemaining: 0 };
       }
-      
       return {
         ...state,
         currentScreen: 'game',
@@ -170,34 +186,17 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         currentQuestionTime: 0,
         selectedAnswer: null,
         isTimerRunning: true,
-        feedbackTimeRemaining: 15
+        feedbackTimeRemaining: 15,
       };
     }
-    
+
     case 'TICK_FEEDBACK_TIMER': {
       const newFeedbackTime = state.feedbackTimeRemaining - action.payload;
-      
       if (newFeedbackTime <= 0) {
-        // When game is over, we don't automatically navigate away 
-        // User must click "Sınavı Bitir" button to see results
-        if (state.gameOver) {
-          return {
-            ...state,
-            feedbackTimeRemaining: 0 // Just keep the timer at 0
-          };
-        }
-        
-        // Check if we've reached the end of all questions
+        if (state.gameOver) return { ...state, feedbackTimeRemaining: 0 };
         if (state.currentQuestionIndex >= state.questions.length - 1) {
-          return {
-            ...state,
-            currentScreen: 'result',
-            gameOver: true,
-            isTimerRunning: false,
-            feedbackTimeRemaining: 0
-          };
+          return { ...state, currentScreen: 'result', gameOver: true, isTimerRunning: false, feedbackTimeRemaining: 0 };
         }
-        
         return {
           ...state,
           currentScreen: 'game',
@@ -205,43 +204,31 @@ function gameReducer(state: GameState, action: GameAction): GameState {
           currentQuestionTime: 0,
           selectedAnswer: null,
           isTimerRunning: true,
-          feedbackTimeRemaining: 15
+          feedbackTimeRemaining: 15,
         };
       }
-      
-      return {
-        ...state,
-        feedbackTimeRemaining: newFeedbackTime
-      };
+      return { ...state, feedbackTimeRemaining: newFeedbackTime };
     }
-    
+
     case 'SET_SCREEN':
-      return {
-        ...state,
-        currentScreen: action.payload
-      };
-    
+      return { ...state, currentScreen: action.payload };
+
     case 'RESET_GAME':
+      return { ...initialState };
+
+    case 'PLAY_AGAIN':
       return {
-        ...initialState
+        ...initialState,
+        mode: state.mode,
+        currentScreen: 'welcome',
       };
-    
+
     case 'END_GAME':
-      return {
-        ...state,
-        currentScreen: 'result',
-        gameOver: true,
-        isTimerRunning: false
-      };
-      
+      return { ...state, currentScreen: 'result', gameOver: true, isTimerRunning: false };
+
     case 'FINISH_EXAM':
-      return {
-        ...state,
-        currentScreen: 'result',
-        isTimerRunning: false,
-        feedbackTimeRemaining: 0
-      };
-    
+      return { ...state, currentScreen: 'result', isTimerRunning: false, feedbackTimeRemaining: 0 };
+
     default:
       return state;
   }
@@ -250,6 +237,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 type GameStateContextType = {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
+  selectMode: (mode: GameMode) => void;
   selectSection: (section: Section) => void;
   startGame: (difficulty: Difficulty) => void;
   checkAnswer: (answer: string) => void;
@@ -262,12 +250,38 @@ type GameStateContextType = {
 
 const GameStateContext = createContext<GameStateContextType | undefined>(undefined);
 
+function buildSnapshot(s: GameState) {
+  return {
+    correctAnswers: s.correctAnswers,
+    wrongAnswers: s.wrongAnswers,
+    totalTime: s.totalTime,
+    finalScore: s.totalTime,
+    maxStreak: s.maxStreak,
+    totalQuestionsAnswered: s.correctAnswers + s.wrongAnswers,
+    categoryPerformance: s.categoryPerformance,
+  };
+}
+
 export function GameStateProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(gameReducer, initialState);
   const timerRef = useRef<number | null>(null);
   const feedbackTimerRef = useRef<number | null>(null);
-  
-  // Handle timer logic
+  const stateRef = useRef(state);
+  const completedRef = useRef(false);
+  const prevTotalAnswersRef = useRef(0);
+
+  // Keep stateRef in sync with latest state for use in event handlers
+  useEffect(() => { stateRef.current = state; }, [state]);
+
+  // Reset completedRef when gameId is cleared (new game / reset)
+  useEffect(() => {
+    if (state.gameId === null) {
+      completedRef.current = false;
+      prevTotalAnswersRef.current = 0;
+    }
+  }, [state.gameId]);
+
+  // Handle timer
   useEffect(() => {
     if (state.isTimerRunning) {
       timerRef.current = window.setInterval(() => {
@@ -277,16 +291,12 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
-    
     return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
+      if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
     };
   }, [state.isTimerRunning]);
-  
-  // Handle feedback timer logic
+
+  // Handle feedback timer
   useEffect(() => {
     if (state.currentScreen === 'feedback') {
       feedbackTimerRef.current = window.setInterval(() => {
@@ -296,113 +306,136 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
       clearInterval(feedbackTimerRef.current);
       feedbackTimerRef.current = null;
     }
-    
     return () => {
-      if (feedbackTimerRef.current) {
-        clearInterval(feedbackTimerRef.current);
-        feedbackTimerRef.current = null;
-      }
+      if (feedbackTimerRef.current) { clearInterval(feedbackTimerRef.current); feedbackTimerRef.current = null; }
     };
   }, [state.currentScreen]);
-  
-  // We don't need a navigation effect since we're managing screens via state
-  
-  // Select section function
+
+  // Competitive: snapshot after each answer
+  useEffect(() => {
+    const totalAnswers = state.correctAnswers + state.wrongAnswers;
+    if (
+      totalAnswers > prevTotalAnswersRef.current &&
+      state.mode === 'competitive' &&
+      state.gameId !== null
+    ) {
+      prevTotalAnswersRef.current = totalAnswers;
+      const snapshot = buildSnapshot(state);
+      apiRequest('PATCH', `/api/games/${state.gameId}`, snapshot).catch(e =>
+        console.error('[sync] snapshot failed', e)
+      );
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.correctAnswers, state.wrongAnswers]);
+
+  // Competitive: finalize when result screen appears
+  useEffect(() => {
+    if (
+      state.currentScreen === 'result' &&
+      state.mode === 'competitive' &&
+      state.gameId !== null &&
+      !completedRef.current
+    ) {
+      completedRef.current = true;
+      const snapshot = buildSnapshot(state);
+      apiRequest('PATCH', `/api/games/${state.gameId}/complete`, snapshot).catch(e =>
+        console.error('[sync] complete failed', e)
+      );
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.currentScreen]);
+
+  // Competitive: send beacon on tab close
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      const s = stateRef.current;
+      if (s.mode === 'competitive' && s.gameId !== null && !completedRef.current) {
+        navigator.sendBeacon(
+          `/api/games/${s.gameId}`,
+          new Blob([JSON.stringify(buildSnapshot(s))], { type: 'application/json' })
+        );
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
+
+  const selectMode = (mode: GameMode) => {
+    dispatch({ type: 'SET_MODE', payload: mode });
+  };
+
   const selectSection = (section: Section) => {
     dispatch({ type: 'SET_SECTION', payload: section });
   };
-  
-  // Start game function
+
   const startGame = async (difficulty: Difficulty) => {
     dispatch({ type: 'SET_DIFFICULTY', payload: difficulty });
-    
+
     try {
-      // Get questions for the selected section
       const endpoint = state.section ? `/api/questions/${state.section}` : '/api/questions';
       const response = await apiRequest('GET', endpoint, undefined);
       const data: Question[] = await response.json();
-
-      // Shuffle the questions randomly
       const shuffledQuestions = fisherYatesShuffle(data);
-
       dispatch({ type: 'SET_QUESTIONS', payload: shuffledQuestions });
+
+      // Create server game row for competitive mode
+      if (state.mode === 'competitive') {
+        try {
+          const res = await apiRequest('POST', '/api/games', {
+            mode: 'competitive',
+            section: state.section ?? 'klinik',
+            difficulty,
+          });
+          const { gameId } = await res.json() as { gameId: number };
+          dispatch({ type: 'SET_GAME_ID', payload: gameId });
+        } catch (e) {
+          console.error('[sync] game create failed', e);
+        }
+      }
     } catch (error) {
       console.error('Failed to fetch questions:', error);
-      // If there's an error, we could load some local questions
-      // For now, we'll just reset to welcome screen
       dispatch({ type: 'RESET_GAME' });
     }
   };
-  
-  // Check answer function
+
   const checkAnswer = (answer: string) => {
     dispatch({ type: 'SELECT_ANSWER', payload: answer });
   };
-  
-  // Show answer function
+
   const showAnswer = () => {
     dispatch({ type: 'SHOW_ANSWER' });
   };
-  
-  // Skip feedback function
+
   const skipFeedback = () => {
     dispatch({ type: 'SKIP_FEEDBACK' });
   };
-  
-  // Finish exam function
+
   const finishExam = () => {
     dispatch({ type: 'FINISH_EXAM' });
   };
-  
-  // Play again function
-  const playAgain = async () => {
-    // First reset the game state completely
-    dispatch({ type: 'RESET_GAME' });
-    
-    // If we have section and difficulty info, restart with those settings
-    if (state.section) {
-      dispatch({ type: 'SET_SECTION', payload: state.section });
-      
-      if (state.difficulty) {
-        try {
-          // Get fresh questions for the selected section
-          const endpoint = state.section ? `/api/questions/${state.section}` : '/api/questions';
-          const response = await apiRequest('GET', endpoint, undefined);
-          const data: Question[] = await response.json();
 
-          // Shuffle the questions freshly
-          const shuffledQuestions = fisherYatesShuffle(data);
-          
-          // Set difficulty and then questions (in that order)
-          dispatch({ type: 'SET_DIFFICULTY', payload: state.difficulty });
-          dispatch({ type: 'SET_QUESTIONS', payload: shuffledQuestions });
-        } catch (error) {
-          console.error('Failed to fetch questions:', error);
-          // If there's an error, reset to welcome screen
-          dispatch({ type: 'RESET_GAME' });
-        }
-      }
-    }
+  const playAgain = () => {
+    dispatch({ type: 'PLAY_AGAIN' });
   };
-  
-  // Return to menu function
+
   const returnToMenu = () => {
     dispatch({ type: 'RESET_GAME' });
   };
-  
+
   return (
-    <GameStateContext.Provider 
-      value={{ 
-        state, 
+    <GameStateContext.Provider
+      value={{
+        state,
         dispatch,
+        selectMode,
         selectSection,
-        startGame, 
+        startGame,
         checkAnswer,
         showAnswer,
         skipFeedback,
         finishExam,
-        playAgain, 
-        returnToMenu 
+        playAgain,
+        returnToMenu,
       }}
     >
       {children}

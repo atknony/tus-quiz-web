@@ -7,16 +7,24 @@ import rateLimit from "express-rate-limit";
 import { z } from "zod";
 import { storage } from "./storage";
 import type { User } from "@shared/schema";
+import { gameSnapshotSchema } from "@shared/schema";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Rate limiter for all auth endpoints — 10 requests per 15 minutes per IP
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 10,
   standardHeaders: "draft-7",
   legacyHeaders: false,
   message: { message: "Çok fazla deneme. Lütfen 15 dakika sonra tekrar deneyin." },
+});
+
+const gamesLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 120,
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  message: { message: "Çok fazla istek." },
 });
 
 // --- Validation schemas ---
@@ -56,6 +64,12 @@ const verifyEmailBodySchema = z.object({
 
 const resendVerificationBodySchema = z.object({
   email: z.string().email(),
+});
+
+const startGameBodySchema = z.object({
+  mode: z.literal("competitive"),
+  section: z.string().min(1),
+  difficulty: z.enum(["easy", "medium", "expert"]),
 });
 
 // --- Helpers ---
@@ -124,22 +138,91 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/games", async (req, res) => {
+  // --- Competitive games API ---
+
+  app.post("/api/games", gamesLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const parsed = startGameBodySchema.safeParse(req.body);
+    if (!parsed.success) return res.status(400).json({ message: "Geçersiz istek." });
+    const { section, difficulty } = parsed.data;
+    const user = req.user as User;
     try {
-      const game = await storage.saveGame(req.body);
-      res.status(201).json(game);
+      const game = await storage.createGame({
+        userId: user.id,
+        mode: "competitive",
+        section,
+        difficulty,
+        status: "abandoned",
+        correctAnswers: 0,
+        wrongAnswers: 0,
+        totalTime: 0,
+        finalScore: 0,
+        dateCreated: new Date().toISOString().split("T")[0],
+      });
+      return res.status(201).json({ gameId: game.id });
     } catch {
-      res.status(500).json({ message: "Failed to save game" });
+      return res.status(500).json({ message: "Oyun başlatılamadı." });
     }
   });
 
-  app.get("/api/games/top", async (req, res) => {
+  app.patch("/api/games/:id/complete", gamesLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) return res.status(400).json({ message: "Geçersiz oyun ID." });
+    const parsed = gameSnapshotSchema.safeParse(req.body);
+    if (!parsed.success) return res.status(400).json({ message: "Geçersiz veri." });
+    const user = req.user as User;
     try {
-      const { difficulty, section } = req.query;
-      const topScores = await storage.getTopScores(difficulty as string, section as string);
-      res.json(topScores);
+      const game = await storage.completeGame(id, user.id, parsed.data);
+      if (!game) return res.status(404).json({ message: "Oyun bulunamadı." });
+      return res.json(game);
     } catch {
-      res.status(500).json({ message: "Failed to fetch top scores" });
+      return res.status(500).json({ message: "Oyun tamamlanamadı." });
+    }
+  });
+
+  app.patch("/api/games/:id", gamesLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) return res.status(400).json({ message: "Geçersiz oyun ID." });
+    const parsed = gameSnapshotSchema.safeParse(req.body);
+    if (!parsed.success) return res.status(400).json({ message: "Geçersiz veri." });
+    const user = req.user as User;
+    try {
+      const game = await storage.updateGame(id, user.id, parsed.data);
+      if (!game) return res.status(404).json({ message: "Oyun bulunamadı." });
+      return res.json(game);
+    } catch {
+      return res.status(500).json({ message: "Anlık kayıt başarısız." });
+    }
+  });
+
+  app.get("/api/games/me", gamesLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const user = req.user as User;
+    const rawLimit = parseInt(req.query.limit as string, 10);
+    const limit = isNaN(rawLimit) ? 100 : Math.min(rawLimit, 100);
+    try {
+      const userGames = await storage.getGamesByUserId(user.id, limit);
+      return res.json(userGames);
+    } catch {
+      return res.status(500).json({ message: "Oyun geçmişi alınamadı." });
+    }
+  });
+
+  app.get("/api/games/leaderboard", async (req: Request, res: Response) => {
+    const { difficulty, section } = req.query;
+    const rawLimit = parseInt(req.query.limit as string, 10);
+    const limit = isNaN(rawLimit) ? 50 : Math.min(rawLimit, 50);
+    try {
+      const board = await storage.getLeaderboard({
+        difficulty: difficulty as string | undefined,
+        section: section as string | undefined,
+        limit,
+      });
+      return res.json(board);
+    } catch {
+      return res.status(500).json({ message: "Liderlik tablosu alınamadı." });
     }
   });
 

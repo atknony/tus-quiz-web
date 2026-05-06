@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, real, jsonb } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -44,6 +44,18 @@ export const games = pgTable("games", {
   totalTime: integer("total_time").notNull(),
   finalScore: integer("final_score").notNull(),
   dateCreated: text("date_created").notNull(),
+  mode: text("mode").notNull().default("competitive"),
+  status: text("status").notNull().default("abandoned"),
+  maxStreak: integer("max_streak").notNull().default(0),
+  totalQuestionsAnswered: integer("total_questions_answered").notNull().default(0),
+  accuracyRate: real("accuracy_rate").notNull().default(0),
+  avgTimePerQuestion: real("avg_time_per_question").notNull().default(0),
+  categoryPerformance: jsonb("category_performance")
+    .$type<Record<string, { correct: number; wrong: number }>>()
+    .notNull()
+    .default({}),
+  startedAt: timestamp("started_at").notNull().defaultNow(),
+  completedAt: timestamp("completed_at"),
 });
 
 // Future feature — not yet exposed via API
@@ -100,6 +112,19 @@ export const insertGameSchema = createInsertSchema(games).omit({
   id: true,
 }).partial({ userId: true });
 
+export const gameSnapshotSchema = z.object({
+  correctAnswers: z.number().int().min(0),
+  wrongAnswers: z.number().int().min(0),
+  totalTime: z.number().min(0),
+  finalScore: z.number().min(0),
+  maxStreak: z.number().int().min(0),
+  totalQuestionsAnswered: z.number().int().min(0),
+  categoryPerformance: z.record(z.object({
+    correct: z.number().int().min(0),
+    wrong: z.number().int().min(0),
+  })),
+});
+
 export const insertFriendshipSchema = createInsertSchema(friendships).omit({
   id: true,
   createdAt: true,
@@ -120,3 +145,5 @@ export type Game = typeof games.$inferSelect;
 
 export type InsertFriendship = z.infer<typeof insertFriendshipSchema>;
 export type Friendship = typeof friendships.$inferSelect;
+
+export type GameSnapshot = z.infer<typeof gameSnapshotSchema>;

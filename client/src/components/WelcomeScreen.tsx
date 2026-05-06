@@ -1,27 +1,55 @@
 import { useState } from 'react';
-import { Clock, AlertTriangle, Zap, BookOpen } from 'lucide-react';
+import { Clock, AlertTriangle, Zap, BookOpen, ChevronLeft, Shield, Trophy } from 'lucide-react';
 import { useGameState } from '@/hooks/useGameState';
 import { Section, Difficulty } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 export default function WelcomeScreen() {
-  const { selectSection, startGame } = useGameState();
+  const { selectSection, startGame, returnToMenu, state } = useGameState();
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
-  
+
   const handleSectionSelect = (section: Section) => {
     setSelectedSection(section);
     selectSection(section);
   };
-  
+
   const handleStartGame = (difficulty: Difficulty) => {
     if (selectedSection) {
       startGame(difficulty);
     }
   };
-  
+
+  const isPractice = state.mode === 'practice';
+
   return (
     <div className="container max-w-4xl mx-auto p-4 flex flex-col items-center justify-center min-h-[80vh]">
+      {/* Mode badge + back button */}
+      <div className="flex items-center justify-between w-full mb-4">
+        <button
+          className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 transition-colors"
+          onClick={returnToMenu}
+        >
+          <ChevronLeft className="w-4 h-4" />
+          Mod Seçimi
+        </button>
+        <span className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full ${
+          isPractice
+            ? 'bg-green-100 text-green-700'
+            : 'bg-blue-100 text-blue-700'
+        }`}>
+          {isPractice ? <Shield className="w-3 h-3" /> : <Trophy className="w-3 h-3" />}
+          {isPractice ? 'Pratik Mod' : 'Rekabet Modu'}
+        </span>
+      </div>
+
+      {/* Practice notice */}
+      {isPractice && (
+        <div className="w-full mb-4 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2 text-sm text-amber-800">
+          Pratik modu — bu oturumda hiçbir veri kaydedilmez.
+        </div>
+      )}
+
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
           TUS Quiz Oyunu
