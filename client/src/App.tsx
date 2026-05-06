@@ -8,26 +8,20 @@ import GameScreen from "@/components/GameScreen";
 import FeedbackScreen from "@/components/FeedbackScreen";
 import ResultScreen from "@/components/ResultScreen";
 import { useGameState, GameStateProvider } from "@/hooks/useGameState";
-
-function Router() {
-  return (
-    <GameStateProvider>
-      <CurrentScreen />
-    </GameStateProvider>
-  );
-}
+import { AuthProvider } from "@/hooks/useAuth";
+import Header from "@/components/Header";
 
 function CurrentScreen() {
   const { state } = useGameState();
-  
+
   switch (state.currentScreen) {
-    case 'welcome':
+    case "welcome":
       return <WelcomeScreen />;
-    case 'game':
+    case "game":
       return <GameScreen />;
-    case 'feedback':
+    case "feedback":
       return <FeedbackScreen />;
-    case 'result':
+    case "result":
       return <ResultScreen />;
     default:
       return <NotFound />;
@@ -37,12 +31,17 @@ function CurrentScreen() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <div className="max-w-3xl mx-auto p-4 sm:p-6">
-          <Toaster />
-          <Router />
-        </div>
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <div className="max-w-3xl mx-auto p-4 sm:p-6">
+            <Toaster />
+            <GameStateProvider>
+              <Header />
+              <CurrentScreen />
+            </GameStateProvider>
+          </div>
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

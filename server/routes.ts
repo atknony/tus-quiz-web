@@ -1,55 +1,258 @@
-import type { Express } from "express";
+import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
+import passport from "passport";
+import bcrypt from "bcrypt";
+import { Resend } from "resend";
+import rateLimit from "express-rate-limit";
+import { z } from "zod";
 import { storage } from "./storage";
-import fs from "fs";
-import path from "path";
+import type { User } from "@shared/schema";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Rate limiter for all auth endpoints — 10 requests per 15 minutes per IP
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  message: { message: "Çok fazla deneme. Lütfen 15 dakika sonra tekrar deneyin." },
+});
+
+// --- Validation schemas ---
+
+const registerBodySchema = z
+  .object({
+    username: z
+      .string()
+      .min(3, "Kullanıcı adı en az 3 karakter olmalıdır.")
+      .max(30, "Kullanıcı adı en fazla 30 karakter olabilir.")
+      .regex(/^[a-zA-Z0-9_]+$/, "Kullanıcı adı sadece harf, rakam ve alt çizgi içerebilir."),
+    email: z.string().email("Geçerli bir e-posta adresi giriniz."),
+    password: z
+      .string()
+      .min(8, "Şifre en az 8 karakter olmalıdır.")
+      .regex(/[A-Z]/, "Şifre en az bir büyük harf içermelidir.")
+      .regex(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/, "Şifre en az bir özel karakter içermelidir."),
+    confirmPassword: z.string(),
+    dateOfBirth: z.string().min(1, "Doğum tarihi zorunludur."),
+    university: z.string().min(1, "Üniversite seçiniz."),
+    captchaToken: z.string().min(1, "Lütfen robot olmadığınızı doğrulayın."),
+  })
+  .refine((d) => d.password === d.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Şifreler eşleşmiyor.",
+  });
+
+const loginBodySchema = z.object({
+  email: z.string().min(1),
+  password: z.string().min(1),
+});
+
+const verifyEmailBodySchema = z.object({
+  userId: z.number(),
+  otp: z.string().length(6),
+});
+
+const resendVerificationBodySchema = z.object({
+  email: z.string().email(),
+});
+
+// --- Helpers ---
+
+function toSafeUser(user: User) {
+  const { password: _, ...safe } = user;
+  return safe;
+}
+
+function generateOtp(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+async function verifyTurnstile(token: string): Promise<boolean> {
+  const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      secret: process.env.TURNSTILE_SECRET_KEY,
+      response: token,
+    }),
+  });
+  const data = (await res.json()) as { success: boolean };
+  return data.success;
+}
+
+async function sendOtpEmail(email: string, username: string, otp: string): Promise<void> {
+  await resend.emails.send({
+    from: process.env.EMAIL_FROM!,
+    to: email,
+    subject: "TUS Quiz — E-posta Doğrulama Kodunuz",
+    html: `
+      <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
+        <h2>Merhaba ${username},</h2>
+        <p>TUS Quiz hesabınızı doğrulamak için aşağıdaki 6 haneli kodu kullanın:</p>
+        <div style="font-size: 36px; font-weight: bold; letter-spacing: 10px; text-align: center;
+                    padding: 24px; background: #f4f4f5; border-radius: 8px; margin: 24px 0;">
+          ${otp}
+        </div>
+        <p style="color: #6b7280; font-size: 14px;">Bu kod <strong>15 dakika</strong> içinde geçerliliğini yitirecektir.</p>
+        <p style="color: #6b7280; font-size: 14px;">Bu e-postayı siz talep etmediyseniz güvenle yoksayabilirsiniz.</p>
+      </div>
+    `,
+  });
+}
+
+// --- Route registration ---
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // API endpoint to get questions (legacy - keep for backward compatibility)
+  // Existing quiz routes
   app.get("/api/questions", async (req, res) => {
     try {
       const questions = await storage.getQuestions();
       res.json(questions);
-    } catch (error) {
-      console.error("Error fetching questions:", error);
+    } catch {
       res.status(500).json({ message: "Failed to fetch questions" });
     }
   });
 
-  // API endpoint to get questions by section
   app.get("/api/questions/:section", async (req, res) => {
     try {
-      const { section } = req.params;
-      const questions = await storage.getQuestionsBySection(section);
+      const questions = await storage.getQuestionsBySection(req.params.section);
       res.json(questions);
-    } catch (error) {
-      console.error(`Error fetching ${req.params.section} questions:`, error);
+    } catch {
       res.status(500).json({ message: `Failed to fetch ${req.params.section} questions` });
     }
   });
 
-  // API endpoint to save game result
   app.post("/api/games", async (req, res) => {
     try {
-      const gameData = req.body;
-      const game = await storage.saveGame(gameData);
+      const game = await storage.saveGame(req.body);
       res.status(201).json(game);
-    } catch (error) {
-      console.error("Error saving game:", error);
+    } catch {
       res.status(500).json({ message: "Failed to save game" });
     }
   });
 
-  // API endpoint to get top scores
   app.get("/api/games/top", async (req, res) => {
     try {
       const { difficulty, section } = req.query;
       const topScores = await storage.getTopScores(difficulty as string, section as string);
       res.json(topScores);
-    } catch (error) {
-      console.error("Error fetching top scores:", error);
+    } catch {
       res.status(500).json({ message: "Failed to fetch top scores" });
     }
+  });
+
+  // Auth routes (all rate-limited)
+  app.post("/api/auth/register", authLimiter, async (req: Request, res: Response) => {
+    const parsed = registerBodySchema.safeParse(req.body);
+    if (!parsed.success) {
+      const msg = parsed.error.errors[0]?.message ?? "Geçersiz istek.";
+      return res.status(400).json({ message: msg });
+    }
+
+    const { username, email, password, dateOfBirth, university, captchaToken } = parsed.data;
+
+    const captchaOk = await verifyTurnstile(captchaToken);
+    if (!captchaOk) {
+      return res.status(400).json({ message: "CAPTCHA doğrulaması başarısız." });
+    }
+
+    const [existingByUsername, existingByEmail] = await Promise.all([
+      storage.getUserByUsername(username),
+      storage.getUserByEmail(email),
+    ]);
+    if (existingByUsername) return res.status(409).json({ message: "Bu kullanıcı adı zaten kullanılıyor." });
+    if (existingByEmail) return res.status(409).json({ message: "Bu e-posta adresi zaten kayıtlı." });
+
+    const passwordHash = await bcrypt.hash(password, 12);
+    const user = await storage.createUser({
+      username,
+      email,
+      password: passwordHash,
+      dateOfBirth,
+      university,
+    });
+
+    const otp = generateOtp();
+    const otpHash = await bcrypt.hash(otp, 10);
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+    await storage.createEmailVerification({ userId: user.id, otpHash, expiresAt });
+    await sendOtpEmail(email, username, otp);
+
+    return res.status(201).json({ userId: user.id, message: "Doğrulama kodu e-posta adresinize gönderildi." });
+  });
+
+  app.post("/api/auth/verify-email", authLimiter, async (req: Request, res: Response) => {
+    const parsed = verifyEmailBodySchema.safeParse(req.body);
+    if (!parsed.success) return res.status(400).json({ message: "Geçersiz istek." });
+
+    const { userId, otp } = parsed.data;
+
+    const record = await storage.getEmailVerification(userId);
+    if (!record) return res.status(400).json({ message: "Doğrulama kaydı bulunamadı." });
+    if (new Date() > record.expiresAt) {
+      await storage.deleteEmailVerification(userId);
+      return res.status(400).json({ message: "Kodun süresi dolmuş. Lütfen yeni kod isteyin." });
+    }
+
+    const isValid = await bcrypt.compare(otp, record.otpHash);
+    if (!isValid) return res.status(400).json({ message: "Hatalı kod. Lütfen tekrar deneyin." });
+
+    await storage.verifyUserEmail(userId);
+    await storage.deleteEmailVerification(userId);
+
+    const user = await storage.getUser(userId);
+    req.login(user!, (err) => {
+      if (err) return res.status(500).json({ message: "Oturum başlatılamadı." });
+      return res.json(toSafeUser(user!));
+    });
+  });
+
+  app.post("/api/auth/login", authLimiter, (req: Request, res: Response, next) => {
+    const parsed = loginBodySchema.safeParse(req.body);
+    if (!parsed.success) return res.status(400).json({ message: "Geçersiz istek." });
+
+    passport.authenticate("local", (err: any, user: User | false, info: { message: string }) => {
+      if (err) return next(err);
+      if (!user) return res.status(401).json({ message: info?.message ?? "Giriş başarısız." });
+
+      req.login(user, (loginErr) => {
+        if (loginErr) return next(loginErr);
+        return res.json(toSafeUser(user));
+      });
+    })(req, res, next);
+  });
+
+  app.post("/api/auth/logout", (req: Request, res: Response, next) => {
+    req.logout((err) => {
+      if (err) return next(err);
+      req.session.destroy(() => res.json({ message: "Çıkış yapıldı." }));
+    });
+  });
+
+  app.get("/api/auth/me", (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.json(null);
+    return res.json(toSafeUser(req.user as User));
+  });
+
+  app.post("/api/auth/resend-verification", authLimiter, async (req: Request, res: Response) => {
+    const parsed = resendVerificationBodySchema.safeParse(req.body);
+    if (!parsed.success) return res.status(400).json({ message: "Geçersiz e-posta." });
+
+    const user = await storage.getUserByEmail(parsed.data.email);
+    // Always return 200 to avoid user enumeration
+    if (!user || user.isEmailVerified) return res.json({ message: "Doğrulama kodu gönderildi." });
+
+    const otp = generateOtp();
+    const otpHash = await bcrypt.hash(otp, 10);
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+    await storage.createEmailVerification({ userId: user.id, otpHash, expiresAt });
+    await sendOtpEmail(user.email, user.username, otp);
+
+    return res.json({ message: "Doğrulama kodu gönderildi." });
   });
 
   const httpServer = createServer(app);

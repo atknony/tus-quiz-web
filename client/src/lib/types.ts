@@ -1,3 +1,14 @@
+export interface AuthUser {
+  id: number;
+  username: string;
+  email: string;
+  dateOfBirth: string;
+  university: string;
+  role: 'user' | 'admin';
+  isEmailVerified: boolean;
+  createdAt: string;
+}
+
 export type Difficulty = 'easy' | 'medium' | 'expert';
 export type Section = 'klinik' | 'preklinik';
 
