@@ -19,6 +19,7 @@ function updateCategory(perf: CategoryPerformance, category: string, field: 'cor
 
 const initialState: GameState = {
   currentScreen: 'mode',
+  viewingUserId: null,
   mode: null,
   gameId: null,
   section: null,
@@ -211,7 +212,10 @@ function gameReducer(state: GameState, action: GameAction): GameState {
     }
 
     case 'SET_SCREEN':
-      return { ...state, currentScreen: action.payload };
+      return { ...state, currentScreen: action.payload, viewingUserId: null };
+
+    case 'VIEW_USER':
+      return { ...state, currentScreen: 'profile', viewingUserId: action.payload };
 
     case 'RESET_GAME':
       return { ...initialState };

@@ -28,7 +28,8 @@ export interface Question {
 }
 
 export interface GameState {
-  currentScreen: 'mode' | 'welcome' | 'game' | 'feedback' | 'result' | 'profile';
+  currentScreen: 'mode' | 'welcome' | 'game' | 'feedback' | 'result' | 'profile' | 'friends';
+  viewingUserId: number | null;
   mode: GameMode | null;
   gameId: number | null;
   section: Section | null;
@@ -64,4 +65,5 @@ export type GameAction =
   | { type: 'RESET_GAME' }
   | { type: 'PLAY_AGAIN' }
   | { type: 'END_GAME' }
-  | { type: 'FINISH_EXAM' };
+  | { type: 'FINISH_EXAM' }
+  | { type: 'VIEW_USER'; payload: number };

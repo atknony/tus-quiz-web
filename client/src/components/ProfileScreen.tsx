@@ -65,7 +65,7 @@ const PAGE_SIZE = 20;
 
 export default function ProfileScreen() {
   const { user } = useAuth();
-  const { dispatch } = useGameState();
+  const { state, dispatch } = useGameState();
 
   if (!user) {
     return (
@@ -81,10 +81,12 @@ export default function ProfileScreen() {
     );
   }
 
-  return <ProfileContent userId={user.id} />;
+  const profileUserId = state.viewingUserId ?? user.id;
+  const isViewingFriend = state.viewingUserId !== null;
+  return <ProfileContent userId={profileUserId} isViewingFriend={isViewingFriend} />;
 }
 
-function ProfileContent({ userId }: { userId: number }) {
+function ProfileContent({ userId, isViewingFriend }: { userId: number; isViewingFriend: boolean }) {
   const { dispatch } = useGameState();
 
   const profileQuery = useQuery<ProfileResponse>({
@@ -133,12 +135,12 @@ function ProfileContent({ userId }: { userId: number }) {
       <div className="flex items-center justify-between">
         <button
           className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 transition-colors"
-          onClick={() => dispatch({ type: 'SET_SCREEN', payload: 'mode' })}
+          onClick={() => dispatch({ type: 'SET_SCREEN', payload: isViewingFriend ? 'friends' : 'mode' })}
         >
           <ChevronLeft className="w-4 h-4" />
-          Mod Seçimi
+          {isViewingFriend ? 'Arkadaşlarım' : 'Mod Seçimi'}
         </button>
-        <h1 className="text-2xl font-bold">Profilim</h1>
+        <h1 className="text-2xl font-bold">{isViewingFriend ? 'Profil' : 'Profilim'}</h1>
         <span className="w-20" />
       </div>
 

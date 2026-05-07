@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp, real, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, real, jsonb, index, uniqueIndex } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -56,16 +56,21 @@ export const games = pgTable("games", {
     .default({}),
   startedAt: timestamp("started_at").notNull().defaultNow(),
   completedAt: timestamp("completed_at"),
-});
+}, (table) => ({
+  idxUserStatusScore: index("idx_games_user_status_score").on(table.userId, table.status, table.finalScore),
+}));
 
-// Future feature — not yet exposed via API
 export const friendships = pgTable("friendships", {
   id: serial("id").primaryKey(),
   requesterId: integer("requester_id").notNull().references(() => users.id, { onDelete: "cascade" }),
   addresseeId: integer("addressee_id").notNull().references(() => users.id, { onDelete: "cascade" }),
   status: text("status").notNull().default("pending"), // 'pending' | 'accepted' | 'blocked'
   createdAt: timestamp("created_at").notNull().defaultNow(),
-});
+}, (table) => ({
+  uqRequesterAddressee: uniqueIndex("uq_friendships_requester_addressee").on(table.requesterId, table.addresseeId),
+  idxRequesterStatus: index("idx_friendships_requester_status").on(table.requesterId, table.status),
+  idxAddresseeStatus: index("idx_friendships_addressee_status").on(table.addresseeId, table.status),
+}));
 
 // Relations (used for future join queries)
 export const usersRelations = relations(users, ({ many }) => ({

@@ -12,9 +12,28 @@ import {
   type Game,
   type InsertGame,
   type GameSnapshot,
+  friendships,
+  type Friendship,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, asc, and, count, sum, max, inArray } from "drizzle-orm";
+import { eq, desc, asc, and, or, ne, ilike, count, sum, max, inArray } from "drizzle-orm";
+
+export interface FriendshipWithUser extends Friendship {
+  otherUser: { id: number; username: string; university: string };
+}
+
+export interface FriendWithProfile {
+  friendshipId: number;
+  id: number;
+  username: string;
+  university: string;
+}
+
+export interface UserPublic {
+  id: number;
+  username: string;
+  university: string;
+}
 
 export interface UserStats {
   totalGames: number;
@@ -60,6 +79,16 @@ export interface IStorage {
   enforceUserGameCap(userId: number): Promise<void>;
   getLeaderboard(opts?: { difficulty?: string; section?: string; limit?: number }): Promise<Array<Game & { username: string }>>;
   getTopScores(difficulty?: string, section?: string): Promise<Game[]>;
+
+  // Friendships
+  sendFriendRequest(requesterId: number, addresseeId: number): Promise<Friendship>;
+  getFriendshipBetween(userId1: number, userId2: number): Promise<Friendship | undefined>;
+  getFriendRequestById(id: number): Promise<Friendship | undefined>;
+  acceptFriendRequest(id: number, addresseeId: number): Promise<Friendship | undefined>;
+  deleteFriendship(id: number, userId: number): Promise<void>;
+  getPendingRequestsForUser(userId: number): Promise<{ sent: FriendshipWithUser[]; received: FriendshipWithUser[] }>;
+  getAcceptedFriends(userId: number): Promise<FriendWithProfile[]>;
+  searchUsers(query: string, excludeUserId: number, limit?: number): Promise<UserPublic[]>;
 }
 
 export class PostgresStorage implements IStorage {
@@ -286,6 +315,81 @@ export class PostgresStorage implements IStorage {
     if (difficulty) query = query.where(eq(games.difficulty, difficulty));
     if (section) query = query.where(eq(games.section, section));
     return query.orderBy(desc(games.finalScore)).limit(10);
+  }
+
+  // --- Friendships ---
+
+  async sendFriendRequest(requesterId: number, addresseeId: number): Promise<Friendship> {
+    const existing = await this.getFriendshipBetween(requesterId, addresseeId);
+    if (existing) throw new Error("Friendship already exists");
+    return db.insert(friendships).values({ requesterId, addresseeId, status: "pending" }).returning().then(r => r[0]);
+  }
+
+  async getFriendshipBetween(userId1: number, userId2: number): Promise<Friendship | undefined> {
+    return db.select().from(friendships)
+      .where(or(
+        and(eq(friendships.requesterId, userId1), eq(friendships.addresseeId, userId2)),
+        and(eq(friendships.requesterId, userId2), eq(friendships.addresseeId, userId1)),
+      ))
+      .limit(1)
+      .then(r => r[0]);
+  }
+
+  async getFriendRequestById(id: number): Promise<Friendship | undefined> {
+    return db.select().from(friendships).where(eq(friendships.id, id)).limit(1).then(r => r[0]);
+  }
+
+  async acceptFriendRequest(id: number, addresseeId: number): Promise<Friendship | undefined> {
+    return db.update(friendships)
+      .set({ status: "accepted" })
+      .where(and(eq(friendships.id, id), eq(friendships.addresseeId, addresseeId)))
+      .returning()
+      .then(r => r[0]);
+  }
+
+  async deleteFriendship(id: number, userId: number): Promise<void> {
+    await db.delete(friendships).where(
+      and(eq(friendships.id, id), or(eq(friendships.requesterId, userId), eq(friendships.addresseeId, userId))),
+    );
+  }
+
+  async getPendingRequestsForUser(userId: number): Promise<{ sent: FriendshipWithUser[]; received: FriendshipWithUser[] }> {
+    const cols = { id: friendships.id, requesterId: friendships.requesterId, addresseeId: friendships.addresseeId, status: friendships.status, createdAt: friendships.createdAt };
+    const userCols = { id: users.id, username: users.username, university: users.university };
+
+    const [sentRows, receivedRows] = await Promise.all([
+      db.select({ ...cols, otherUser: userCols })
+        .from(friendships)
+        .innerJoin(users, eq(users.id, friendships.addresseeId))
+        .where(and(eq(friendships.requesterId, userId), eq(friendships.status, "pending"))),
+      db.select({ ...cols, otherUser: userCols })
+        .from(friendships)
+        .innerJoin(users, eq(users.id, friendships.requesterId))
+        .where(and(eq(friendships.addresseeId, userId), eq(friendships.status, "pending"))),
+    ]);
+
+    return { sent: sentRows, received: receivedRows };
+  }
+
+  async getAcceptedFriends(userId: number): Promise<FriendWithProfile[]> {
+    const [asRequester, asAddressee] = await Promise.all([
+      db.select({ friendshipId: friendships.id, id: users.id, username: users.username, university: users.university })
+        .from(friendships)
+        .innerJoin(users, eq(users.id, friendships.addresseeId))
+        .where(and(eq(friendships.requesterId, userId), eq(friendships.status, "accepted"))),
+      db.select({ friendshipId: friendships.id, id: users.id, username: users.username, university: users.university })
+        .from(friendships)
+        .innerJoin(users, eq(users.id, friendships.requesterId))
+        .where(and(eq(friendships.addresseeId, userId), eq(friendships.status, "accepted"))),
+    ]);
+    return [...asRequester, ...asAddressee];
+  }
+
+  async searchUsers(query: string, excludeUserId: number, limit = 10): Promise<UserPublic[]> {
+    return db.select({ id: users.id, username: users.username, university: users.university })
+      .from(users)
+      .where(and(ilike(users.username, `%${query}%`), ne(users.id, excludeUserId)))
+      .limit(limit);
   }
 }
 

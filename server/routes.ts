@@ -27,6 +27,14 @@ const gamesLimiter = rateLimit({
   message: { message: "Çok fazla istek." },
 });
 
+const friendsLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 60,
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  message: { message: "Çok fazla istek." },
+});
+
 // --- Validation schemas ---
 
 const registerBodySchema = z
@@ -252,6 +260,101 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.json({ games: page, hasMore });
     } catch {
       return res.status(500).json({ message: "Oyun geçmişi alınamadı." });
+    }
+  });
+
+  // --- Friends API ---
+
+  app.get("/api/friends/search", friendsLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const q = (req.query.q as string) ?? "";
+    if (q.length < 2) return res.status(400).json({ message: "En az 2 karakter giriniz." });
+    const me = (req.user as User).id;
+    try {
+      const results = await storage.searchUsers(q, me);
+      return res.json(results);
+    } catch {
+      return res.status(500).json({ message: "Arama başarısız." });
+    }
+  });
+
+  app.get("/api/friends", friendsLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const me = (req.user as User).id;
+    try {
+      const friends = await storage.getAcceptedFriends(me);
+      return res.json(friends);
+    } catch {
+      return res.status(500).json({ message: "Arkadaş listesi alınamadı." });
+    }
+  });
+
+  app.get("/api/friends/requests", friendsLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const me = (req.user as User).id;
+    try {
+      const requests = await storage.getPendingRequestsForUser(me);
+      return res.json(requests);
+    } catch {
+      return res.status(500).json({ message: "İstekler alınamadı." });
+    }
+  });
+
+  app.post("/api/friends/request", friendsLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const me = (req.user as User).id;
+    const addresseeId = Number(req.body?.addresseeId);
+    if (!Number.isInteger(addresseeId) || addresseeId <= 0) return res.status(400).json({ message: "Geçersiz kullanıcı." });
+    if (addresseeId === me) return res.status(400).json({ message: "Kendinize istek gönderemezsiniz." });
+    try {
+      const friendship = await storage.sendFriendRequest(me, addresseeId);
+      return res.status(201).json(friendship);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "";
+      if (msg === "Friendship already exists") return res.status(409).json({ message: "Bu kullanıcıyla zaten bir ilişkiniz var." });
+      return res.status(500).json({ message: "İstek gönderilemedi." });
+    }
+  });
+
+  app.patch("/api/friends/requests/:id/accept", friendsLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) return res.status(400).json({ message: "Geçersiz istek ID." });
+    const me = (req.user as User).id;
+    try {
+      const friendship = await storage.acceptFriendRequest(id, me);
+      if (!friendship) return res.status(403).json({ message: "Bu isteği kabul edemezsiniz." });
+      return res.json(friendship);
+    } catch {
+      return res.status(500).json({ message: "İstek kabul edilemedi." });
+    }
+  });
+
+  app.delete("/api/friends/requests/:id", friendsLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) return res.status(400).json({ message: "Geçersiz istek ID." });
+    const me = (req.user as User).id;
+    try {
+      await storage.deleteFriendship(id, me);
+      return res.json({ message: "İstek silindi." });
+    } catch {
+      return res.status(500).json({ message: "İstek silinemedi." });
+    }
+  });
+
+  app.delete("/api/friends/:friendId", friendsLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const friendId = parseInt(req.params.friendId, 10);
+    if (isNaN(friendId)) return res.status(400).json({ message: "Geçersiz kullanıcı ID." });
+    const me = (req.user as User).id;
+    try {
+      const row = await storage.getFriendshipBetween(me, friendId);
+      if (!row) return res.status(404).json({ message: "Arkadaşlık bulunamadı." });
+      await storage.deleteFriendship(row.id, me);
+      return res.json({ message: "Arkadaş kaldırıldı." });
+    } catch {
+      return res.status(500).json({ message: "Arkadaş kaldırılamadı." });
     }
   });
 

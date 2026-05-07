@@ -1,4 +1,4 @@
-import { LogOut, User, UserCircle } from "lucide-react";
+import { LogOut, User, UserCircle, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useGameState } from "@/hooks/useGameState";
@@ -13,6 +13,7 @@ export default function Header() {
 
   const isPlaying = GAMEPLAY_SCREENS.has(state.currentScreen);
   const isOnProfile = state.currentScreen === 'profile';
+  const isOnFriends = state.currentScreen === 'friends';
 
   return (
     <header className="flex items-center justify-end gap-2 mb-4 min-h-[36px]">
@@ -23,6 +24,16 @@ export default function Header() {
               <User className="w-4 h-4" />
               <span className="font-medium">{user.username}</span>
             </span>
+            {!isPlaying && !isOnFriends && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => dispatch({ type: 'SET_SCREEN', payload: 'friends' })}
+              >
+                <Users className="w-4 h-4 mr-1.5" />
+                Arkadaşlarım
+              </Button>
+            )}
             {!isPlaying && !isOnProfile && (
               <Button
                 variant="ghost"
@@ -34,7 +45,10 @@ export default function Header() {
               </Button>
             )}
             {!isPlaying && (
-              <Button variant="outline" size="sm" onClick={() => logout()}>
+              <Button variant="outline" size="sm" onClick={async () => {
+                await logout();
+                dispatch({ type: 'RESET_GAME' });
+              }}>
                 <LogOut className="w-4 h-4 mr-1.5" />
                 Çıkış
               </Button>
