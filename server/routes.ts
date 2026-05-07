@@ -358,6 +358,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/leaderboard", friendsLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const me = (req.user as User).id;
+    try {
+      const entries = await storage.getFriendsLeaderboard(me);
+      return res.json(entries.map(e => ({ ...e, isMe: e.userId === me })));
+    } catch {
+      return res.status(500).json({ message: "Sıralama alınamadı." });
+    }
+  });
+
   app.get("/api/games/leaderboard", async (req: Request, res: Response) => {
     const { difficulty, section } = req.query;
     const rawLimit = parseInt(req.query.limit as string, 10);

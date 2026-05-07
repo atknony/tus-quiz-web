@@ -10,6 +10,7 @@ import FeedbackScreen from "@/components/FeedbackScreen";
 import ResultScreen from "@/components/ResultScreen";
 import ProfileScreen from "@/components/ProfileScreen";
 import FriendsScreen from "@/components/FriendsScreen";
+import LeaderboardScreen from "@/components/LeaderboardScreen";
 import { useGameState, GameStateProvider } from "@/hooks/useGameState";
 import { AuthProvider } from "@/hooks/useAuth";
 import { AuthModalProvider } from "@/hooks/useAuthModal";
@@ -33,6 +34,8 @@ function CurrentScreen() {
       return <ProfileScreen />;
     case "friends":
       return <FriendsScreen />;
+    case "leaderboard":
+      return <LeaderboardScreen />;
     default:
       return <NotFound />;
   }

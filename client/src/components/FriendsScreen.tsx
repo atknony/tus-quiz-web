@@ -74,6 +74,7 @@ export default function FriendsScreen() {
     qc.invalidateQueries({ queryKey: ['/api/friends'] });
     qc.invalidateQueries({ queryKey: ['/api/friends/requests'] });
     qc.invalidateQueries({ queryKey: ['/api/friends/search'] });
+    qc.invalidateQueries({ queryKey: ['/api/leaderboard'] });
   };
 
   const sendRequest = useMutation({

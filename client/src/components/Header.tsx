@@ -1,4 +1,4 @@
-import { LogOut, User, UserCircle, Users } from "lucide-react";
+import { LogOut, User, UserCircle, Users, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useGameState } from "@/hooks/useGameState";
@@ -14,6 +14,7 @@ export default function Header() {
   const isPlaying = GAMEPLAY_SCREENS.has(state.currentScreen);
   const isOnProfile = state.currentScreen === 'profile';
   const isOnFriends = state.currentScreen === 'friends';
+  const isOnLeaderboard = state.currentScreen === 'leaderboard';
 
   return (
     <header className="flex items-center justify-end gap-2 mb-4 min-h-[36px]">
@@ -24,6 +25,16 @@ export default function Header() {
               <User className="w-4 h-4" />
               <span className="font-medium">{user.username}</span>
             </span>
+            {!isPlaying && !isOnLeaderboard && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => dispatch({ type: 'SET_SCREEN', payload: 'leaderboard' })}
+              >
+                <Trophy className="w-4 h-4 mr-1.5" />
+                Sıralama
+              </Button>
+            )}
             {!isPlaying && !isOnFriends && (
               <Button
                 variant="ghost"

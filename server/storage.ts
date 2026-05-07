@@ -35,6 +35,15 @@ export interface UserPublic {
   university: string;
 }
 
+export interface LeaderboardEntry {
+  userId: number;
+  username: string;
+  masteryScore: number;
+  totalGames: number;
+  accuracyRate: number;
+  maxStreakEver: number;
+}
+
 export interface UserStats {
   totalGames: number;
   totalCorrect: number;
@@ -79,6 +88,8 @@ export interface IStorage {
   enforceUserGameCap(userId: number): Promise<void>;
   getLeaderboard(opts?: { difficulty?: string; section?: string; limit?: number }): Promise<Array<Game & { username: string }>>;
   getTopScores(difficulty?: string, section?: string): Promise<Game[]>;
+
+  getFriendsLeaderboard(userId: number): Promise<LeaderboardEntry[]>;
 
   // Friendships
   sendFriendRequest(requesterId: number, addresseeId: number): Promise<Friendship>;
@@ -315,6 +326,35 @@ export class PostgresStorage implements IStorage {
     if (difficulty) query = query.where(eq(games.difficulty, difficulty));
     if (section) query = query.where(eq(games.section, section));
     return query.orderBy(desc(games.finalScore)).limit(10);
+  }
+
+  async getFriendsLeaderboard(userId: number): Promise<LeaderboardEntry[]> {
+    const friends = await this.getAcceptedFriends(userId);
+    const participantIds = [userId, ...friends.map(f => f.id)];
+
+    const rows = await db.select({
+      userId: users.id,
+      username: users.username,
+      totalGames: count(games.id),
+      totalCorrect: sum(games.correctAnswers),
+      totalWrong: sum(games.wrongAnswers),
+      maxStreakEver: max(games.maxStreak),
+    })
+      .from(users)
+      .leftJoin(games, and(eq(games.userId, users.id), eq(games.status, "completed")))
+      .where(inArray(users.id, participantIds))
+      .groupBy(users.id, users.username);
+
+    return rows.map(r => {
+      const totalGames = r.totalGames;
+      const totalCorrect = Number(r.totalCorrect ?? 0);
+      const totalWrong = Number(r.totalWrong ?? 0);
+      const totalAnswered = totalCorrect + totalWrong;
+      const accuracyRate = totalAnswered > 0 ? (totalCorrect / totalAnswered) * 100 : 0;
+      const maxStreakEver = Number(r.maxStreakEver ?? 0);
+      const masteryScore = Math.round((accuracyRate * Math.sqrt(totalGames)) * 10 + (maxStreakEver * 50));
+      return { userId: r.userId, username: r.username, masteryScore, totalGames, accuracyRate, maxStreakEver };
+    }).sort((a, b) => b.masteryScore - a.masteryScore);
   }
 
   // --- Friendships ---
