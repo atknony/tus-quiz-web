@@ -210,6 +210,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/users/:id/profile", gamesLimiter, async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) return res.status(400).json({ message: "Geçersiz kullanıcı ID." });
+    try {
+      const target = await storage.getUser(id);
+      if (!target) return res.status(404).json({ message: "Kullanıcı bulunamadı." });
+      const stats = await storage.getUserStats(id);
+      const isSelf = req.isAuthenticated() && (req.user as User).id === id;
+
+      const base = {
+        id: target.id,
+        username: target.username,
+        university: target.university,
+        createdAt: target.createdAt,
+        stats,
+      };
+      const payload = isSelf
+        ? { ...base, email: target.email, dateOfBirth: target.dateOfBirth }
+        : base;
+      return res.json(payload);
+    } catch {
+      return res.status(500).json({ message: "Profil yüklenemedi." });
+    }
+  });
+
+  app.get("/api/users/:id/games", gamesLimiter, async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) return res.status(400).json({ message: "Geçersiz kullanıcı ID." });
+
+    const rawLimit = parseInt(req.query.limit as string, 10);
+    const limit = isNaN(rawLimit) ? 20 : Math.min(Math.max(rawLimit, 1), 50);
+    const rawOffset = parseInt(req.query.offset as string, 10);
+    const offset = isNaN(rawOffset) ? 0 : Math.max(rawOffset, 0);
+
+    try {
+      // Fetch limit + 1 so we can tell if more rows exist beyond this page.
+      const fetched = await storage.getCompletedGamesByUserId(id, { limit: limit + 1, offset });
+      const hasMore = fetched.length > limit;
+      const page = hasMore ? fetched.slice(0, limit) : fetched;
+      return res.json({ games: page, hasMore });
+    } catch {
+      return res.status(500).json({ message: "Oyun geçmişi alınamadı." });
+    }
+  });
+
   app.get("/api/games/leaderboard", async (req: Request, res: Response) => {
     const { difficulty, section } = req.query;
     const rawLimit = parseInt(req.query.limit as string, 10);

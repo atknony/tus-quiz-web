@@ -14,7 +14,19 @@ import {
   type GameSnapshot,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, asc, and, count, sum, max, inArray } from "drizzle-orm";
+
+export interface UserStats {
+  totalGames: number;
+  totalCorrect: number;
+  totalWrong: number;
+  accuracyRate: number;
+  maxStreakEver: number;
+  strongestCategory: string | null;
+  weakestCategory: string | null;
+}
+
+const USER_GAME_CAP = 100;
 
 export interface IStorage {
   // Users
@@ -43,6 +55,9 @@ export interface IStorage {
   completeGame(id: number, userId: number, data: GameSnapshot): Promise<Game | undefined>;
   getGameById(id: number): Promise<Game | undefined>;
   getGamesByUserId(userId: number, limit?: number): Promise<Game[]>;
+  getCompletedGamesByUserId(userId: number, opts?: { limit?: number; offset?: number }): Promise<Game[]>;
+  getUserStats(userId: number): Promise<UserStats>;
+  enforceUserGameCap(userId: number): Promise<void>;
   getLeaderboard(opts?: { difficulty?: string; section?: string; limit?: number }): Promise<Array<Game & { username: string }>>;
   getTopScores(difficulty?: string, section?: string): Promise<Game[]>;
 }
@@ -117,10 +132,13 @@ export class PostgresStorage implements IStorage {
   // --- Games / scores ---
 
   async saveGame(insertGame: InsertGame): Promise<Game> {
-    return db.insert(games).values(insertGame).returning().then(r => r[0]);
+    return this.createGame(insertGame);
   }
 
   async createGame(insertGame: InsertGame): Promise<Game> {
+    if (insertGame.userId != null) {
+      await this.enforceUserGameCap(insertGame.userId);
+    }
     return db.insert(games).values(insertGame).returning().then(r => r[0]);
   }
 
@@ -157,6 +175,94 @@ export class PostgresStorage implements IStorage {
       .where(eq(games.userId, userId))
       .orderBy(desc(games.startedAt))
       .limit(limit);
+  }
+
+  async getCompletedGamesByUserId(userId: number, opts: { limit?: number; offset?: number } = {}): Promise<Game[]> {
+    const { limit = 20, offset = 0 } = opts;
+    return db.select().from(games)
+      .where(and(eq(games.userId, userId), eq(games.status, "completed")))
+      .orderBy(desc(games.startedAt))
+      .limit(limit)
+      .offset(offset);
+  }
+
+  async getUserStats(userId: number): Promise<UserStats> {
+    const [agg] = await db.select({
+      totalGames: count(),
+      totalCorrect: sum(games.correctAnswers),
+      totalWrong: sum(games.wrongAnswers),
+      maxStreakEver: max(games.maxStreak),
+    }).from(games).where(and(eq(games.userId, userId), eq(games.status, "completed")));
+
+    const totalGames = agg?.totalGames ?? 0;
+    const totalCorrect = Number(agg?.totalCorrect ?? 0);
+    const totalWrong = Number(agg?.totalWrong ?? 0);
+    const totalAnswered = totalCorrect + totalWrong;
+    const accuracyRate = totalAnswered > 0 ? (totalCorrect / totalAnswered) * 100 : 0;
+    const maxStreakEver = Number(agg?.maxStreakEver ?? 0);
+
+    let strongestCategory: string | null = null;
+    let weakestCategory: string | null = null;
+
+    if (totalGames > 0) {
+      const rows = await db.select({ categoryPerformance: games.categoryPerformance })
+        .from(games)
+        .where(and(eq(games.userId, userId), eq(games.status, "completed")));
+
+      const merged: Record<string, { correct: number; wrong: number }> = {};
+      for (const r of rows) {
+        const perf = r.categoryPerformance ?? {};
+        for (const [cat, stats] of Object.entries(perf)) {
+          if (!merged[cat]) merged[cat] = { correct: 0, wrong: 0 };
+          merged[cat].correct += stats.correct;
+          merged[cat].wrong += stats.wrong;
+        }
+      }
+
+      // Require minimum 3 answers in a category to qualify as strongest/weakest,
+      // so a single lucky/unlucky guess doesn't dominate the result.
+      const ranked = Object.entries(merged)
+        .map(([category, s]) => ({
+          category,
+          total: s.correct + s.wrong,
+          accuracy: s.correct + s.wrong > 0 ? (s.correct / (s.correct + s.wrong)) * 100 : 0,
+        }))
+        .filter(c => c.total >= 3)
+        .sort((a, b) => b.accuracy - a.accuracy);
+
+      if (ranked.length > 0) {
+        strongestCategory = ranked[0].category;
+        weakestCategory = ranked[ranked.length - 1].category;
+      }
+    }
+
+    return {
+      totalGames,
+      totalCorrect,
+      totalWrong,
+      accuracyRate,
+      maxStreakEver,
+      strongestCategory,
+      weakestCategory,
+    };
+  }
+
+  async enforceUserGameCap(userId: number): Promise<void> {
+    const [row] = await db.select({ count: count() }).from(games).where(eq(games.userId, userId));
+    const current = row?.count ?? 0;
+    if (current < USER_GAME_CAP) return;
+
+    // Delete enough oldest rows so the upcoming insert leaves the user at exactly USER_GAME_CAP.
+    const toDelete = current - (USER_GAME_CAP - 1);
+    const oldest = await db.select({ id: games.id })
+      .from(games)
+      .where(eq(games.userId, userId))
+      .orderBy(asc(games.startedAt))
+      .limit(toDelete);
+
+    if (oldest.length > 0) {
+      await db.delete(games).where(inArray(games.id, oldest.map(r => r.id)));
+    }
   }
 
   async getLeaderboard(opts: { difficulty?: string; section?: string; limit?: number } = {}): Promise<Array<Game & { username: string }>> {

@@ -28,7 +28,7 @@ export interface Question {
 }
 
 export interface GameState {
-  currentScreen: 'mode' | 'welcome' | 'game' | 'feedback' | 'result';
+  currentScreen: 'mode' | 'welcome' | 'game' | 'feedback' | 'result' | 'profile';
   mode: GameMode | null;
   gameId: number | null;
   section: Section | null;

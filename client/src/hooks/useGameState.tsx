@@ -254,8 +254,8 @@ function buildSnapshot(s: GameState) {
   return {
     correctAnswers: s.correctAnswers,
     wrongAnswers: s.wrongAnswers,
-    totalTime: s.totalTime,
-    finalScore: s.totalTime,
+    totalTime: Math.round(s.totalTime),
+    finalScore: Math.round(s.totalTime),
     maxStreak: s.maxStreak,
     totalQuestionsAnswered: s.correctAnswers + s.wrongAnswers,
     categoryPerformance: s.categoryPerformance,

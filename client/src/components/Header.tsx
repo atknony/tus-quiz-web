@@ -1,4 +1,4 @@
-import { LogOut, User } from "lucide-react";
+import { LogOut, User, UserCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useGameState } from "@/hooks/useGameState";
@@ -8,10 +8,11 @@ const GAMEPLAY_SCREENS = new Set(["game", "feedback", "result"]);
 
 export default function Header() {
   const { user, isLoading, logout } = useAuth();
-  const { state } = useGameState();
+  const { state, dispatch } = useGameState();
   const { open: openModal } = useAuthModal();
 
   const isPlaying = GAMEPLAY_SCREENS.has(state.currentScreen);
+  const isOnProfile = state.currentScreen === 'profile';
 
   return (
     <header className="flex items-center justify-end gap-2 mb-4 min-h-[36px]">
@@ -22,6 +23,16 @@ export default function Header() {
               <User className="w-4 h-4" />
               <span className="font-medium">{user.username}</span>
             </span>
+            {!isPlaying && !isOnProfile && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => dispatch({ type: 'SET_SCREEN', payload: 'profile' })}
+              >
+                <UserCircle className="w-4 h-4 mr-1.5" />
+                Profilim
+              </Button>
+            )}
             {!isPlaying && (
               <Button variant="outline" size="sm" onClick={() => logout()}>
                 <LogOut className="w-4 h-4 mr-1.5" />
