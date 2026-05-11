@@ -47,7 +47,7 @@ function App() {
       <AuthProvider>
         <TooltipProvider>
           <div className="min-h-screen bg-background text-foreground">
-            <div className="max-w-2xl mx-auto px-5 sm:px-8 py-5 sm:py-8">
+            <div className="max-w-2xl lg:max-w-4xl mx-auto px-5 sm:px-8 lg:px-10 py-5 sm:py-8">
               <Toaster />
               <GameStateProvider>
                 <AuthModalProvider>

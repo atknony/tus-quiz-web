@@ -185,7 +185,7 @@ function ProfileContent({ userId, isViewingFriend }: { userId: number; isViewing
       {stats && (
         <SurfaceCard padding="lg">
           <div className="text-eyebrow text-muted-foreground mb-5">Yaşam Boyu İstatistikler</div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-5">
             <StatTile icon={<Trophy />} label="Toplam Maç" value={stats.totalGames} />
             <StatTile icon={<Target />} label="Doğruluk" value={`${stats.accuracyRate.toFixed(1)}%`} />
             <StatTile icon={<Flame />} label="En Uzun Seri" value={stats.maxStreakEver} />
@@ -325,7 +325,7 @@ function MatchCard({ match }: { match: MatchRow }) {
       </summary>
       <div className="px-4 sm:px-5 pb-4 pt-1 border-t border-border/60 space-y-4">
         <div className="text-caption text-muted-soft">{date}</div>
-        <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-body">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 text-body">
           <Detail label="Toplam Cevap" value={totalAnswered} />
           <Detail label="Doğruluk" value={`${match.accuracyRate.toFixed(1)}%`} />
           <Detail label="Max Seri" value={match.maxStreak} />

@@ -25,7 +25,7 @@ export default function ModeSelectionScreen() {
         <p className="mt-3 text-body-lg text-muted-foreground">Bir mod seçin</p>
       </header>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl lg:max-w-2xl mx-auto">
         <SurfaceCard
           variant="interactive"
           tone="success"
