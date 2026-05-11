@@ -139,7 +139,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/questions/:section", async (req, res) => {
     try {
-      const questions = await storage.getQuestionsBySection(req.params.section);
+      const { section } = req.params;
+      const category = typeof req.query.category === 'string' && req.query.category ? req.query.category : undefined;
+      const questions = category
+        ? await storage.getQuestionsBySectionAndCategory(section, category)
+        : await storage.getQuestionsBySection(section);
       res.json(questions);
     } catch {
       res.status(500).json({ message: `Failed to fetch ${req.params.section} questions` });

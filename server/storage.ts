@@ -74,6 +74,7 @@ export interface IStorage {
   getQuestions(): Promise<Question[]>;
   getQuestion(id: number): Promise<Question | undefined>;
   getQuestionsBySection(section: string): Promise<Question[]>;
+  getQuestionsBySectionAndCategory(section: string, category: string): Promise<Question[]>;
   createQuestion(question: InsertQuestion): Promise<Question>;
 
   // Games / scores
@@ -163,6 +164,13 @@ export class PostgresStorage implements IStorage {
   async getQuestionsBySection(section: string): Promise<Question[]> {
     const normalized = section.charAt(0).toUpperCase() + section.slice(1).toLowerCase();
     return db.select().from(questions).where(eq(questions.section, normalized));
+  }
+
+  async getQuestionsBySectionAndCategory(section: string, category: string): Promise<Question[]> {
+    const normalized = section.charAt(0).toUpperCase() + section.slice(1).toLowerCase();
+    return db.select().from(questions).where(
+      and(eq(questions.section, normalized), eq(questions.category, category))
+    );
   }
 
   async createQuestion(insertQuestion: InsertQuestion): Promise<Question> {

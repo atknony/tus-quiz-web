@@ -33,6 +33,7 @@ export interface GameState {
   mode: GameMode | null;
   gameId: number | null;
   section: Section | null;
+  category: string | null;
   difficulty: Difficulty | null;
   questions: Question[];
   currentQuestionIndex: number;
@@ -53,6 +54,7 @@ export type GameAction =
   | { type: 'SET_MODE'; payload: GameMode }
   | { type: 'SET_GAME_ID'; payload: number }
   | { type: 'SET_SECTION'; payload: Section }
+  | { type: 'SET_CATEGORY'; payload: string | null }
   | { type: 'SET_DIFFICULTY'; payload: Difficulty }
   | { type: 'SET_QUESTIONS'; payload: Question[] }
   | { type: 'NEXT_QUESTION' }

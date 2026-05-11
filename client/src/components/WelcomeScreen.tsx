@@ -4,7 +4,32 @@ import { useGameState } from '@/hooks/useGameState';
 import { Section, Difficulty } from '@/lib/types';
 import { SurfaceCard } from '@/components/ui/surface-card';
 import { SemanticBadge } from '@/components/ui/semantic-badge';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { cn } from '@/lib/utils';
+
+const CATEGORY_MAP: Record<Section, string[]> = {
+  preklinik: [
+    'Anatomi',
+    'Histoloji ve Embriyoloji',
+    'Fizyoloji',
+    'Biyokimya',
+    'Mikrobiyoloji',
+    'Patoloji',
+    'Farmakoloji',
+  ],
+  klinik: [
+    'Dâhiliye Grubu',
+    'Pediatri',
+    'Cerrahi Grubu',
+    'Kadın Hastalıkları ve Doğum',
+  ],
+};
 
 interface DifficultyMeta {
   key: Difficulty;
@@ -55,7 +80,7 @@ const RULES = [
 ];
 
 export default function WelcomeScreen() {
-  const { selectSection, startGame, returnToMenu, state } = useGameState();
+  const { selectSection, selectCategory, startGame, returnToMenu, state } = useGameState();
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
 
   const handleSectionSelect = (section: Section) => {
@@ -63,11 +88,16 @@ export default function WelcomeScreen() {
     selectSection(section);
   };
 
+  const handleCategoryChange = (value: string) => {
+    selectCategory(value === '__mixed__' ? null : value);
+  };
+
   const handleStartGame = (difficulty: Difficulty) => {
     if (selectedSection) startGame(difficulty);
   };
 
   const isPractice = state.mode === 'practice';
+  const availableCategories = selectedSection ? CATEGORY_MAP[selectedSection] : [];
 
   return (
     <div className="space-y-6 animate-fade-in-up">
@@ -137,6 +167,32 @@ export default function WelcomeScreen() {
           })}
         </div>
       </section>
+
+      {/* Category selection */}
+      {selectedSection && (
+        <section className="space-y-3 animate-fade-in-up">
+          <div>
+            <h2 className="font-serif text-h2 text-foreground">Konu Seçin</h2>
+            <p className="text-caption text-muted-foreground mt-0.5">
+              Belirli bir konuya odaklanın veya karışık devam edin
+            </p>
+          </div>
+          <Select
+            value={state.category ?? '__mixed__'}
+            onValueChange={handleCategoryChange}
+          >
+            <SelectTrigger className="bg-background border-border focus:border-border-strong">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="__mixed__">Karışık (tüm konular)</SelectItem>
+              {availableCategories.map((cat) => (
+                <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </section>
+      )}
 
       {/* Difficulty selection */}
       {selectedSection && (

@@ -23,6 +23,7 @@ const initialState: GameState = {
   mode: null,
   gameId: null,
   section: null,
+  category: null,
   difficulty: null,
   questions: [],
   currentQuestionIndex: 0,
@@ -60,7 +61,11 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         mode: state.mode,
         currentScreen: 'welcome',
         section: action.payload,
+        category: null,
       };
+
+    case 'SET_CATEGORY':
+      return { ...state, category: action.payload };
 
     case 'SET_DIFFICULTY':
       return {
@@ -243,6 +248,7 @@ type GameStateContextType = {
   dispatch: React.Dispatch<GameAction>;
   selectMode: (mode: GameMode) => void;
   selectSection: (section: Section) => void;
+  selectCategory: (category: string | null) => void;
   startGame: (difficulty: Difficulty) => void;
   checkAnswer: (answer: string) => void;
   showAnswer: () => void;
@@ -372,11 +378,16 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'SET_SECTION', payload: section });
   };
 
+  const selectCategory = (category: string | null) => {
+    dispatch({ type: 'SET_CATEGORY', payload: category });
+  };
+
   const startGame = async (difficulty: Difficulty) => {
     dispatch({ type: 'SET_DIFFICULTY', payload: difficulty });
 
     try {
-      const endpoint = state.section ? `/api/questions/${state.section}` : '/api/questions';
+      const categoryParam = state.category ? `?category=${encodeURIComponent(state.category)}` : '';
+      const endpoint = state.section ? `/api/questions/${state.section}${categoryParam}` : '/api/questions';
       const response = await apiRequest('GET', endpoint, undefined);
       const data: Question[] = await response.json();
       const shuffledQuestions = fisherYatesShuffle(data);
@@ -433,6 +444,7 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
         dispatch,
         selectMode,
         selectSection,
+        selectCategory,
         startGame,
         checkAnswer,
         showAnswer,
