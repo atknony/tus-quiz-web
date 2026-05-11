@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { Camera } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { useGameState } from '@/hooks/useGameState';
 import {
@@ -8,6 +9,9 @@ import {
   calculateAvgTimePerQuestion,
   getDifficultyName,
 } from '@/lib/gameLogic';
+import { Button } from '@/components/ui/button';
+import { SurfaceCard } from '@/components/ui/surface-card';
+import { cn } from '@/lib/utils';
 
 export default function ResultScreen() {
   const { state, playAgain, returnToMenu } = useGameState();
@@ -36,7 +40,9 @@ export default function ResultScreen() {
     if (!resultCardRef.current) return;
     setIsSaving(true);
     try {
-      const canvas = await html2canvas(resultCardRef.current);
+      const canvas = await html2canvas(resultCardRef.current, {
+        backgroundColor: '#FAF9F5',
+      });
       const link = document.createElement('a');
       link.download = `TUS-Quiz-Skor-${new Date().toISOString().split('T')[0]}.png`;
       link.href = canvas.toDataURL('image/png');
@@ -49,105 +55,114 @@ export default function ResultScreen() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 sm:p-8">
-      <div ref={resultCardRef}>
-        <h2 className="text-2xl font-bold text-center mb-2">Oyun Bitti</h2>
-        <p className="text-center text-gray-600 mb-6">Maksimum yanlış cevap sayısına ulaştınız</p>
+    <div className="space-y-6 animate-fade-in">
+      <div ref={resultCardRef} className="space-y-6">
+        <header className="text-center">
+          <div className="text-eyebrow text-muted-foreground mb-2">Sonuç</div>
+          <h1 className="font-serif text-h1 text-foreground">Oyun Bitti</h1>
+          <p className="mt-2 text-body text-muted-foreground">
+            Maksimum yanlış cevap sayısına ulaştınız
+          </p>
+        </header>
 
-        <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6">
-          <h3 className="text-lg font-bold text-center text-blue-800 mb-4">Son Skor</h3>
+        {/* Score block */}
+        <SurfaceCard padding="lg">
+          <div className="text-eyebrow text-muted-foreground mb-4">Son Skor</div>
+          <div className="font-serif text-display text-foreground tabular-nums font-mono mb-6">
+            {formatTime(finalScore)}
+          </div>
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-body">
+            <div className="flex flex-col">
+              <dt className="text-caption text-muted-foreground">Toplam Soru</dt>
+              <dd className="font-serif text-h2 text-foreground tabular-nums">{totalQuestions}</dd>
+            </div>
+            <div className="flex flex-col">
+              <dt className="text-caption text-muted-foreground">Süre</dt>
+              <dd className="font-serif text-h2 text-foreground tabular-nums font-mono">{formatTime(totalTime)}</dd>
+            </div>
+            <div className="flex flex-col">
+              <dt className="text-caption text-muted-foreground">Doğru</dt>
+              <dd className="font-serif text-h2 text-success tabular-nums">{correctAnswers}</dd>
+            </div>
+            <div className="flex flex-col">
+              <dt className="text-caption text-muted-foreground">Yanlış</dt>
+              <dd className="font-serif text-h2 text-danger tabular-nums">{wrongAnswers}</dd>
+            </div>
+          </dl>
+        </SurfaceCard>
 
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-600">Toplam Soru:</span>
-            <span className="font-bold">{totalQuestions}</span>
-          </div>
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-600">Doğru Cevaplar:</span>
-            <span className="font-bold text-green-600">{correctAnswers}</span>
-          </div>
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-600">Yanlış Cevaplar:</span>
-            <span className="font-bold text-red-600">{wrongAnswers}</span>
-          </div>
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-600">Cevaplama Süresi:</span>
-            <span className="font-bold font-mono">{formatTime(totalTime)}</span>
-          </div>
+        {/* Performance */}
+        <SurfaceCard padding="lg">
+          <div className="text-eyebrow text-muted-foreground mb-4">Performans</div>
+          <dl className="divide-y divide-border">
+            <div className="flex items-center justify-between py-2.5">
+              <dt className="text-body text-muted-foreground">Zorluk</dt>
+              <dd className="text-body text-foreground">{getDifficultyName(state.difficulty)}</dd>
+            </div>
+            <div className="flex items-center justify-between py-2.5">
+              <dt className="text-body text-muted-foreground">Doğruluk oranı</dt>
+              <dd className="text-body text-foreground tabular-nums">{accuracyRate}</dd>
+            </div>
+            <div className="flex items-center justify-between py-2.5">
+              <dt className="text-body text-muted-foreground">Soru başına ortalama</dt>
+              <dd className="text-body text-foreground tabular-nums font-mono">{avgTimePerQuestion}</dd>
+            </div>
+            <div className="flex items-center justify-between py-2.5">
+              <dt className="text-body text-muted-foreground">En uzun seri</dt>
+              <dd className="text-body text-foreground tabular-nums">{maxStreak} doğru</dd>
+            </div>
+          </dl>
+        </SurfaceCard>
 
-          <div className="border-t border-blue-200 mt-4 pt-4 flex justify-between items-center">
-            <span className="text-gray-800 font-semibold">Son Skor:</span>
-            <span className="font-bold text-xl font-mono">{formatTime(finalScore)}</span>
-          </div>
-        </div>
-
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
-          <h3 className="text-lg font-bold text-center mb-3">Performans Özeti</h3>
-
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-600">Zorluk Seviyesi:</span>
-            <span className="font-medium">{getDifficultyName(state.difficulty)}</span>
-          </div>
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-600">Doğruluk Oranı:</span>
-            <span className="font-medium">{accuracyRate}</span>
-          </div>
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-600">Soru Başına Ortalama Süre:</span>
-            <span className="font-medium font-mono">{avgTimePerQuestion}</span>
-          </div>
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-600">Maksimum Seri:</span>
-            <span className="font-medium">{maxStreak} doğru</span>
-          </div>
-        </div>
-
+        {/* Category Performance */}
         {mode === 'competitive' && sortedCategories.length > 0 && (
-          <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 mb-6">
-            <h3 className="text-lg font-bold text-center text-indigo-800 mb-3">Kategori Performansı</h3>
-            <p className="text-xs text-center text-gray-500 mb-3">En düşük doğruluk oranından en yükseğe sıralanmıştır</p>
-            <div className="space-y-2">
+          <SurfaceCard padding="lg">
+            <div className="flex items-baseline justify-between mb-1">
+              <div className="text-eyebrow text-muted-foreground">Kategori Performansı</div>
+            </div>
+            <p className="text-caption text-muted-soft mb-4">En düşük doğruluk oranından en yükseğe</p>
+            <div className="space-y-3">
               {sortedCategories.map(({ category, correct, total, accuracy }) => (
-                <div key={category} className="flex items-center gap-3">
-                  <span className="text-sm text-gray-700 w-40 truncate" title={category}>{category}</span>
-                  <div className="flex-1 bg-gray-200 rounded-full h-2">
+                <div key={category} className="space-y-1.5">
+                  <div className="flex items-baseline justify-between gap-3 text-caption">
+                    <span className="text-foreground truncate" title={category}>{category}</span>
+                    <span className="font-mono tabular-nums text-muted-foreground shrink-0">
+                      {correct}/{total} · {accuracy}%
+                    </span>
+                  </div>
+                  <div className="h-1 bg-surface-sunken rounded-full overflow-hidden">
                     <div
-                      className={`h-2 rounded-full ${accuracy >= 70 ? 'bg-green-500' : accuracy >= 40 ? 'bg-amber-500' : 'bg-red-500'}`}
-                      style={{ width: `${accuracy}%` }}
+                      className={cn(
+                        "h-full rounded-full",
+                        accuracy >= 70 ? "bg-success" : accuracy >= 40 ? "bg-warning" : "bg-danger"
+                      )}
+                      style={{ width: `${Math.max(2, accuracy)}%` }}
                     />
                   </div>
-                  <span className="text-xs font-mono text-gray-600 w-20 text-right">
-                    {correct}/{total} ({accuracy}%)
-                  </span>
                 </div>
               ))}
             </div>
-          </div>
+          </SurfaceCard>
         )}
       </div>
 
-      <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-        <button
-          className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-medium transition-colors flex-1"
+      {/* Actions */}
+      <div className="flex flex-col sm:flex-row gap-2 pt-2">
+        <Button
+          variant="outline"
           onClick={saveScreenshot}
           disabled={isSaving}
+          className="sm:flex-1"
         >
-          {isSaving ? 'Kaydediliyor...' : 'Ekran Görüntüsünü Kaydet'}
-        </button>
-      </div>
-
-      <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center">
-        <button
-          className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg font-medium transition-colors"
-          onClick={playAgain}
-        >
+          <Camera className="w-4 h-4" />
+          {isSaving ? 'Kaydediliyor...' : 'Ekran Görüntüsü'}
+        </Button>
+        <Button onClick={playAgain} className="sm:flex-1">
           Tekrar Oyna
-        </button>
-        <button
-          className="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-6 rounded-lg font-medium transition-colors"
-          onClick={returnToMenu}
-        >
-          Mod Seçimine Dön
-        </button>
+        </Button>
+        <Button variant="ghost" onClick={returnToMenu} className="sm:flex-1">
+          Menüye Dön
+        </Button>
       </div>
     </div>
   );

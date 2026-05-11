@@ -1,117 +1,110 @@
-import { Clock } from 'lucide-react';
 import { useGameState } from '@/hooks/useGameState';
 import { getDifficultyName, getMaxTime, formatTime } from '@/lib/gameLogic';
+import { Button } from '@/components/ui/button';
 
 export default function GameScreen() {
   const { state, checkAnswer, showAnswer } = useGameState();
-  const { difficulty, questions, currentQuestionIndex, correctAnswers, wrongAnswers, currentQuestionTime } = state;
-  
+  const { difficulty, section, questions, currentQuestionIndex, correctAnswers, wrongAnswers, currentQuestionTime, currentStreak } = state;
+
   const currentQuestion = questions[currentQuestionIndex];
   const maxTime = getMaxTime(difficulty);
-  const timePercentage = (currentQuestionTime / maxTime) * 100;
-  const timeRemaining = maxTime - currentQuestionTime;
-  
-  // If no questions are loaded or currentQuestion is undefined, show a loading state
+  const timePercentage = Math.min(100, (currentQuestionTime / maxTime) * 100);
+  const timeRemaining = Math.max(0, maxTime - currentQuestionTime);
+
   if (!currentQuestion) {
     return (
       <div className="flex justify-center items-center h-40">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-border border-t-foreground" />
       </div>
     );
   }
-  
-  const handleAnswerClick = (option: string, index: number) => {
-    const answer = String.fromCharCode(65 + index); // Convert index to A, B, C, D, E
+
+  const handleAnswerClick = (_option: string, index: number) => {
+    const answer = String.fromCharCode(65 + index);
     checkAnswer(answer);
   };
-  
+
+  const sectionLabel = section === 'klinik' ? 'Klinik' : section === 'preklinik' ? 'Preklinik' : null;
+
   return (
-    <>
-      {/* Game header with stats */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
-        <div>
-          <h2 className="text-xl font-bold">{getDifficultyName(difficulty)} Modu</h2>
-          <p className="text-sm text-gray-600">
-            <span>{correctAnswers}</span> doğru | 
-            <span className="text-red-600"> {wrongAnswers}</span>/5 yanlış
-          </p>
+    <div className="animate-fade-in">
+      {/* Low-contrast top strip */}
+      <div className="flex items-center justify-between text-caption text-muted-foreground mb-2">
+        <div className="flex items-center gap-2 truncate">
+          <span className="tabular-nums">Soru {currentQuestionIndex + 1} / {questions.length}</span>
+          {sectionLabel && <><span aria-hidden>·</span><span>{sectionLabel}</span></>}
+          {difficulty && <><span aria-hidden>·</span><span>{getDifficultyName(difficulty)}</span></>}
+          {currentStreak >= 2 && <><span aria-hidden>·</span><span>Seri {currentStreak}</span></>}
         </div>
-        <div className="flex items-center space-x-4">
-          <div className="text-sm font-medium">
-            <div className="text-gray-500 mb-1">Toplam Süre</div>
-            <div className="font-mono text-lg">{formatTime(state.totalTime)}</div>
-          </div>
-          
-          {/* Wrong answers progress indicator */}
-          <div className="flex gap-1">
-            {Array(5).fill(0).map((_, i) => (
-              <div 
-                key={i}
-                className={`w-3 h-8 rounded ${i < wrongAnswers ? 'bg-red-500' : 'bg-gray-200'}`}
-              />
-            ))}
-          </div>
-        </div>
+        <div className="font-mono tabular-nums text-foreground/80">{formatTime(timeRemaining)}</div>
       </div>
-      
-      {/* Question card */}
-      <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
-        {/* Timer */}
-        <div className="relative h-2 bg-gray-100">
-          <div 
-            className="absolute left-0 top-0 h-full bg-blue-500 transition-all duration-1000"
-            style={{ width: `${100 - timePercentage}%` }}
-          />
-        </div>
-        
-        <div className="flex justify-between items-center p-4 border-b">
-          <div className="font-semibold text-sm text-gray-500">Soru <span>{currentQuestionIndex + 1}</span></div>
-          <div className="flex items-center gap-1 font-mono text-lg">
-            <Clock className="h-5 w-5 text-blue-500" />
-            <span>{formatTime(timeRemaining)}</span>
-          </div>
-        </div>
-        
-        <div className="p-5">
-          <p className="text-lg mb-6">{currentQuestion.text}</p>
-          
-          {/* Answer options */}
-          <div className="space-y-3">
-            {currentQuestion.options.map((option, index) => {
-              // Get the letter for this option
-              const optionLetter = String.fromCharCode(65 + index);
-              
-              // Check if this is the correct answer (for highlighting when "Cevabı Göster" is clicked)
-              const isCorrectAnswer = optionLetter === currentQuestion.correctAnswer;
-              
-              return (
-                <button 
-                  key={index}
-                  className={`w-full text-left p-3 border-2 ${
-                    state.currentScreen === 'feedback' && isCorrectAnswer 
-                      ? 'border-green-500 bg-green-50' 
-                      : 'border-gray-200 hover:border-blue-400'
-                  } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all`}
-                  onClick={() => handleAnswerClick(option, index)}
-                >
-                  <span className="font-medium mr-2">{optionLetter}.</span>
-                  <span>{option}</span>
-                </button>
-              );
-            })}
-          </div>
-          
-          {/* Cevabı Göster button */}
-          <div className="mt-6 flex justify-center">
+
+      {/* Hairline timer bar */}
+      <div className="relative h-[2px] bg-border mb-8 overflow-hidden rounded-full">
+        <div
+          className="absolute left-0 top-0 h-full bg-foreground transition-all duration-1000 ease-linear"
+          style={{ width: `${100 - timePercentage}%` }}
+        />
+      </div>
+
+      {/* Question */}
+      <div className="mb-8">
+        <p className="font-serif text-body-lg text-foreground leading-relaxed">
+          {currentQuestion.text}
+        </p>
+      </div>
+
+      {/* Answer options */}
+      <div className="space-y-2 mb-8">
+        {currentQuestion.options.map((option, index) => {
+          const optionLetter = String.fromCharCode(65 + index);
+          return (
             <button
-              onClick={() => showAnswer()}
-              className="py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg transition-colors"
+              key={index}
+              onClick={() => handleAnswerClick(option, index)}
+              className="group w-full text-left px-4 sm:px-5 py-3.5 rounded-xl bg-surface border border-transparent hover:bg-surface-sunken hover:border-border focus-visible:outline-none focus-visible:border-border-strong focus-visible:ring-2 focus-visible:ring-ring/40 transition-all"
             >
-              Cevabı Göster
+              <div className="flex items-baseline gap-3">
+                <span className="font-serif text-caption text-muted-soft group-hover:text-muted-foreground tabular-nums shrink-0 w-4">
+                  {optionLetter}
+                </span>
+                <span className="text-body-lg text-foreground">{option}</span>
+              </div>
             </button>
+          );
+        })}
+      </div>
+
+      {/* Footer row: stats + show answer */}
+      <div className="flex items-center justify-between gap-4 pt-2 border-t border-border/60">
+        <div className="flex items-center gap-4 text-caption text-muted-foreground">
+          <div className="flex items-center gap-1.5">
+            <span className="tabular-nums">{correctAnswers}</span>
+            <span>doğru</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="flex gap-1" aria-label={`${wrongAnswers} / 5 yanlış`}>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div
+                  key={i}
+                  className={
+                    "w-1.5 h-1.5 rounded-full transition-colors " +
+                    (i < wrongAnswers ? "bg-danger" : "bg-border")
+                  }
+                />
+              ))}
+            </div>
+            <span className="tabular-nums">{wrongAnswers}/5</span>
+          </div>
+          <div className="hidden sm:flex items-center gap-1.5">
+            <span>Toplam</span>
+            <span className="font-mono tabular-nums">{formatTime(state.totalTime)}</span>
           </div>
         </div>
+        <Button variant="ghost" size="sm" onClick={() => showAnswer()} className="text-muted-foreground hover:text-foreground">
+          Cevabı Göster
+        </Button>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,7 +1,8 @@
-import { Shield, Trophy } from 'lucide-react';
+import { Shield, Trophy, AlertCircle } from 'lucide-react';
 import { useGameState } from '@/hooks/useGameState';
 import { useAuth } from '@/hooks/useAuth';
 import { useAuthModal } from '@/hooks/useAuthModal';
+import { SurfaceCard } from '@/components/ui/surface-card';
 
 export default function ModeSelectionScreen() {
   const { selectMode } = useGameState();
@@ -17,46 +18,45 @@ export default function ModeSelectionScreen() {
   };
 
   return (
-    <div className="container max-w-4xl mx-auto p-4 flex flex-col items-center justify-center min-h-[80vh]">
-      <div className="text-center mb-10">
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
-          TUS Quiz Oyunu
-        </h1>
-        <p className="text-lg text-gray-600">Bir mod seçin</p>
-      </div>
+    <div className="animate-fade-in-up py-6 sm:py-10">
+      <header className="text-center mb-10 sm:mb-14">
+        <div className="text-eyebrow text-muted-foreground mb-3">Başla</div>
+        <h1 className="font-serif text-display text-foreground">TUS Quiz</h1>
+        <p className="mt-3 text-body-lg text-muted-foreground">Bir mod seçin</p>
+      </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
-        {/* Practice mode */}
-        <div
-          className="p-6 rounded-xl border-2 border-green-200 hover:border-green-500 bg-gradient-to-br from-green-50 to-white shadow-md hover:shadow-lg cursor-pointer transition-all"
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+        <SurfaceCard
+          variant="interactive"
+          tone="success"
+          padding="lg"
           onClick={() => selectMode('practice')}
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
-              <Shield className="w-6 h-6 text-white" />
-            </div>
-            <h2 className="text-xl font-bold text-green-700">Pratik Mod</h2>
-          </div>
-          <p className="text-gray-600 text-sm">Giriş gerektirmez.</p>
-          <p className="text-amber-700 text-sm mt-1 font-medium">Bu modda hiçbir veri kaydedilmez.</p>
-        </div>
+          <Shield className="w-5 h-5 text-success mb-4" />
+          <h2 className="font-serif text-h2 text-foreground mb-2">Pratik Mod</h2>
+          <p className="text-caption text-muted-foreground leading-relaxed">
+            Giriş gerektirmez. Hiçbir veri kaydedilmez.
+          </p>
+        </SurfaceCard>
 
-        {/* Competitive mode */}
-        <div
-          className="p-6 rounded-xl border-2 border-blue-200 hover:border-blue-500 bg-gradient-to-br from-blue-50 to-white shadow-md hover:shadow-lg cursor-pointer transition-all"
+        <SurfaceCard
+          variant="interactive"
+          tone="accent"
+          padding="lg"
           onClick={handleCompetitive}
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-              <Trophy className="w-6 h-6 text-white" />
-            </div>
-            <h2 className="text-xl font-bold text-blue-700">Rekabet Modu</h2>
-          </div>
-          <p className="text-gray-600 text-sm">Skor ve istatistikler kaydedilir.</p>
+          <Trophy className="w-5 h-5 text-foreground mb-4" />
+          <h2 className="font-serif text-h2 text-foreground mb-2">Rekabet Modu</h2>
+          <p className="text-caption text-muted-foreground leading-relaxed">
+            Skor ve istatistikler kaydedilir.
+          </p>
           {!user && (
-            <p className="text-amber-700 text-sm mt-1 font-medium">Giriş yapmanız gerekir.</p>
+            <div className="mt-3 inline-flex items-center gap-1.5 text-caption text-warning">
+              <AlertCircle className="w-3.5 h-3.5" />
+              Giriş yapmanız gerekir
+            </div>
           )}
-        </div>
+        </SurfaceCard>
       </div>
     </div>
   );

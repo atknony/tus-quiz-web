@@ -46,14 +46,16 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <TooltipProvider>
-          <div className="max-w-3xl mx-auto p-4 sm:p-6">
-            <Toaster />
-            <GameStateProvider>
-              <AuthModalProvider>
-                <Header />
-                <CurrentScreen />
-              </AuthModalProvider>
-            </GameStateProvider>
+          <div className="min-h-screen bg-background text-foreground">
+            <div className="max-w-2xl mx-auto px-5 sm:px-8 py-5 sm:py-8">
+              <Toaster />
+              <GameStateProvider>
+                <AuthModalProvider>
+                  <Header />
+                  <CurrentScreen />
+                </AuthModalProvider>
+              </GameStateProvider>
+            </div>
           </div>
         </TooltipProvider>
       </AuthProvider>

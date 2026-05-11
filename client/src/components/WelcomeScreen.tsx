@@ -1,9 +1,58 @@
 import { useState } from 'react';
-import { Clock, AlertTriangle, Zap, BookOpen, ChevronLeft, Shield, Trophy } from 'lucide-react';
+import { Clock, AlertTriangle, Zap, ChevronLeft, Shield, Trophy, Info } from 'lucide-react';
 import { useGameState } from '@/hooks/useGameState';
 import { Section, Difficulty } from '@/lib/types';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { SurfaceCard } from '@/components/ui/surface-card';
+import { SemanticBadge } from '@/components/ui/semantic-badge';
+import { cn } from '@/lib/utils';
+
+interface DifficultyMeta {
+  key: Difficulty;
+  label: string;
+  perQuestion: string;
+  penalty: string;
+  audience: string;
+  tone: 'success' | 'warning' | 'danger';
+  toneText: string;
+}
+
+const DIFFICULTIES: DifficultyMeta[] = [
+  {
+    key: 'easy',
+    label: 'Kolay',
+    perQuestion: 'Soru başına 120 saniye',
+    penalty: 'Hata başına +120s ceza',
+    audience: 'Yeni başlayanlar için',
+    tone: 'success',
+    toneText: 'text-success',
+  },
+  {
+    key: 'medium',
+    label: 'Orta',
+    perQuestion: 'Soru başına 60 saniye',
+    penalty: 'Hata başına +60s ceza',
+    audience: 'Orta seviye öğrenciler için',
+    tone: 'warning',
+    toneText: 'text-warning',
+  },
+  {
+    key: 'expert',
+    label: 'Uzman',
+    perQuestion: 'Soru başına 30 saniye',
+    penalty: 'Hata başına +30s ceza',
+    audience: 'Sınava hazır öğrenciler için',
+    tone: 'danger',
+    toneText: 'text-danger',
+  },
+];
+
+const RULES = [
+  'Cevaplayabildiğiniz kadar soruyu yanıtlayın',
+  '5 yanlış cevaptan sonra oyun biter',
+  'Sorular süre dolmadan cevaplanmalıdır',
+  'Doğru cevaplar için 5 sn, yanlış cevaplar için 15 sn geribildirim süresi',
+  'Düşük puan daha iyidir',
+];
 
 export default function WelcomeScreen() {
   const { selectSection, startGame, returnToMenu, state } = useGameState();
@@ -15,186 +64,133 @@ export default function WelcomeScreen() {
   };
 
   const handleStartGame = (difficulty: Difficulty) => {
-    if (selectedSection) {
-      startGame(difficulty);
-    }
+    if (selectedSection) startGame(difficulty);
   };
 
   const isPractice = state.mode === 'practice';
 
   return (
-    <div className="container max-w-4xl mx-auto p-4 flex flex-col items-center justify-center min-h-[80vh]">
-      {/* Mode badge + back button */}
-      <div className="flex items-center justify-between w-full mb-4">
+    <div className="space-y-6 animate-fade-in-up">
+      {/* Header row */}
+      <div className="flex items-center justify-between">
         <button
-          className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 transition-colors"
           onClick={returnToMenu}
+          className="inline-flex items-center gap-1 text-caption text-muted-foreground hover:text-foreground transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-3.5 h-3.5" />
           Mod Seçimi
         </button>
-        <span className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full ${
-          isPractice
-            ? 'bg-green-100 text-green-700'
-            : 'bg-blue-100 text-blue-700'
-        }`}>
-          {isPractice ? <Shield className="w-3 h-3" /> : <Trophy className="w-3 h-3" />}
+        <SemanticBadge tone={isPractice ? 'success' : 'neutral'} icon={isPractice ? <Shield /> : <Trophy />}>
           {isPractice ? 'Pratik Mod' : 'Rekabet Modu'}
-        </span>
+        </SemanticBadge>
       </div>
+
+      {/* Title */}
+      <header className="text-center pt-2 pb-2">
+        <div className="text-eyebrow text-muted-foreground mb-2">Hazırlık</div>
+        <h1 className="font-serif text-h1 text-foreground">TUS Quiz</h1>
+        <p className="mt-2 text-body text-muted-foreground">
+          Tıpta Uzmanlık Sınavı için bilgilerinizi test edin
+        </p>
+      </header>
 
       {/* Practice notice */}
       {isPractice && (
-        <div className="w-full mb-4 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2 text-sm text-amber-800">
-          Pratik modu — bu oturumda hiçbir veri kaydedilmez.
-        </div>
+        <SurfaceCard variant="inset" tone="warning" padding="sm">
+          <div className="flex items-start gap-2.5">
+            <Info className="w-4 h-4 text-warning mt-0.5 shrink-0" />
+            <p className="text-caption text-foreground/90">
+              Pratik modu — bu oturumda hiçbir veri kaydedilmez.
+            </p>
+          </div>
+        </SurfaceCard>
       )}
 
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
-          TUS Quiz Oyunu
-        </h1>
-        <p className="text-lg text-gray-600 mb-2">
-          Tıpta Uzmanlık Sınavı için bilgilerinizi test edin
-        </p>
-      </div>
-      
-      <Card className="w-full mb-6">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">Bölüm Seçin</CardTitle>
-          <CardDescription>
-            Çalışmak istediğiniz tıp alanını seçin
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div 
-              className={`p-4 rounded-lg border-2 transition-all cursor-pointer flex items-center ${
-                selectedSection === 'klinik' 
-                  ? 'border-blue-500 bg-blue-50' 
-                  : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50/50'
-              }`}
-              onClick={() => handleSectionSelect('klinik')}
-            >
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mr-4">
-                <BookOpen className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">Klinik</h3>
-                <p className="text-sm text-gray-600">Klinik tıp alanı soruları</p>
-              </div>
-            </div>
-            
-            <div 
-              className={`p-4 rounded-lg border-2 transition-all cursor-pointer flex items-center ${
-                selectedSection === 'preklinik' 
-                  ? 'border-purple-500 bg-purple-50' 
-                  : 'border-gray-200 hover:border-purple-300 hover:bg-purple-50/50'
-              }`}
-              onClick={() => handleSectionSelect('preklinik')}
-            >
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center mr-4">
-                <BookOpen className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">Preklinik</h3>
-                <p className="text-sm text-gray-600">Temel tıp bilimleri soruları</p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-      
+      {/* Section selection */}
+      <section className="space-y-3">
+        <div>
+          <h2 className="font-serif text-h2 text-foreground">Bölüm Seçin</h2>
+          <p className="text-caption text-muted-foreground mt-0.5">Çalışmak istediğiniz tıp alanı</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {(['klinik', 'preklinik'] as Section[]).map((sec) => {
+            const active = selectedSection === sec;
+            return (
+              <button
+                key={sec}
+                onClick={() => handleSectionSelect(sec)}
+                className={cn(
+                  "text-left rounded-2xl border transition-all p-5",
+                  active
+                    ? "bg-surface-sunken border-foreground/40 border-2"
+                    : "bg-surface border-border hover:border-border-strong"
+                )}
+              >
+                <div className="font-serif text-h2 text-foreground mb-1">
+                  {sec === 'klinik' ? 'Klinik' : 'Preklinik'}
+                </div>
+                <div className="text-caption text-muted-foreground">
+                  {sec === 'klinik' ? 'Klinik tıp alanı soruları' : 'Temel tıp bilimleri soruları'}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Difficulty selection */}
       {selectedSection && (
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">Zorluk Seviyesi</CardTitle>
-            <CardDescription>
-              Zorluk seviyesi yalnızca soruları cevaplamak için olan süreyi belirler
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Easy mode */}
-              <div 
-                className="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 hover:border-blue-500 rounded-xl shadow-md p-6 cursor-pointer transition-all hover:shadow-lg"
-                onClick={() => handleStartGame('easy')}
+        <section className="space-y-3 animate-fade-in-up">
+          <div>
+            <h2 className="font-serif text-h2 text-foreground">Zorluk Seviyesi</h2>
+            <p className="text-caption text-muted-foreground mt-0.5">
+              Zorluk yalnızca cevaplama süresini belirler
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {DIFFICULTIES.map((d) => (
+              <SurfaceCard
+                key={d.key}
+                variant="interactive"
+                tone={d.tone}
+                padding="md"
+                onClick={() => handleStartGame(d.key)}
               >
-                <h3 className="font-bold text-xl text-blue-700 mb-3">Kolay</h3>
-                <ul className="text-sm text-gray-600 space-y-3">
-                  <li className="flex items-center">
-                    <Clock className="h-5 w-5 mr-2 text-blue-500" />
-                    <span>Soru başına 120 saniye</span>
+                <div className={cn("font-serif text-h2 mb-3", d.toneText)}>{d.label}</div>
+                <ul className="space-y-2 text-caption text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <Clock className="w-3.5 h-3.5 mt-0.5 shrink-0 text-muted-soft" />
+                    <span>{d.perQuestion}</span>
                   </li>
-                  <li className="flex items-center">
-                    <AlertTriangle className="h-5 w-5 mr-2 text-blue-500" />
-                    <span>Hata başına +120s ceza</span>
+                  <li className="flex items-start gap-2">
+                    <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-muted-soft" />
+                    <span>{d.penalty}</span>
                   </li>
-                  <li className="flex items-center">
-                    <Zap className="h-5 w-5 mr-2 text-blue-500" />
-                    <span>Yeni başlayanlar için</span>
+                  <li className="flex items-start gap-2">
+                    <Zap className="w-3.5 h-3.5 mt-0.5 shrink-0 text-muted-soft" />
+                    <span>{d.audience}</span>
                   </li>
                 </ul>
-              </div>
-              
-              {/* Medium mode */}
-              <div 
-                className="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-200 hover:border-amber-500 rounded-xl shadow-md p-6 cursor-pointer transition-all hover:shadow-lg"
-                onClick={() => handleStartGame('medium')}
-              >
-                <h3 className="font-bold text-xl text-amber-700 mb-3">Orta</h3>
-                <ul className="text-sm text-gray-600 space-y-3">
-                  <li className="flex items-center">
-                    <Clock className="h-5 w-5 mr-2 text-amber-500" />
-                    <span>Soru başına 60 saniye</span>
-                  </li>
-                  <li className="flex items-center">
-                    <AlertTriangle className="h-5 w-5 mr-2 text-amber-500" />
-                    <span>Hata başına +60s ceza</span>
-                  </li>
-                  <li className="flex items-center">
-                    <Zap className="h-5 w-5 mr-2 text-amber-500" />
-                    <span>Orta seviye öğrenciler için</span>
-                  </li>
-                </ul>
-              </div>
-              
-              {/* Expert mode */}
-              <div 
-                className="bg-gradient-to-br from-red-50 to-white border-2 border-red-200 hover:border-red-500 rounded-xl shadow-md p-6 cursor-pointer transition-all hover:shadow-lg"
-                onClick={() => handleStartGame('expert')}
-              >
-                <h3 className="font-bold text-xl text-red-700 mb-3">Uzman</h3>
-                <ul className="text-sm text-gray-600 space-y-3">
-                  <li className="flex items-center">
-                    <Clock className="h-5 w-5 mr-2 text-red-500" />
-                    <span>Soru başına 30 saniye</span>
-                  </li>
-                  <li className="flex items-center">
-                    <AlertTriangle className="h-5 w-5 mr-2 text-red-500" />
-                    <span>Hata başına +30s ceza</span>
-                  </li>
-                  <li className="flex items-center">
-                    <Zap className="h-5 w-5 mr-2 text-red-500" />
-                    <span>Sınava hazır öğrenciler için</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              </SurfaceCard>
+            ))}
+          </div>
+        </section>
       )}
-      
-      <div className="mt-8 bg-white rounded-lg p-5 shadow w-full max-w-2xl">
-        <h3 className="font-semibold mb-3 text-gray-800">Oyun Kuralları:</h3>
-        <ul className="list-disc pl-5 space-y-2 text-gray-600">
-          <li>Cevaplayabildiğiniz kadar soruyu yanıtlayın</li>
-          <li>5 yanlış cevaptan sonra oyun biter</li>
-          <li>Sorular süre dolmadan cevaplanmalıdır</li>
-          <li>Doğru cevaplar için 5 sn, yanlış cevaplar için 15 sn geribildirim süresi</li>
-          <li>Düşük puan daha iyidir</li>
+
+      {/* Rules */}
+      <SurfaceCard variant="inset" padding="md">
+        <div className="text-eyebrow text-muted-foreground mb-3">Oyun Kuralları</div>
+        <ul className="space-y-2">
+          {RULES.map((rule, i) => (
+            <li key={i} className="flex items-start gap-3 text-body text-foreground/90">
+              <span className="text-muted-soft font-serif tabular-nums shrink-0 w-4">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span>{rule}</span>
+            </li>
+          ))}
         </ul>
-      </div>
+      </SurfaceCard>
     </div>
   );
 }

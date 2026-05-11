@@ -7,16 +7,18 @@ import {
   Flame,
   Award,
   AlertCircle,
-  Mail,
-  Cake,
-  GraduationCap,
+  ChevronDown,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useGameState } from '@/hooks/useGameState';
 import { apiRequest } from '@/lib/queryClient';
 import { formatTime, getDifficultyName } from '@/lib/gameLogic';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { SurfaceCard } from '@/components/ui/surface-card';
+import { StatTile } from '@/components/ui/stat-tile';
+import { SemanticBadge } from '@/components/ui/semantic-badge';
+import { EmptyState } from '@/components/ui/empty-state';
+import { cn } from '@/lib/utils';
 import type { Difficulty } from '@/lib/types';
 
 interface ProfileStats {
@@ -69,15 +71,18 @@ export default function ProfileScreen() {
 
   if (!user) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6 text-center">
-        <p className="text-gray-700">Profilinizi görmek için giriş yapmalısınız.</p>
-        <Button
-          className="mt-4"
-          onClick={() => dispatch({ type: 'SET_SCREEN', payload: 'mode' })}
-        >
-          Mod Seçimine Dön
-        </Button>
-      </div>
+      <SurfaceCard padding="lg">
+        <EmptyState
+          icon={<AlertCircle />}
+          title="Giriş gerekli"
+          description="Profilinizi görmek için giriş yapmalısınız."
+          action={
+            <Button onClick={() => dispatch({ type: 'SET_SCREEN', payload: 'mode' })}>
+              Mod Seçimine Dön
+            </Button>
+          }
+        />
+      </SurfaceCard>
     );
   }
 
@@ -131,130 +136,148 @@ function ProfileContent({ userId, isViewingFriend }: { userId: number; isViewing
   const stats = profile?.stats;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 animate-fade-in">
+      {/* Header */}
+      <div className="space-y-3">
         <button
-          className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 transition-colors"
           onClick={() => dispatch({ type: 'SET_SCREEN', payload: isViewingFriend ? 'friends' : 'mode' })}
+          className="inline-flex items-center gap-1 text-caption text-muted-foreground hover:text-foreground transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-3.5 h-3.5" />
           {isViewingFriend ? 'Arkadaşlarım' : 'Mod Seçimi'}
         </button>
-        <h1 className="text-2xl font-bold">{isViewingFriend ? 'Profil' : 'Profilim'}</h1>
-        <span className="w-20" />
+        <div>
+          <div className="text-eyebrow text-muted-foreground">
+            {isViewingFriend ? 'Arkadaş Profili' : 'Hesap'}
+          </div>
+          <h1 className="font-serif text-h1 text-foreground mt-1">
+            {profile?.username ?? (isViewingFriend ? 'Profil' : 'Profilim')}
+          </h1>
+        </div>
       </div>
 
       {profileQuery.isLoading && (
-        <p className="text-center text-gray-500">Yükleniyor...</p>
+        <p className="text-caption text-muted-foreground">Yükleniyor...</p>
       )}
       {profileQuery.isError && (
-        <Card>
-          <CardContent className="p-4 text-red-600 text-sm">
-            Profil bilgileri yüklenemedi.
-          </CardContent>
-        </Card>
+        <SurfaceCard tone="danger" variant="inset" padding="md">
+          <p className="text-caption text-danger">Profil bilgileri yüklenemedi.</p>
+        </SurfaceCard>
       )}
 
+      {/* User info */}
       {profile && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl">{profile.username}</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm text-gray-700">
-            <div className="flex items-center gap-2">
-              <GraduationCap className="w-4 h-4 text-gray-400" />
-              {profile.university}
-            </div>
-            {profile.email && (
-              <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-gray-400" />
-                {profile.email}
-              </div>
-            )}
-            {profile.dateOfBirth && (
-              <div className="flex items-center gap-2">
-                <Cake className="w-4 h-4 text-gray-400" />
-                {profile.dateOfBirth}
-              </div>
-            )}
-            <div className="text-xs text-gray-400 pt-2">
-              Üyelik: {new Date(profile.createdAt).toLocaleDateString('tr-TR')}
-            </div>
-          </CardContent>
-        </Card>
+        <SurfaceCard padding="lg">
+          <div className="text-eyebrow text-muted-foreground mb-4">Bilgiler</div>
+          <dl className="divide-y divide-border">
+            <InfoRow label="Üniversite" value={profile.university} />
+            {profile.email && <InfoRow label="E-posta" value={profile.email} />}
+            {profile.dateOfBirth && <InfoRow label="Doğum Tarihi" value={profile.dateOfBirth} />}
+            <InfoRow
+              label="Üyelik"
+              value={new Date(profile.createdAt).toLocaleDateString('tr-TR')}
+            />
+          </dl>
+        </SurfaceCard>
       )}
 
+      {/* Stats */}
       {stats && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Yaşam Boyu İstatistikler</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              <StatTile icon={<Trophy />} label="Toplam Maç" value={String(stats.totalGames)} />
-              <StatTile icon={<Target />} label="Doğruluk" value={`${stats.accuracyRate.toFixed(1)}%`} />
-              <StatTile icon={<Flame />} label="En Uzun Seri" value={String(stats.maxStreakEver)} />
-              <StatTile icon={<Award />} label="En Güçlü" value={stats.strongestCategory ?? '—'} compact />
-              <StatTile icon={<AlertCircle />} label="En Zayıf" value={stats.weakestCategory ?? '—'} compact />
-            </div>
-          </CardContent>
-        </Card>
+        <SurfaceCard padding="lg">
+          <div className="text-eyebrow text-muted-foreground mb-5">Yaşam Boyu İstatistikler</div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-5">
+            <StatTile icon={<Trophy />} label="Toplam Maç" value={stats.totalGames} />
+            <StatTile icon={<Target />} label="Doğruluk" value={`${stats.accuracyRate.toFixed(1)}%`} />
+            <StatTile icon={<Flame />} label="En Uzun Seri" value={stats.maxStreakEver} />
+            <CategoryTile
+              icon={<Award />}
+              label="En Güçlü"
+              value={stats.strongestCategory ?? '—'}
+              tone="success"
+            />
+            <CategoryTile
+              icon={<AlertCircle />}
+              label="En Zayıf"
+              value={stats.weakestCategory ?? '—'}
+              tone="danger"
+            />
+          </div>
+        </SurfaceCard>
       )}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Geçmiş Maçlar</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {historyError && (
-            <p className="text-red-600 text-sm mb-3">{historyError}</p>
-          )}
-          {initialized && matches.length === 0 && !historyError && (
-            <p className="text-center text-gray-500 py-6">
-              Henüz tamamlanmış rekabetli maç yok. Bir maç oynamayı dene!
-            </p>
-          )}
-          <div className="space-y-3">
-            {matches.map((m) => (
-              <MatchCard key={m.id} match={m} />
-            ))}
+      {/* Match history */}
+      <section>
+        <div className="text-eyebrow text-muted-foreground mb-3">Geçmiş Maçlar</div>
+
+        {historyError && (
+          <SurfaceCard tone="danger" variant="inset" padding="sm" className="mb-3">
+            <p className="text-caption text-danger">{historyError}</p>
+          </SurfaceCard>
+        )}
+
+        {initialized && matches.length === 0 && !historyError && (
+          <SurfaceCard padding="md">
+            <EmptyState
+              icon={<Trophy />}
+              title="Henüz maç yok"
+              description="Henüz tamamlanmış rekabetli maç yok. Bir maç oynamayı dene!"
+            />
+          </SurfaceCard>
+        )}
+
+        <div className="space-y-2">
+          {matches.map((m) => (
+            <MatchCard key={m.id} match={m} />
+          ))}
+        </div>
+
+        {hasMore && (
+          <div className="mt-4 flex justify-center">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => loadPage(matches.length)}
+              disabled={loadingMore}
+            >
+              {loadingMore ? 'Yükleniyor...' : 'Daha Fazla Yükle'}
+            </Button>
           </div>
-          {hasMore && (
-            <div className="mt-4 flex justify-center">
-              <Button
-                variant="outline"
-                onClick={() => loadPage(matches.length)}
-                disabled={loadingMore}
-              >
-                {loadingMore ? 'Yükleniyor...' : 'Daha Fazla Yükle'}
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+        )}
+      </section>
     </div>
   );
 }
 
-function StatTile({
+function InfoRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-baseline justify-between gap-3 py-2.5">
+      <dt className="text-caption text-muted-foreground">{label}</dt>
+      <dd className="text-body text-foreground truncate text-right">{value}</dd>
+    </div>
+  );
+}
+
+function CategoryTile({
   icon,
   label,
   value,
-  compact,
+  tone,
 }: {
   icon: React.ReactNode;
   label: string;
   value: string;
-  compact?: boolean;
+  tone: 'success' | 'danger';
 }) {
   return (
-    <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 flex items-center gap-3">
-      <div className="text-blue-500 [&>svg]:w-5 [&>svg]:h-5 shrink-0">{icon}</div>
-      <div className="min-w-0">
-        <div className="text-xs text-gray-500">{label}</div>
-        <div className={`font-bold ${compact ? 'text-sm truncate' : 'text-lg'}`} title={compact ? value : undefined}>
-          {value}
-        </div>
+    <div className="flex flex-col gap-1.5">
+      <div className="flex items-center gap-1.5 text-caption text-muted-foreground">
+        <span className={cn("[&_svg]:w-3.5 [&_svg]:h-3.5", tone === 'success' ? 'text-success' : 'text-danger')}>
+          {icon}
+        </span>
+        <span>{label}</span>
+      </div>
+      <div className="text-body text-foreground truncate" title={value}>
+        {value}
       </div>
     </div>
   );
@@ -285,50 +308,63 @@ function MatchCard({ match }: { match: MatchRow }) {
   const difficultyLabel = getDifficultyName(match.difficulty as Difficulty) || match.difficulty;
 
   return (
-    <details className="border border-gray-200 rounded-lg">
-      <summary className="cursor-pointer p-3 flex flex-wrap items-center justify-between gap-2 hover:bg-gray-50">
-        <div className="flex items-center gap-2">
-          <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">{sectionLabel}</span>
-          <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">{difficultyLabel}</span>
+    <details className="group rounded-2xl bg-surface border border-border hover:border-border-strong transition-colors [&_summary::-webkit-details-marker]:hidden">
+      <summary className="cursor-pointer px-4 sm:px-5 py-3.5 flex items-center gap-3 list-none">
+        <ChevronDown className="w-4 h-4 text-muted-foreground transition-transform group-open:rotate-180 shrink-0" />
+        <div className="flex flex-1 flex-wrap items-center gap-2 sm:gap-3 min-w-0">
+          <SemanticBadge tone="neutral" size="sm">{sectionLabel}</SemanticBadge>
+          <SemanticBadge tone="warning" size="sm">{difficultyLabel}</SemanticBadge>
+          <span className="text-caption text-muted-foreground tabular-nums font-mono ml-auto">
+            {match.correctAnswers}<span className="text-muted-soft">D</span>
+            <span className="mx-1 text-muted-soft">·</span>
+            {match.wrongAnswers}<span className="text-muted-soft">Y</span>
+            <span className="mx-1 text-muted-soft">·</span>
+            {formatTime(match.totalTime)}
+          </span>
         </div>
-        <div className="flex items-center gap-3 text-sm font-mono">
-          <span className="text-green-600">{match.correctAnswers}D</span>
-          <span className="text-red-600">{match.wrongAnswers}Y</span>
-          <span className="text-gray-600">{formatTime(match.totalTime)}</span>
-        </div>
-        <span className="text-xs text-gray-500 w-full sm:w-auto">{date}</span>
       </summary>
-      <div className="px-3 pb-3 pt-2 text-sm border-t border-gray-100">
-        <div className="grid grid-cols-2 gap-2 mb-3 text-gray-700">
-          <div>Toplam Cevap: <span className="font-semibold">{totalAnswered}</span></div>
-          <div>Doğruluk: <span className="font-semibold">{match.accuracyRate.toFixed(1)}%</span></div>
-          <div>Max Seri: <span className="font-semibold">{match.maxStreak}</span></div>
-          <div>Ort. Süre/Soru: <span className="font-semibold font-mono">{formatTime(match.avgTimePerQuestion)}</span></div>
+      <div className="px-4 sm:px-5 pb-4 pt-1 border-t border-border/60 space-y-4">
+        <div className="text-caption text-muted-soft">{date}</div>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-body">
+          <Detail label="Toplam Cevap" value={totalAnswered} />
+          <Detail label="Doğruluk" value={`${match.accuracyRate.toFixed(1)}%`} />
+          <Detail label="Max Seri" value={match.maxStreak} />
+          <Detail label="Ort. Süre" value={formatTime(match.avgTimePerQuestion)} mono />
         </div>
         {sortedCategories.length > 0 && (
-          <div className="space-y-1">
-            <div className="text-xs text-gray-500 mb-1">Kategori Performansı</div>
+          <div className="space-y-2">
+            <div className="text-eyebrow text-muted-foreground">Kategori Performansı</div>
             {sortedCategories.map(({ category, correct, total, accuracy }) => (
-              <div key={category} className="flex items-center gap-2">
-                <span className="text-xs text-gray-700 w-32 truncate" title={category}>
-                  {category}
-                </span>
-                <div className="flex-1 bg-gray-200 rounded-full h-2">
+              <div key={category} className="space-y-1">
+                <div className="flex items-baseline justify-between gap-3 text-caption">
+                  <span className="text-foreground truncate" title={category}>{category}</span>
+                  <span className="font-mono tabular-nums text-muted-foreground shrink-0">
+                    {correct}/{total} · {accuracy}%
+                  </span>
+                </div>
+                <div className="h-1 bg-surface-sunken rounded-full overflow-hidden">
                   <div
-                    className={`h-2 rounded-full ${
-                      accuracy >= 70 ? 'bg-green-500' : accuracy >= 40 ? 'bg-amber-500' : 'bg-red-500'
-                    }`}
-                    style={{ width: `${accuracy}%` }}
+                    className={cn(
+                      "h-full rounded-full",
+                      accuracy >= 70 ? "bg-success" : accuracy >= 40 ? "bg-warning" : "bg-danger"
+                    )}
+                    style={{ width: `${Math.max(2, accuracy)}%` }}
                   />
                 </div>
-                <span className="text-xs font-mono text-gray-600 w-16 text-right">
-                  {correct}/{total} ({accuracy}%)
-                </span>
               </div>
             ))}
           </div>
         )}
       </div>
     </details>
+  );
+}
+
+function Detail({ label, value, mono }: { label: string; value: React.ReactNode; mono?: boolean }) {
+  return (
+    <div className="flex items-baseline justify-between gap-2">
+      <span className="text-caption text-muted-foreground">{label}</span>
+      <span className={cn("text-body text-foreground tabular-nums", mono && "font-mono")}>{value}</span>
+    </div>
   );
 }

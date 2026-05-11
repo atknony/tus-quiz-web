@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SurfaceCard } from "@/components/ui/surface-card";
 
 interface LoginFormProps {
   onSuccess: () => void;
@@ -31,38 +32,46 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
   };
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
-      <div className="space-y-1.5">
-        <Label htmlFor="login-email">E-posta veya Kullanıcı Adı</Label>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-4">
+      <div className="space-y-2">
+        <Label htmlFor="login-email" className="text-caption text-muted-foreground">
+          E-posta veya Kullanıcı Adı
+        </Label>
         <Input
           id="login-email"
           type="text"
           placeholder="ornek@email.com"
+          className="bg-background border-border focus-visible:border-border-strong"
           {...form.register("email")}
         />
         {form.formState.errors.email && (
-          <p className="text-sm text-red-500">{form.formState.errors.email.message}</p>
+          <p className="text-caption text-danger">{form.formState.errors.email.message}</p>
         )}
       </div>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="login-password">Şifre</Label>
+      <div className="space-y-2">
+        <Label htmlFor="login-password" className="text-caption text-muted-foreground">
+          Şifre
+        </Label>
         <Input
           id="login-password"
           type="password"
           placeholder="••••••••"
+          className="bg-background border-border focus-visible:border-border-strong"
           {...form.register("password")}
         />
         {form.formState.errors.password && (
-          <p className="text-sm text-red-500">{form.formState.errors.password.message}</p>
+          <p className="text-caption text-danger">{form.formState.errors.password.message}</p>
         )}
       </div>
 
       {serverError && (
-        <p className="text-sm text-red-500 bg-red-50 p-2 rounded-md">{serverError}</p>
+        <SurfaceCard variant="inset" tone="danger" padding="sm">
+          <p className="text-caption text-danger">{serverError}</p>
+        </SurfaceCard>
       )}
 
-      <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+      <Button type="submit" className="w-full h-11" disabled={form.formState.isSubmitting}>
         {form.formState.isSubmitting ? "Giriş yapılıyor…" : "Giriş Yap"}
       </Button>
     </form>

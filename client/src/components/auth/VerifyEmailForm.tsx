@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { SurfaceCard } from "@/components/ui/surface-card";
 
 interface VerifyEmailFormProps {
   userId: number;
@@ -47,10 +48,10 @@ export default function VerifyEmailForm({ userId, email, onSuccess }: VerifyEmai
   };
 
   return (
-    <div className="space-y-4 py-2">
-      <p className="text-sm text-gray-600">
-        <span className="font-medium">{email}</span> adresine 6 haneli bir doğrulama kodu
-        gönderdik. Kodun geçerlilik süresi 15 dakikadır.
+    <div className="space-y-5 pt-4">
+      <p className="text-body text-muted-foreground leading-relaxed">
+        <span className="text-foreground font-medium">{email}</span> adresine 6 haneli bir
+        doğrulama kodu gönderdik. Kodun geçerlilik süresi 15 dakikadır.
       </p>
 
       <div className="flex justify-center py-2">
@@ -66,13 +67,19 @@ export default function VerifyEmailForm({ userId, email, onSuccess }: VerifyEmai
         </InputOTP>
       </div>
 
-      {error && <p className="text-sm text-red-500 bg-red-50 p-2 rounded-md">{error}</p>}
+      {error && (
+        <SurfaceCard variant="inset" tone="danger" padding="sm">
+          <p className="text-caption text-danger">{error}</p>
+        </SurfaceCard>
+      )}
       {resendMessage && (
-        <p className="text-sm text-green-600 bg-green-50 p-2 rounded-md">{resendMessage}</p>
+        <SurfaceCard variant="inset" tone="success" padding="sm">
+          <p className="text-caption text-success">{resendMessage}</p>
+        </SurfaceCard>
       )}
 
       <Button
-        className="w-full"
+        className="w-full h-11"
         onClick={handleVerify}
         disabled={otp.length !== 6 || isVerifying}
       >
@@ -81,7 +88,7 @@ export default function VerifyEmailForm({ userId, email, onSuccess }: VerifyEmai
 
       <Button
         variant="ghost"
-        className="w-full text-sm text-gray-500"
+        className="w-full text-caption text-muted-foreground"
         onClick={handleResend}
         disabled={isResending}
       >

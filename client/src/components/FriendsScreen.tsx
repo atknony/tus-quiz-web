@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { ChevronLeft, Search, UserPlus, UserMinus, Check, X, Users } from 'lucide-react';
+import { ChevronLeft, Search, UserPlus, UserMinus, Check, X, Users, Eye, AlertCircle } from 'lucide-react';
 import { useGameState } from '@/hooks/useGameState';
 import { useAuth } from '@/hooks/useAuth';
 import { apiRequest } from '@/lib/queryClient';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { SurfaceCard } from '@/components/ui/surface-card';
+import { SemanticBadge } from '@/components/ui/semantic-badge';
+import { EmptyState } from '@/components/ui/empty-state';
 
 interface UserPublic {
   id: number;
@@ -81,17 +84,14 @@ export default function FriendsScreen() {
     mutationFn: (addresseeId: number) => apiRequest('POST', '/api/friends/request', { addresseeId }),
     onSuccess: invalidate,
   });
-
   const acceptRequest = useMutation({
     mutationFn: (id: number) => apiRequest('PATCH', `/api/friends/requests/${id}/accept`, {}),
     onSuccess: invalidate,
   });
-
   const deleteRequest = useMutation({
     mutationFn: (id: number) => apiRequest('DELETE', `/api/friends/requests/${id}`),
     onSuccess: invalidate,
   });
-
   const removeFriend = useMutation({
     mutationFn: (friendId: number) => apiRequest('DELETE', `/api/friends/${friendId}`),
     onSuccess: invalidate,
@@ -102,242 +102,261 @@ export default function FriendsScreen() {
   const received = requestsQuery.data?.received ?? [];
   const searchResults = searchQuery.data ?? [];
 
-  // Build lookup maps for deriving button state from search results
   const friendIds = new Set(friends.map(f => f.id));
   const sentMap = new Map(sent.map(r => [r.otherUser.id, r.id]));
   const receivedMap = new Map(received.map(r => [r.otherUser.id, r.id]));
 
   const hasPendingSection = sent.length > 0 || received.length > 0;
+  const pendingCount = sent.length + received.length;
 
   if (!user) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6 text-center">
-        <p className="text-gray-700">Bu sayfayı görmek için giriş yapmalısınız.</p>
-        <Button className="mt-4" onClick={() => dispatch({ type: 'SET_SCREEN', payload: 'mode' })}>
-          Mod Seçimine Dön
-        </Button>
-      </div>
+      <SurfaceCard padding="lg">
+        <EmptyState
+          icon={<AlertCircle />}
+          title="Giriş gerekli"
+          description="Bu sayfayı görmek için giriş yapmalısınız."
+          action={
+            <Button onClick={() => dispatch({ type: 'SET_SCREEN', payload: 'mode' })}>
+              Mod Seçimine Dön
+            </Button>
+          }
+        />
+      </SurfaceCard>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="space-y-3">
         <button
-          className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 transition-colors"
           onClick={() => dispatch({ type: 'SET_SCREEN', payload: 'mode' })}
+          className="inline-flex items-center gap-1 text-caption text-muted-foreground hover:text-foreground transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-3.5 h-3.5" />
           Mod Seçimi
         </button>
-        <h1 className="text-2xl font-bold">Arkadaşlarım</h1>
-        <span className="w-20" />
+        <div>
+          <div className="text-eyebrow text-muted-foreground">Sosyal</div>
+          <h1 className="font-serif text-h1 text-foreground mt-1">Arkadaşlarım</h1>
+        </div>
       </div>
 
       {/* Search */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base flex items-center gap-2">
-            <Search className="w-4 h-4" />
-            Kullanıcı Ara
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
+      <SurfaceCard padding="md">
+        <div className="text-eyebrow text-muted-foreground mb-3">Kullanıcı Ara</div>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-soft pointer-events-none" />
           <Input
             placeholder="Kullanıcı adı ile ara..."
             value={searchInput}
             onChange={e => setSearchInput(e.target.value)}
+            className="pl-9 h-10 bg-background border-border focus-visible:border-border-strong"
           />
-          {debouncedQ.length >= 2 && (
-            <div className="space-y-2">
-              {searchQuery.isLoading && <p className="text-sm text-gray-500">Aranıyor...</p>}
-              {searchResults.length === 0 && !searchQuery.isLoading && (
-                <p className="text-sm text-gray-500">Kullanıcı bulunamadı.</p>
-              )}
+        </div>
+
+        {debouncedQ.length >= 2 && (
+          <div className="mt-3">
+            {searchQuery.isLoading && <p className="text-caption text-muted-foreground">Aranıyor...</p>}
+            {searchResults.length === 0 && !searchQuery.isLoading && (
+              <p className="text-caption text-muted-foreground">Kullanıcı bulunamadı.</p>
+            )}
+            <ul className="divide-y divide-border">
               {searchResults.map(u => {
                 const isFriend = friendIds.has(u.id);
                 const sentId = sentMap.get(u.id);
                 const receivedId = receivedMap.get(u.id);
 
                 return (
-                  <div key={u.id} className="flex items-center justify-between p-2 border border-gray-100 rounded-lg">
-                    <div>
-                      <div className="text-sm font-medium">{u.username}</div>
-                      <div className="text-xs text-gray-500">{u.university}</div>
-                    </div>
-                    <div className="flex gap-2">
+                  <li key={u.id} className="flex items-center gap-3 py-3">
+                    <UserInfo username={u.username} university={u.university} />
+                    <div className="flex items-center gap-1 shrink-0">
                       {isFriend ? (
-                        <Button
-                          variant="outline"
-                          size="sm"
+                        <IconAction
+                          label="Arkadaşlıktan Çıkar"
+                          icon={<UserMinus />}
                           onClick={() => removeFriend.mutate(u.id)}
                           disabled={removeFriend.isPending}
-                        >
-                          <UserMinus className="w-3.5 h-3.5 mr-1" />
-                          Kaldır
-                        </Button>
+                        />
                       ) : sentId !== undefined ? (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => deleteRequest.mutate(sentId)}
-                          disabled={deleteRequest.isPending}
-                        >
-                          <X className="w-3.5 h-3.5 mr-1" />
-                          İptal Et
-                        </Button>
+                        <SemanticBadge tone="warning" size="sm">İstek Gönderildi</SemanticBadge>
                       ) : receivedId !== undefined ? (
                         <>
-                          <Button
-                            size="sm"
+                          <IconAction
+                            label="Kabul Et"
+                            icon={<Check />}
+                            primary
                             onClick={() => acceptRequest.mutate(receivedId)}
                             disabled={acceptRequest.isPending}
-                          >
-                            <Check className="w-3.5 h-3.5 mr-1" />
-                            Kabul Et
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
+                          />
+                          <IconAction
+                            label="Reddet"
+                            icon={<X />}
                             onClick={() => deleteRequest.mutate(receivedId)}
                             disabled={deleteRequest.isPending}
-                          >
-                            <X className="w-3.5 h-3.5 mr-1" />
-                            Reddet
-                          </Button>
+                          />
                         </>
                       ) : (
-                        <Button
-                          size="sm"
+                        <IconAction
+                          label="İstek Gönder"
+                          icon={<UserPlus />}
+                          primary
                           onClick={() => sendRequest.mutate(u.id)}
                           disabled={sendRequest.isPending}
-                        >
-                          <UserPlus className="w-3.5 h-3.5 mr-1" />
-                          İstek Gönder
-                        </Button>
+                        />
                       )}
                     </div>
-                  </div>
+                  </li>
                 );
               })}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+            </ul>
+          </div>
+        )}
+      </SurfaceCard>
 
       {/* Pending Requests */}
       {hasPendingSection && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Bekleyen İstekler</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {received.length > 0 && (
-              <div className="space-y-2">
-                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Gelen İstekler</div>
+        <SurfaceCard padding="md">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="text-eyebrow text-muted-foreground">Bekleyen İstekler</div>
+            <SemanticBadge tone="warning" size="sm">{pendingCount}</SemanticBadge>
+          </div>
+
+          {received.length > 0 && (
+            <div className="mb-4 last:mb-0">
+              <div className="text-caption text-muted-soft mb-2">Gelen</div>
+              <ul className="divide-y divide-border">
                 {received.map(r => (
-                  <div key={r.id} className="flex items-center justify-between p-2 border border-gray-100 rounded-lg">
-                    <div>
-                      <div className="text-sm font-medium">{r.otherUser.username}</div>
-                      <div className="text-xs text-gray-500">{r.otherUser.university}</div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        size="sm"
+                  <li key={r.id} className="flex items-center gap-3 py-3">
+                    <UserInfo username={r.otherUser.username} university={r.otherUser.university} />
+                    <div className="flex items-center gap-1 shrink-0">
+                      <IconAction
+                        label="Kabul Et"
+                        icon={<Check />}
+                        primary
                         onClick={() => acceptRequest.mutate(r.id)}
                         disabled={acceptRequest.isPending}
-                      >
-                        <Check className="w-3.5 h-3.5 mr-1" />
-                        Kabul Et
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
+                      />
+                      <IconAction
+                        label="Reddet"
+                        icon={<X />}
                         onClick={() => deleteRequest.mutate(r.id)}
                         disabled={deleteRequest.isPending}
-                      >
-                        <X className="w-3.5 h-3.5 mr-1" />
-                        Reddet
-                      </Button>
+                      />
                     </div>
-                  </div>
+                  </li>
                 ))}
-              </div>
-            )}
-            {sent.length > 0 && (
-              <div className="space-y-2">
-                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Gönderilen İstekler</div>
+              </ul>
+            </div>
+          )}
+
+          {sent.length > 0 && (
+            <div>
+              <div className="text-caption text-muted-soft mb-2">Gönderilen</div>
+              <ul className="divide-y divide-border">
                 {sent.map(r => (
-                  <div key={r.id} className="flex items-center justify-between p-2 border border-gray-100 rounded-lg">
-                    <div>
-                      <div className="text-sm font-medium">{r.otherUser.username}</div>
-                      <div className="text-xs text-gray-500">{r.otherUser.university}</div>
+                  <li key={r.id} className="flex items-center gap-3 py-3">
+                    <UserInfo username={r.otherUser.username} university={r.otherUser.university} />
+                    <div className="flex items-center gap-1 shrink-0">
+                      <IconAction
+                        label="İptal Et"
+                        icon={<X />}
+                        onClick={() => deleteRequest.mutate(r.id)}
+                        disabled={deleteRequest.isPending}
+                      />
                     </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => deleteRequest.mutate(r.id)}
-                      disabled={deleteRequest.isPending}
-                    >
-                      <X className="w-3.5 h-3.5 mr-1" />
-                      İptal Et
-                    </Button>
-                  </div>
+                  </li>
                 ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+              </ul>
+            </div>
+          )}
+        </SurfaceCard>
       )}
 
       {/* Friends List */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base flex items-center gap-2">
-            <Users className="w-4 h-4" />
-            Arkadaş Listesi
-            {friends.length > 0 && (
-              <span className="text-sm font-normal text-gray-500">({friends.length})</span>
-            )}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {friendsQuery.isLoading && <p className="text-sm text-gray-500">Yükleniyor...</p>}
-          {!friendsQuery.isLoading && friends.length === 0 && (
-            <p className="text-center text-gray-500 py-6 text-sm">
-              Henüz hiç arkadaşın yok. Birini arayarak başla!
-            </p>
+      <SurfaceCard padding="md">
+        <div className="flex items-center gap-2 mb-3">
+          <Users className="w-3.5 h-3.5 text-muted-foreground" />
+          <div className="text-eyebrow text-muted-foreground">Arkadaş Listesi</div>
+          {friends.length > 0 && (
+            <span className="text-caption text-muted-soft tabular-nums">{friends.length}</span>
           )}
-          <div className="space-y-2">
-            {friends.map(f => (
-              <div key={f.friendshipId} className="flex items-center justify-between p-2 border border-gray-100 rounded-lg">
-                <div>
-                  <div className="text-sm font-medium">{f.username}</div>
-                  <div className="text-xs text-gray-500">{f.university}</div>
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => dispatch({ type: 'VIEW_USER', payload: f.id })}
-                  >
-                    Profili Gör
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => removeFriend.mutate(f.id)}
-                    disabled={removeFriend.isPending}
-                  >
-                    <UserMinus className="w-3.5 h-3.5" />
-                  </Button>
-                </div>
+        </div>
+
+        {friendsQuery.isLoading && (
+          <p className="text-caption text-muted-foreground">Yükleniyor...</p>
+        )}
+        {!friendsQuery.isLoading && friends.length === 0 && (
+          <EmptyState
+            icon={<Users />}
+            title="Henüz arkadaş yok"
+            description="Birini arayarak başla."
+          />
+        )}
+
+        <ul className="divide-y divide-border">
+          {friends.map(f => (
+            <li key={f.friendshipId} className="flex items-center gap-3 py-3">
+              <UserInfo username={f.username} university={f.university} />
+              <div className="flex items-center gap-1 shrink-0">
+                <IconAction
+                  label="Profili Gör"
+                  icon={<Eye />}
+                  onClick={() => dispatch({ type: 'VIEW_USER', payload: f.id })}
+                />
+                <IconAction
+                  label="Arkadaşlıktan Çıkar"
+                  icon={<UserMinus />}
+                  onClick={() => removeFriend.mutate(f.id)}
+                  disabled={removeFriend.isPending}
+                />
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </li>
+          ))}
+        </ul>
+      </SurfaceCard>
     </div>
+  );
+}
+
+function UserInfo({ username, university }: { username: string; university: string }) {
+  return (
+    <div className="min-w-0 flex-1">
+      <div className="text-body text-foreground truncate">{username}</div>
+      <div className="text-caption text-muted-foreground truncate">{university}</div>
+    </div>
+  );
+}
+
+function IconAction({
+  label,
+  icon,
+  onClick,
+  disabled,
+  primary,
+}: {
+  label: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+  disabled?: boolean;
+  primary?: boolean;
+}) {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          variant={primary ? 'default' : 'ghost'}
+          size="icon"
+          className="h-9 w-9"
+          onClick={onClick}
+          disabled={disabled}
+          aria-label={label}
+        >
+          {icon}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>{label}</TooltipContent>
+    </Tooltip>
   );
 }

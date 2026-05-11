@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { ChevronLeft, Trophy } from 'lucide-react';
+import { ChevronLeft, Trophy, AlertCircle } from 'lucide-react';
 import { useGameState } from '@/hooks/useGameState';
 import { useAuth } from '@/hooks/useAuth';
 import { apiRequest } from '@/lib/queryClient';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { SurfaceCard } from '@/components/ui/surface-card';
+import { SemanticBadge } from '@/components/ui/semantic-badge';
+import { EmptyState } from '@/components/ui/empty-state';
+import { cn } from '@/lib/utils';
 
 interface LeaderboardEntry {
   userId: number;
@@ -15,8 +18,6 @@ interface LeaderboardEntry {
   maxStreakEver: number;
   isMe: boolean;
 }
-
-const RANK_MEDALS = ['🥇', '🥈', '🥉'];
 
 export default function LeaderboardScreen() {
   const { dispatch } = useGameState();
@@ -31,98 +32,113 @@ export default function LeaderboardScreen() {
 
   if (!user) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6 text-center">
-        <p className="text-gray-700">Bu sayfayı görmek için giriş yapmalısınız.</p>
-        <Button className="mt-4" onClick={() => dispatch({ type: 'SET_SCREEN', payload: 'mode' })}>
-          Mod Seçimine Dön
-        </Button>
-      </div>
+      <SurfaceCard padding="lg">
+        <EmptyState
+          icon={<AlertCircle />}
+          title="Giriş gerekli"
+          description="Bu sayfayı görmek için giriş yapmalısınız."
+          action={
+            <Button onClick={() => dispatch({ type: 'SET_SCREEN', payload: 'mode' })}>
+              Mod Seçimine Dön
+            </Button>
+          }
+        />
+      </SurfaceCard>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 animate-fade-in">
+      {/* Header */}
+      <div className="space-y-3">
         <button
-          className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 transition-colors"
           onClick={() => dispatch({ type: 'SET_SCREEN', payload: 'mode' })}
+          className="inline-flex items-center gap-1 text-caption text-muted-foreground hover:text-foreground transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-3.5 h-3.5" />
           Mod Seçimi
         </button>
-        <h1 className="text-2xl font-bold flex items-center gap-2">
-          <Trophy className="w-6 h-6 text-amber-500" />
-          Sıralama
-        </h1>
-        <span className="w-20" />
+        <div>
+          <div className="text-eyebrow text-muted-foreground">Performans</div>
+          <h1 className="font-serif text-h1 text-foreground mt-1">Sıralama</h1>
+          <p className="mt-1.5 text-caption text-muted-foreground">
+            Sen ve arkadaşların arasındaki sıralama
+          </p>
+        </div>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-normal text-gray-500">
-            Sen ve arkadaşların arasındaki sıralama
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {isLoading && <p className="text-center text-gray-500 py-6">Yükleniyor...</p>}
-          {isError && <p className="text-center text-red-500 py-6 text-sm">Sıralama yüklenemedi.</p>}
-          {data && data.length === 0 && (
-            <p className="text-center text-gray-500 py-6 text-sm">
-              Henüz tamamlanmış rekabetli maç yok. Bir maç oyna!
-            </p>
-          )}
-          {data && data.length > 0 && (
-            <div className="space-y-2">
-              {data.map((entry, index) => (
-                <div
-                  key={entry.userId}
-                  className={`flex items-center gap-3 p-3 rounded-lg border ${
-                    entry.isMe
-                      ? 'border-blue-300 bg-blue-50 ring-2 ring-blue-400'
-                      : 'border-gray-100 bg-white'
-                  }`}
-                >
-                  {/* Rank */}
-                  <div className="w-8 text-center shrink-0">
-                    {index < 3 ? (
-                      <span className="text-xl">{RANK_MEDALS[index]}</span>
-                    ) : (
-                      <span className="text-sm font-bold text-gray-500">#{index + 1}</span>
-                    )}
-                  </div>
+      <SurfaceCard padding="none">
+        {isLoading && (
+          <p className="text-center text-caption text-muted-foreground py-10">Yükleniyor...</p>
+        )}
+        {isError && (
+          <p className="text-center text-caption text-danger py-10">Sıralama yüklenemedi.</p>
+        )}
+        {data && data.length === 0 && (
+          <EmptyState
+            icon={<Trophy />}
+            title="Henüz veri yok"
+            description="Henüz tamamlanmış rekabetli maç yok. Bir maç oyna!"
+          />
+        )}
+        {data && data.length > 0 && (
+          <ul className="divide-y divide-border">
+            {data.map((entry, index) => (
+              <li key={entry.userId}>
+                <LeaderRow entry={entry} rank={index + 1} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </SurfaceCard>
+    </div>
+  );
+}
 
-                  {/* Username */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className={`font-semibold truncate ${entry.isMe ? 'text-blue-700' : 'text-gray-900'}`}>
-                        {entry.username}
-                      </span>
-                      {entry.isMe && (
-                        <span className="text-xs px-1.5 py-0.5 rounded-full bg-blue-200 text-blue-700 font-medium shrink-0">
-                          Sen
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-3 mt-1 text-xs text-gray-500 flex-wrap">
-                      <span>{entry.totalGames} maç</span>
-                      <span>{entry.accuracyRate.toFixed(1)}% doğruluk</span>
-                      <span>{entry.maxStreakEver} max seri</span>
-                    </div>
-                  </div>
+function LeaderRow({ entry, rank }: { entry: LeaderboardEntry; rank: number }) {
+  const isTop = rank <= 3;
+  const rankLabel = String(rank).padStart(2, '0');
 
-                  {/* Score */}
-                  <div className="text-right shrink-0">
-                    <div className={`text-xl font-bold tabular-nums ${entry.isMe ? 'text-blue-700' : 'text-gray-800'}`}>
-                      {entry.masteryScore.toLocaleString('tr-TR')}
-                    </div>
-                    <div className="text-xs text-gray-400">puan</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+  return (
+    <div
+      className={cn(
+        "flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3.5",
+        entry.isMe && "bg-surface-sunken"
+      )}
+    >
+      {/* Rank */}
+      <div className="w-10 shrink-0 text-center">
+        {isTop ? (
+          <span className="font-serif text-h2 text-warning tabular-nums">{rankLabel}</span>
+        ) : (
+          <span className="text-caption text-muted-soft tabular-nums">#{rank}</span>
+        )}
+      </div>
+
+      {/* Identity + sub-stats */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className={cn("text-body text-foreground truncate", entry.isMe && "font-medium")}>
+            {entry.username}
+          </span>
+          {entry.isMe && <SemanticBadge tone="accent" size="sm">Sen</SemanticBadge>}
+        </div>
+        <div className="mt-0.5 text-caption text-muted-soft font-mono tabular-nums truncate">
+          {entry.totalGames} maç
+          <span className="mx-1.5">·</span>
+          {entry.accuracyRate.toFixed(1)}%
+          <span className="mx-1.5">·</span>
+          {entry.maxStreakEver} max seri
+        </div>
+      </div>
+
+      {/* Mastery score */}
+      <div className="text-right shrink-0">
+        <div className="font-serif text-h2 text-foreground tabular-nums">
+          {entry.masteryScore.toLocaleString('tr-TR')}
+        </div>
+        <div className="text-caption text-muted-soft">puan</div>
+      </div>
     </div>
   );
 }

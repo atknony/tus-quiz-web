@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type UseFormRegisterReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { registerSchema, type RegisterData } from "@/lib/authSchemas";
@@ -15,10 +15,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SurfaceCard } from "@/components/ui/surface-card";
 
 interface RegisterFormProps {
   onSuccess: (userId: number, email: string) => void;
 }
+
+const inputClass = "bg-background border-border focus-visible:border-border-strong";
 
 export default function RegisterForm({ onSuccess }: RegisterFormProps) {
   const { register } = useAuth();
@@ -48,46 +51,38 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
   };
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 pt-2">
-      <div className="space-y-1.5">
-        <Label htmlFor="reg-username">Kullanıcı Adı</Label>
-        <Input
-          id="reg-username"
-          placeholder="kullanici_adi"
-          {...form.register("username")}
-        />
-        {form.formState.errors.username && (
-          <p className="text-sm text-red-500">{form.formState.errors.username.message}</p>
-        )}
-      </div>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 pt-4">
+      <Field
+        id="reg-username"
+        label="Kullanıcı Adı"
+        placeholder="kullanici_adi"
+        error={form.formState.errors.username?.message}
+        registerProps={form.register("username")}
+      />
 
-      <div className="space-y-1.5">
-        <Label htmlFor="reg-email">E-posta</Label>
-        <Input
-          id="reg-email"
-          type="email"
-          placeholder="ornek@email.com"
-          {...form.register("email")}
-        />
-        {form.formState.errors.email && (
-          <p className="text-sm text-red-500">{form.formState.errors.email.message}</p>
-        )}
-      </div>
+      <Field
+        id="reg-email"
+        label="E-posta"
+        type="email"
+        placeholder="ornek@email.com"
+        error={form.formState.errors.email?.message}
+        registerProps={form.register("email")}
+      />
 
-      <div className="space-y-1.5">
-        <Label htmlFor="reg-dob">Doğum Tarihi</Label>
-        <Input id="reg-dob" type="date" {...form.register("dateOfBirth")} />
-        {form.formState.errors.dateOfBirth && (
-          <p className="text-sm text-red-500">{form.formState.errors.dateOfBirth.message}</p>
-        )}
-      </div>
+      <Field
+        id="reg-dob"
+        label="Doğum Tarihi"
+        type="date"
+        error={form.formState.errors.dateOfBirth?.message}
+        registerProps={form.register("dateOfBirth")}
+      />
 
-      <div className="space-y-1.5">
-        <Label>Üniversite</Label>
+      <div className="space-y-2">
+        <Label className="text-caption text-muted-foreground">Üniversite</Label>
         <Select
           onValueChange={(val) => form.setValue("university", val, { shouldValidate: true })}
         >
-          <SelectTrigger>
+          <SelectTrigger className={inputClass}>
             <SelectValue placeholder="Üniversitenizi seçin" />
           </SelectTrigger>
           <SelectContent>
@@ -105,59 +100,81 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
           </SelectContent>
         </Select>
         {form.formState.errors.university && (
-          <p className="text-sm text-red-500">{form.formState.errors.university.message}</p>
+          <p className="text-caption text-danger">{form.formState.errors.university.message}</p>
         )}
       </div>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="reg-password">Şifre</Label>
-        <Input
-          id="reg-password"
-          type="password"
-          placeholder="••••••••"
-          {...form.register("password")}
-        />
-        {form.formState.errors.password && (
-          <p className="text-sm text-red-500">{form.formState.errors.password.message}</p>
-        )}
-      </div>
+      <Field
+        id="reg-password"
+        label="Şifre"
+        type="password"
+        placeholder="••••••••"
+        error={form.formState.errors.password?.message}
+        registerProps={form.register("password")}
+      />
 
-      <div className="space-y-1.5">
-        <Label htmlFor="reg-confirm">Şifre Tekrar</Label>
-        <Input
-          id="reg-confirm"
-          type="password"
-          placeholder="••••••••"
-          {...form.register("confirmPassword")}
-        />
-        {form.formState.errors.confirmPassword && (
-          <p className="text-sm text-red-500">{form.formState.errors.confirmPassword.message}</p>
-        )}
-      </div>
+      <Field
+        id="reg-confirm"
+        label="Şifre Tekrar"
+        type="password"
+        placeholder="••••••••"
+        error={form.formState.errors.confirmPassword?.message}
+        registerProps={form.register("confirmPassword")}
+      />
 
       <div className="pt-1">
-        <Turnstile
-          siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
-          onSuccess={(token) =>
-            form.setValue("captchaToken", token, { shouldValidate: true })
-          }
-          onError={() => form.setValue("captchaToken", "", { shouldValidate: true })}
-          onExpire={() => form.setValue("captchaToken", "", { shouldValidate: true })}
-        />
+        <div className="rounded-xl border border-border bg-surface p-2 inline-block">
+          <Turnstile
+            siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+            onSuccess={(token) =>
+              form.setValue("captchaToken", token, { shouldValidate: true })
+            }
+            onError={() => form.setValue("captchaToken", "", { shouldValidate: true })}
+            onExpire={() => form.setValue("captchaToken", "", { shouldValidate: true })}
+          />
+        </div>
         {form.formState.errors.captchaToken && (
-          <p className="text-sm text-red-500 mt-1">
+          <p className="text-caption text-danger mt-1.5">
             {form.formState.errors.captchaToken.message}
           </p>
         )}
       </div>
 
       {serverError && (
-        <p className="text-sm text-red-500 bg-red-50 p-2 rounded-md">{serverError}</p>
+        <SurfaceCard variant="inset" tone="danger" padding="sm">
+          <p className="text-caption text-danger">{serverError}</p>
+        </SurfaceCard>
       )}
 
-      <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+      <Button type="submit" className="w-full h-11" disabled={form.formState.isSubmitting}>
         {form.formState.isSubmitting ? "Kayıt yapılıyor…" : "Kayıt Ol"}
       </Button>
     </form>
+  );
+}
+
+function Field({
+  id,
+  label,
+  placeholder,
+  type = "text",
+  error,
+  registerProps,
+}: {
+  id: string;
+  label: string;
+  placeholder?: string;
+  type?: string;
+  error?: string;
+  registerProps: UseFormRegisterReturn;
+}) {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor={id} className="text-caption text-muted-foreground">
+        {label}
+      </Label>
+      <Input id={id} type={type} placeholder={placeholder} className={inputClass} {...registerProps} />
+      {error && <p className="text-caption text-danger">{error}</p>}
+    </div>
   );
 }

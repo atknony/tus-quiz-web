@@ -28,11 +28,12 @@ export default function AuthModal({ open, onOpenChange, defaultTab = "login" }: 
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-background border-border">
         {pendingVerification ? (
           <>
             <DialogHeader>
-              <DialogTitle>E-posta Doğrulama</DialogTitle>
+              <div className="text-eyebrow text-muted-foreground">Doğrulama</div>
+              <DialogTitle className="font-serif text-h1 text-foreground">E-posta Doğrulama</DialogTitle>
             </DialogHeader>
             <VerifyEmailForm
               userId={pendingVerification.userId}
@@ -46,12 +47,23 @@ export default function AuthModal({ open, onOpenChange, defaultTab = "login" }: 
         ) : (
           <>
             <DialogHeader>
-              <DialogTitle>TUS Quiz Hesabı</DialogTitle>
+              <div className="text-eyebrow text-muted-foreground">Hesap</div>
+              <DialogTitle className="font-serif text-h1 text-foreground">TUS Quiz</DialogTitle>
             </DialogHeader>
-            <Tabs defaultValue={defaultTab}>
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="login">Giriş Yap</TabsTrigger>
-                <TabsTrigger value="register">Kayıt Ol</TabsTrigger>
+            <Tabs defaultValue={defaultTab} className="mt-2">
+              <TabsList className="grid w-full grid-cols-2 bg-transparent p-0 h-auto border-b border-border rounded-none">
+                <TabsTrigger
+                  value="login"
+                  className="rounded-none border-b-2 border-transparent bg-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none text-muted-foreground data-[state=active]:text-foreground px-3 py-2.5"
+                >
+                  Giriş Yap
+                </TabsTrigger>
+                <TabsTrigger
+                  value="register"
+                  className="rounded-none border-b-2 border-transparent bg-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none text-muted-foreground data-[state=active]:text-foreground px-3 py-2.5"
+                >
+                  Kayıt Ol
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="login">
                 <LoginForm onSuccess={() => onOpenChange(false)} />
