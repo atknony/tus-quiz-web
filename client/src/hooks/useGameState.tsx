@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer, ReactNode, useEffect, useRef } from 'react';
-import { apiRequest } from '@/lib/queryClient';
-import { GameState, GameAction, GameMode, Difficulty, Section, Question, CategoryPerformance } from '@/lib/types';
+import { apiRequest, queryClient } from '@/lib/queryClient';
+import { GameState, GameAction, GameMode, Difficulty, Section, Question, CategoryPerformance, AnswerSubmittedPayload } from '@/lib/types';
 import { getMaxTime } from '@/lib/gameLogic';
 
 function fisherYatesShuffle<T>(arr: T[]): T[] {
@@ -26,10 +26,12 @@ const initialState: GameState = {
   category: null,
   difficulty: null,
   questions: [],
+  totalQuestions: 0,
   currentQuestionIndex: 0,
   correctAnswers: 0,
   wrongAnswers: 0,
   totalTime: 0,
+  score: 0,
   currentQuestionTime: 0,
   selectedAnswer: null,
   isTimerRunning: false,
@@ -78,11 +80,36 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       return {
         ...state,
         questions: action.payload,
+        totalQuestions: action.payload.length,
         isTimerRunning: true,
       };
 
-    case 'NEXT_QUESTION':
-      if (state.currentQuestionIndex >= state.questions.length - 1) {
+    case 'START_COMPETITIVE_GAME': {
+      const { gameId, question, totalQuestions } = action.payload;
+      return {
+        ...state,
+        gameId,
+        questions: [question],
+        totalQuestions,
+        currentQuestionIndex: 0,
+        isTimerRunning: true,
+      };
+    }
+
+    case 'APPEND_QUESTION': {
+      const { question, index } = action.payload;
+      if (index !== state.currentQuestionIndex) return state;
+      const newQuestions = [...state.questions];
+      newQuestions[index] = question;
+      return {
+        ...state,
+        questions: newQuestions,
+        isTimerRunning: true,
+      };
+    }
+
+    case 'NEXT_QUESTION': {
+      if (state.currentQuestionIndex >= state.totalQuestions - 1) {
         return {
           ...state,
           currentScreen: 'result',
@@ -90,14 +117,16 @@ function gameReducer(state: GameState, action: GameAction): GameState {
           isTimerRunning: false,
         };
       }
+      const newIndex = state.currentQuestionIndex + 1;
       return {
         ...state,
-        currentQuestionIndex: state.currentQuestionIndex + 1,
+        currentQuestionIndex: newIndex,
         currentQuestionTime: 0,
         selectedAnswer: null,
-        isTimerRunning: true,
+        isTimerRunning: state.questions[newIndex] !== undefined,
         feedbackTimeRemaining: 15,
       };
+    }
 
     case 'SHOW_ANSWER': {
       const q = state.questions[state.currentQuestionIndex];
@@ -113,6 +142,38 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         currentScreen: 'feedback',
         currentStreak: 0,
         categoryPerformance: updateCategory(state.categoryPerformance, category, 'wrong'),
+      };
+    }
+
+    case 'ANSWER_SUBMITTED': {
+      // Server-authoritative path (competitive mode). The reducer just applies the response.
+      // Inject server-provided correctAnswer/explanation into the question so FeedbackScreen
+      // renders identically regardless of whether they were already on the payload.
+      const p = action.payload;
+      const updatedQuestions = [...state.questions];
+      const cur = updatedQuestions[state.currentQuestionIndex];
+      if (cur) {
+        updatedQuestions[state.currentQuestionIndex] = {
+          ...cur,
+          correctAnswer: p.correctAnswer,
+          explanation: p.explanation ?? cur.explanation,
+        };
+      }
+      return {
+        ...state,
+        questions: updatedQuestions,
+        selectedAnswer: p.selectedAnswer,
+        correctAnswers: p.correctAnswers,
+        wrongAnswers: p.wrongAnswers,
+        totalTime: p.totalTime,
+        score: p.score,
+        maxStreak: p.maxStreak,
+        currentStreak: p.currentStreak,
+        categoryPerformance: p.categoryPerformance,
+        isTimerRunning: false,
+        feedbackTimeRemaining: p.isCorrect ? 5 : 15,
+        currentScreen: 'feedback',
+        gameOver: p.gameOver,
       };
     }
 
@@ -182,16 +243,17 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       if (state.gameOver) {
         return { ...state, currentScreen: 'result', feedbackTimeRemaining: 0 };
       }
-      if (state.currentQuestionIndex >= state.questions.length - 1) {
+      if (state.currentQuestionIndex >= state.totalQuestions - 1) {
         return { ...state, currentScreen: 'result', gameOver: true, isTimerRunning: false, feedbackTimeRemaining: 0 };
       }
+      const newIndex = state.currentQuestionIndex + 1;
       return {
         ...state,
         currentScreen: 'game',
-        currentQuestionIndex: state.currentQuestionIndex + 1,
+        currentQuestionIndex: newIndex,
         currentQuestionTime: 0,
         selectedAnswer: null,
-        isTimerRunning: true,
+        isTimerRunning: state.questions[newIndex] !== undefined,
         feedbackTimeRemaining: 15,
       };
     }
@@ -200,16 +262,17 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       const newFeedbackTime = state.feedbackTimeRemaining - action.payload;
       if (newFeedbackTime <= 0) {
         if (state.gameOver) return { ...state, feedbackTimeRemaining: 0 };
-        if (state.currentQuestionIndex >= state.questions.length - 1) {
+        if (state.currentQuestionIndex >= state.totalQuestions - 1) {
           return { ...state, currentScreen: 'result', gameOver: true, isTimerRunning: false, feedbackTimeRemaining: 0 };
         }
+        const newIndex = state.currentQuestionIndex + 1;
         return {
           ...state,
           currentScreen: 'game',
-          currentQuestionIndex: state.currentQuestionIndex + 1,
+          currentQuestionIndex: newIndex,
           currentQuestionTime: 0,
           selectedAnswer: null,
-          isTimerRunning: true,
+          isTimerRunning: state.questions[newIndex] !== undefined,
           feedbackTimeRemaining: 15,
         };
       }
@@ -260,25 +323,12 @@ type GameStateContextType = {
 
 const GameStateContext = createContext<GameStateContextType | undefined>(undefined);
 
-function buildSnapshot(s: GameState) {
-  return {
-    correctAnswers: s.correctAnswers,
-    wrongAnswers: s.wrongAnswers,
-    totalTime: Math.round(s.totalTime),
-    finalScore: Math.round(s.totalTime),
-    maxStreak: s.maxStreak,
-    totalQuestionsAnswered: s.correctAnswers + s.wrongAnswers,
-    categoryPerformance: s.categoryPerformance,
-  };
-}
-
 export function GameStateProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(gameReducer, initialState);
   const timerRef = useRef<number | null>(null);
   const feedbackTimerRef = useRef<number | null>(null);
   const stateRef = useRef(state);
   const completedRef = useRef(false);
-  const prevTotalAnswersRef = useRef(0);
 
   // Keep stateRef in sync with latest state for use in event handlers
   useEffect(() => { stateRef.current = state; }, [state]);
@@ -287,7 +337,6 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (state.gameId === null) {
       completedRef.current = false;
-      prevTotalAnswersRef.current = 0;
     }
   }, [state.gameId]);
 
@@ -295,6 +344,19 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (state.isTimerRunning) {
       timerRef.current = window.setInterval(() => {
+        const s = stateRef.current;
+        const newTime = s.currentQuestionTime + 0.1;
+        const maxTime = getMaxTime(s.difficulty);
+        // Competitive: intercept timeout and route through the server answer endpoint.
+        // The reducer's TICK_TIMER timeout branch (local correctness) handles practice mode.
+        if (newTime >= maxTime && s.mode === 'competitive' && s.gameId !== null) {
+          if (timerRef.current) {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+          }
+          void submitAnswerCompetitive(null);
+          return;
+        }
         dispatch({ type: 'TICK_TIMER', payload: 0.1 });
       }, 100);
     } else if (timerRef.current) {
@@ -304,6 +366,7 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     return () => {
       if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.isTimerRunning]);
 
   // Handle feedback timer
@@ -321,24 +384,29 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     };
   }, [state.currentScreen]);
 
-  // Competitive: snapshot after each answer
+  // Competitive: fetch the current question from the server if it's not loaded yet.
+  // This fires after SKIP_FEEDBACK / TICK_FEEDBACK_TIMER advances the index past a question
+  // we don't yet have. APPEND_QUESTION then starts the per-question timer.
   useEffect(() => {
-    const totalAnswers = state.correctAnswers + state.wrongAnswers;
-    if (
-      totalAnswers > prevTotalAnswersRef.current &&
-      state.mode === 'competitive' &&
-      state.gameId !== null
-    ) {
-      prevTotalAnswersRef.current = totalAnswers;
-      const snapshot = buildSnapshot(state);
-      apiRequest('PATCH', `/api/games/${state.gameId}`, snapshot).catch(e =>
-        console.error('[sync] snapshot failed', e)
-      );
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.correctAnswers, state.wrongAnswers]);
+    if (state.mode !== 'competitive') return;
+    if (state.currentScreen !== 'game') return;
+    if (state.gameId === null) return;
+    if (state.questions[state.currentQuestionIndex] !== undefined) return;
 
-  // Competitive: finalize when result screen appears
+    let cancelled = false;
+    const idx = state.currentQuestionIndex;
+    apiRequest('GET', `/api/games/${state.gameId}/question/${idx}`)
+      .then(r => r.json())
+      .then((data: { question: Question; questionIndex: number }) => {
+        if (cancelled) return;
+        dispatch({ type: 'APPEND_QUESTION', payload: { question: data.question, index: data.questionIndex } });
+      })
+      .catch(e => console.error('[next-question] fetch failed', e));
+    return () => { cancelled = true; };
+  }, [state.mode, state.currentScreen, state.gameId, state.currentQuestionIndex, state.questions]);
+
+  // Competitive: finalize on result screen. POST with no body — server already has
+  // the full game state from /answer calls and derives the final score from timings.
   useEffect(() => {
     if (
       state.currentScreen === 'result' &&
@@ -347,28 +415,15 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
       !completedRef.current
     ) {
       completedRef.current = true;
-      const snapshot = buildSnapshot(state);
-      apiRequest('PATCH', `/api/games/${state.gameId}/complete`, snapshot).catch(e =>
-        console.error('[sync] complete failed', e)
-      );
+      apiRequest('POST', `/api/games/${state.gameId}/complete`, undefined)
+        .then(() => {
+          queryClient.invalidateQueries({ queryKey: ['/api/users'] });
+          queryClient.invalidateQueries({ queryKey: ['/api/leaderboard'] });
+        })
+        .catch(e => console.error('[sync] complete failed', e));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.currentScreen]);
-
-  // Competitive: send beacon on tab close
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      const s = stateRef.current;
-      if (s.mode === 'competitive' && s.gameId !== null && !completedRef.current) {
-        navigator.sendBeacon(
-          `/api/games/${s.gameId}`,
-          new Blob([JSON.stringify(buildSnapshot(s))], { type: 'application/json' })
-        );
-      }
-    };
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, []);
 
   const selectMode = (mode: GameMode) => {
     dispatch({ type: 'SET_MODE', payload: mode });
@@ -386,39 +441,67 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'SET_DIFFICULTY', payload: difficulty });
 
     try {
-      const categoryParam = state.category ? `?category=${encodeURIComponent(state.category)}` : '';
-      const endpoint = state.section ? `/api/questions/${state.section}${categoryParam}` : '/api/questions';
-      const response = await apiRequest('GET', endpoint, undefined);
-      const data: Question[] = await response.json();
-      const shuffledQuestions = fisherYatesShuffle(data);
-      dispatch({ type: 'SET_QUESTIONS', payload: shuffledQuestions });
-
-      // Create server game row for competitive mode
       if (state.mode === 'competitive') {
-        try {
-          const res = await apiRequest('POST', '/api/games', {
-            mode: 'competitive',
-            section: state.section ?? 'klinik',
-            difficulty,
-          });
-          const { gameId } = await res.json() as { gameId: number };
-          dispatch({ type: 'SET_GAME_ID', payload: gameId });
-        } catch (e) {
-          console.error('[sync] game create failed', e);
-        }
+        // Server picks the question pool and serves the first question.
+        const res = await apiRequest('POST', '/api/games', {
+          mode: 'competitive',
+          section: state.section ?? 'klinik',
+          category: state.category,
+          difficulty,
+        });
+        const data = await res.json() as {
+          gameId: number;
+          question: Question;
+          totalQuestions: number;
+        };
+        dispatch({
+          type: 'START_COMPETITIVE_GAME',
+          payload: { gameId: data.gameId, question: data.question, totalQuestions: data.totalQuestions },
+        });
+      } else {
+        // Practice mode: legacy flow — fetch all questions, shuffle client-side, no game row.
+        const categoryParam = state.category ? `?category=${encodeURIComponent(state.category)}` : '';
+        const endpoint = state.section ? `/api/questions/${state.section}${categoryParam}` : '/api/questions';
+        const response = await apiRequest('GET', endpoint, undefined);
+        const data: Question[] = await response.json();
+        const shuffledQuestions = fisherYatesShuffle(data);
+        dispatch({ type: 'SET_QUESTIONS', payload: shuffledQuestions });
       }
     } catch (error) {
-      console.error('Failed to fetch questions:', error);
+      console.error('Failed to start game:', error);
       dispatch({ type: 'RESET_GAME' });
     }
   };
 
+  const submitAnswerCompetitive = async (selectedAnswer: string | null) => {
+    const s = stateRef.current;
+    if (s.gameId === null) return;
+    try {
+      const res = await apiRequest('POST', `/api/games/${s.gameId}/answer`, {
+        questionIndex: s.currentQuestionIndex,
+        selectedAnswer,
+      });
+      const payload: AnswerSubmittedPayload = await res.json();
+      dispatch({ type: 'ANSWER_SUBMITTED', payload });
+    } catch (e) {
+      console.error('[answer] submission failed', e);
+    }
+  };
+
   const checkAnswer = (answer: string) => {
-    dispatch({ type: 'SELECT_ANSWER', payload: answer });
+    if (stateRef.current.mode === 'competitive') {
+      void submitAnswerCompetitive(answer);
+    } else {
+      dispatch({ type: 'SELECT_ANSWER', payload: answer });
+    }
   };
 
   const showAnswer = () => {
-    dispatch({ type: 'SHOW_ANSWER' });
+    if (stateRef.current.mode === 'competitive') {
+      void submitAnswerCompetitive(null);
+    } else {
+      dispatch({ type: 'SHOW_ANSWER' });
+    }
   };
 
   const skipFeedback = () => {

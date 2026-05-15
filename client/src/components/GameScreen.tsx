@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 export default function GameScreen() {
   const { state, checkAnswer, showAnswer } = useGameState();
-  const { difficulty, section, questions, currentQuestionIndex, correctAnswers, wrongAnswers, currentQuestionTime, currentStreak } = state;
+  const { difficulty, section, questions, totalQuestions, currentQuestionIndex, correctAnswers, wrongAnswers, currentQuestionTime, currentStreak } = state;
 
   const currentQuestion = questions[currentQuestionIndex];
   const maxTime = getMaxTime(difficulty);
@@ -31,7 +31,7 @@ export default function GameScreen() {
       {/* Low-contrast top strip */}
       <div className="flex items-center justify-between text-caption text-muted-foreground mb-2">
         <div className="flex items-center gap-2 truncate">
-          <span className="tabular-nums">Soru {currentQuestionIndex + 1} / {questions.length}</span>
+          <span className="tabular-nums">Soru {currentQuestionIndex + 1} / {totalQuestions}</span>
           {sectionLabel && <><span aria-hidden>·</span><span>{sectionLabel}</span></>}
           {difficulty && <><span aria-hidden>·</span><span>{getDifficultyName(difficulty)}</span></>}
           {currentStreak >= 2 && <><span aria-hidden>·</span><span>Seri {currentStreak}</span></>}

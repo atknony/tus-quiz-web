@@ -18,8 +18,15 @@ import { SurfaceCard } from '@/components/ui/surface-card';
 import { StatTile } from '@/components/ui/stat-tile';
 import { SemanticBadge } from '@/components/ui/semantic-badge';
 import { EmptyState } from '@/components/ui/empty-state';
+import { CategoryRadar } from '@/components/CategoryRadar';
 import { cn } from '@/lib/utils';
 import type { Difficulty } from '@/lib/types';
+
+export interface CategoryBreakdownEntry {
+  correct: number;
+  total: number;
+  accuracy: number;
+}
 
 interface ProfileStats {
   totalGames: number;
@@ -29,6 +36,8 @@ interface ProfileStats {
   maxStreakEver: number;
   strongestCategory: string | null;
   weakestCategory: string | null;
+  categoryBreakdown: Record<string, CategoryBreakdownEntry>;
+  categoryBreakdownRecent: Record<string, CategoryBreakdownEntry>;
 }
 
 interface ProfileResponse {
@@ -48,7 +57,7 @@ interface MatchRow {
   correctAnswers: number;
   wrongAnswers: number;
   totalTime: number;
-  finalScore: number;
+  score: number;
   maxStreak: number;
   totalQuestionsAnswered: number;
   accuracyRate: number;
@@ -202,6 +211,17 @@ function ProfileContent({ userId, isViewingFriend }: { userId: number; isViewing
               tone="danger"
             />
           </div>
+        </SurfaceCard>
+      )}
+
+      {/* Category radar */}
+      {stats && Object.keys(stats.categoryBreakdown).length > 0 && (
+        <SurfaceCard padding="lg">
+          <div className="text-eyebrow text-muted-foreground mb-3">Kategori Performansı</div>
+          <CategoryRadar
+            lifetime={stats.categoryBreakdown}
+            recent={stats.categoryBreakdownRecent}
+          />
         </SurfaceCard>
       )}
 

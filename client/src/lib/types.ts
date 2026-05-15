@@ -17,6 +17,22 @@ export type GameStatus = 'abandoned' | 'completed';
 export interface CategoryStats { correct: number; wrong: number }
 export type CategoryPerformance = Record<string, CategoryStats>;
 
+export interface AnswerSubmittedPayload {
+  isCorrect: boolean;
+  correctAnswer: string;
+  explanation: string | null;
+  selectedAnswer: string | null;
+  questionIndex: number;
+  correctAnswers: number;
+  wrongAnswers: number;
+  totalTime: number;
+  score: number;
+  maxStreak: number;
+  currentStreak: number;
+  categoryPerformance: CategoryPerformance;
+  gameOver: boolean;
+}
+
 export interface Question {
   id: number;
   text: string;
@@ -36,10 +52,12 @@ export interface GameState {
   category: string | null;
   difficulty: Difficulty | null;
   questions: Question[];
+  totalQuestions: number;
   currentQuestionIndex: number;
   correctAnswers: number;
   wrongAnswers: number;
   totalTime: number;
+  score: number;
   currentQuestionTime: number;
   selectedAnswer: string | null;
   isTimerRunning: boolean;
@@ -57,9 +75,12 @@ export type GameAction =
   | { type: 'SET_CATEGORY'; payload: string | null }
   | { type: 'SET_DIFFICULTY'; payload: Difficulty }
   | { type: 'SET_QUESTIONS'; payload: Question[] }
+  | { type: 'START_COMPETITIVE_GAME'; payload: { gameId: number; question: Question; totalQuestions: number } }
+  | { type: 'APPEND_QUESTION'; payload: { question: Question; index: number } }
   | { type: 'NEXT_QUESTION' }
   | { type: 'SELECT_ANSWER'; payload: string }
   | { type: 'SHOW_ANSWER' }
+  | { type: 'ANSWER_SUBMITTED'; payload: AnswerSubmittedPayload }
   | { type: 'SKIP_FEEDBACK' }
   | { type: 'TICK_TIMER'; payload: number }
   | { type: 'TICK_FEEDBACK_TIMER'; payload: number }

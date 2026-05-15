@@ -4,7 +4,6 @@ import html2canvas from 'html2canvas';
 import { useGameState } from '@/hooks/useGameState';
 import {
   formatTime,
-  calculateFinalScore,
   calculateAccuracyRate,
   calculateAvgTimePerQuestion,
   getDifficultyName,
@@ -15,12 +14,11 @@ import { cn } from '@/lib/utils';
 
 export default function ResultScreen() {
   const { state, playAgain, returnToMenu } = useGameState();
-  const { correctAnswers, wrongAnswers, totalTime, maxStreak, categoryPerformance, mode } = state;
+  const { correctAnswers, wrongAnswers, totalTime, score, maxStreak, categoryPerformance, mode } = state;
   const [isSaving, setIsSaving] = useState(false);
   const resultCardRef = useRef<HTMLDivElement>(null);
 
   const totalQuestions = correctAnswers + wrongAnswers;
-  const finalScore = calculateFinalScore(state);
   const accuracyRate = calculateAccuracyRate(state);
   const avgTimePerQuestion = calculateAvgTimePerQuestion(state);
 
@@ -65,11 +63,12 @@ export default function ResultScreen() {
           </p>
         </header>
 
-        {/* Score block */}
+        {/* Score block — new server-derived match score */}
         <SurfaceCard padding="lg">
-          <div className="text-eyebrow text-muted-foreground mb-4">Son Skor</div>
-          <div className="font-serif text-display text-foreground tabular-nums font-mono mb-6">
-            {formatTime(finalScore)}
+          <div className="text-eyebrow text-muted-foreground mb-4">Maç Skoru</div>
+          <div className="font-serif text-display text-foreground tabular-nums mb-6">
+            {score.toLocaleString('tr-TR')}
+            <span className="ml-2 text-h2 text-muted-soft">puan</span>
           </div>
           <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-body">
             <div className="flex flex-col">

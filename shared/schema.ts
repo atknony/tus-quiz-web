@@ -3,6 +3,13 @@ import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+export interface QuestionTiming {
+  questionId: number;
+  servedAt: string;
+  answeredAt: string | null;
+  selectedAnswer: string | null;
+}
+
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
@@ -42,8 +49,7 @@ export const games = pgTable("games", {
   correctAnswers: integer("correct_answers").notNull(),
   wrongAnswers: integer("wrong_answers").notNull(),
   totalTime: integer("total_time").notNull(),
-  finalScore: integer("final_score").notNull(),
-  dateCreated: text("date_created").notNull(),
+  score: integer("score").notNull().default(0),
   mode: text("mode").notNull().default("competitive"),
   status: text("status").notNull().default("abandoned"),
   maxStreak: integer("max_streak").notNull().default(0),
@@ -54,10 +60,20 @@ export const games = pgTable("games", {
     .$type<Record<string, { correct: number; wrong: number }>>()
     .notNull()
     .default({}),
+  schemaVersion: integer("schema_version").notNull().default(1),
+  chosenQuestionIds: jsonb("chosen_question_ids")
+    .$type<number[]>()
+    .notNull()
+    .default([]),
+  currentQuestionIndex: integer("current_question_index").notNull().default(0),
+  questionTimings: jsonb("question_timings")
+    .$type<QuestionTiming[]>()
+    .notNull()
+    .default([]),
   startedAt: timestamp("started_at").notNull().defaultNow(),
   completedAt: timestamp("completed_at"),
 }, (table) => ({
-  idxUserStatusScore: index("idx_games_user_status_score").on(table.userId, table.status, table.finalScore),
+  idxUserStatusScore: index("idx_games_user_status_score").on(table.userId, table.status, table.score),
 }));
 
 export const friendships = pgTable("friendships", {
@@ -117,19 +133,6 @@ export const insertGameSchema = createInsertSchema(games).omit({
   id: true,
 }).partial({ userId: true });
 
-export const gameSnapshotSchema = z.object({
-  correctAnswers: z.number().int().min(0),
-  wrongAnswers: z.number().int().min(0),
-  totalTime: z.number().min(0),
-  finalScore: z.number().min(0),
-  maxStreak: z.number().int().min(0),
-  totalQuestionsAnswered: z.number().int().min(0),
-  categoryPerformance: z.record(z.object({
-    correct: z.number().int().min(0),
-    wrong: z.number().int().min(0),
-  })),
-});
-
 export const insertFriendshipSchema = createInsertSchema(friendships).omit({
   id: true,
   createdAt: true,
@@ -145,10 +148,11 @@ export type EmailVerification = typeof emailVerifications.$inferSelect;
 export type InsertQuestion = z.infer<typeof insertQuestionSchema>;
 export type Question = typeof questions.$inferSelect;
 
-export type InsertGame = z.infer<typeof insertGameSchema>;
+// Use drizzle's native inferred insert type so jsonb `.$type<>()` annotations
+// (chosenQuestionIds, questionTimings, categoryPerformance) carry through.
+// The zod-derived schema (kept for runtime validation use cases) loses these.
+export type InsertGame = typeof games.$inferInsert;
 export type Game = typeof games.$inferSelect;
 
 export type InsertFriendship = z.infer<typeof insertFriendshipSchema>;
 export type Friendship = typeof friendships.$inferSelect;
-
-export type GameSnapshot = z.infer<typeof gameSnapshotSchema>;

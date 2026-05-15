@@ -5,9 +5,8 @@ import bcrypt from "bcrypt";
 import { Resend } from "resend";
 import rateLimit from "express-rate-limit";
 import { z } from "zod";
-import { storage } from "./storage";
-import type { User } from "@shared/schema";
-import { gameSnapshotSchema } from "@shared/schema";
+import { storage, GameNotFoundError, GameAlreadyCompletedError, InvalidQuestionIndexError, QuestionNotServedError } from "./storage";
+import type { User, QuestionTiming } from "@shared/schema";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -77,6 +76,7 @@ const resendVerificationBodySchema = z.object({
 const startGameBodySchema = z.object({
   mode: z.literal("competitive"),
   section: z.string().min(1),
+  category: z.string().min(1).nullable().optional(),
   difficulty: z.enum(["easy", "medium", "expert"]),
 });
 
@@ -156,9 +156,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
     const parsed = startGameBodySchema.safeParse(req.body);
     if (!parsed.success) return res.status(400).json({ message: "Geçersiz istek." });
-    const { section, difficulty } = parsed.data;
+    const { section, difficulty, category } = parsed.data;
     const user = req.user as User;
     try {
+      const questionIds = await storage.getQuestionsForGame(section, category ?? null);
+      if (questionIds.length === 0) {
+        return res.status(400).json({ message: "Bu kategoride soru bulunamadı." });
+      }
+
+      const firstServedAt = new Date().toISOString();
+      const firstTiming: QuestionTiming = {
+        questionId: questionIds[0],
+        servedAt: firstServedAt,
+        answeredAt: null,
+        selectedAnswer: null,
+      };
+
       const game = await storage.createGame({
         userId: user.id,
         mode: "competitive",
@@ -168,44 +181,125 @@ export async function registerRoutes(app: Express): Promise<Server> {
         correctAnswers: 0,
         wrongAnswers: 0,
         totalTime: 0,
-        finalScore: 0,
-        dateCreated: new Date().toISOString().split("T")[0],
+        chosenQuestionIds: questionIds,
+        questionTimings: [firstTiming],
+        currentQuestionIndex: 0,
       });
-      return res.status(201).json({ gameId: game.id });
+
+      const firstQuestion = await storage.getQuestion(questionIds[0]);
+      if (!firstQuestion) {
+        return res.status(500).json({ message: "İlk soru yüklenemedi." });
+      }
+      // Iter 2a: still ship correctAnswer/explanation so the client can show feedback.
+      // Iter 2b will move correctness server-side and remove them from this payload.
+      const questionForClient = firstQuestion;
+
+      return res.status(201).json({
+        gameId: game.id,
+        question: questionForClient,
+        questionIndex: 0,
+        totalQuestions: questionIds.length,
+        servedAt: firstServedAt,
+      });
     } catch {
       return res.status(500).json({ message: "Oyun başlatılamadı." });
     }
   });
 
-  app.patch("/api/games/:id/complete", gamesLimiter, async (req: Request, res: Response) => {
+  app.get("/api/games/:id/question/:index", gamesLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const id = parseInt(req.params.id, 10);
+    const index = parseInt(req.params.index, 10);
+    if (isNaN(id) || isNaN(index)) return res.status(400).json({ message: "Geçersiz parametre." });
+
+    const user = req.user as User;
+    try {
+      const game = await storage.getGameById(id);
+      if (!game || game.userId !== user.id) {
+        return res.status(404).json({ message: "Oyun bulunamadı." });
+      }
+      if (game.status === "completed") {
+        return res.status(400).json({ message: "Oyun zaten tamamlandı." });
+      }
+      if (index < 0 || index >= game.chosenQuestionIds.length) {
+        return res.status(400).json({ message: "Geçersiz soru indeksi." });
+      }
+
+      const questionId = game.chosenQuestionIds[index];
+      const question = await storage.getQuestion(questionId);
+      if (!question) {
+        return res.status(500).json({ message: "Soru yüklenemedi." });
+      }
+
+      // Idempotent: if this index already has a servedAt, return cached. Otherwise stamp now.
+      const existing = game.questionTimings[index];
+      let servedAt: string;
+      if (existing && existing.servedAt) {
+        servedAt = existing.servedAt;
+      } else {
+        servedAt = new Date().toISOString();
+        const timing: QuestionTiming = {
+          questionId,
+          servedAt,
+          answeredAt: null,
+          selectedAnswer: null,
+        };
+        await storage.recordQuestionServed(id, user.id, index, timing, game.questionTimings);
+      }
+
+      return res.json({
+        question,
+        questionIndex: index,
+        totalQuestions: game.chosenQuestionIds.length,
+        servedAt,
+      });
+    } catch {
+      return res.status(500).json({ message: "Soru yüklenemedi." });
+    }
+  });
+
+  const answerBodySchema = z.object({
+    questionIndex: z.number().int().min(0),
+    selectedAnswer: z.string().min(1).nullable(),
+  });
+
+  app.post("/api/games/:id/answer", gamesLimiter, async (req: Request, res: Response) => {
     if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
     const id = parseInt(req.params.id, 10);
     if (isNaN(id)) return res.status(400).json({ message: "Geçersiz oyun ID." });
-    const parsed = gameSnapshotSchema.safeParse(req.body);
-    if (!parsed.success) return res.status(400).json({ message: "Geçersiz veri." });
+    const parsed = answerBodySchema.safeParse(req.body);
+    if (!parsed.success) return res.status(400).json({ message: "Geçersiz cevap verisi." });
+
     const user = req.user as User;
     try {
-      const game = await storage.completeGame(id, user.id, parsed.data);
+      const result = await storage.submitAnswer(
+        id,
+        user.id,
+        parsed.data.questionIndex,
+        parsed.data.selectedAnswer,
+      );
+      return res.json(result);
+    } catch (err) {
+      if (err instanceof GameNotFoundError) return res.status(404).json({ message: "Oyun bulunamadı." });
+      if (err instanceof GameAlreadyCompletedError) return res.status(400).json({ message: "Oyun zaten tamamlandı." });
+      if (err instanceof InvalidQuestionIndexError) return res.status(400).json({ message: "Geçersiz soru indeksi." });
+      if (err instanceof QuestionNotServedError) return res.status(400).json({ message: "Bu soru henüz sunulmadı." });
+      console.error("[submitAnswer]", err);
+      return res.status(500).json({ message: "Cevap işlenemedi." });
+    }
+  });
+
+  app.post("/api/games/:id/complete", gamesLimiter, async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) return res.status(400).json({ message: "Geçersiz oyun ID." });
+    const user = req.user as User;
+    try {
+      const game = await storage.completeGame(id, user.id);
       if (!game) return res.status(404).json({ message: "Oyun bulunamadı." });
       return res.json(game);
     } catch {
       return res.status(500).json({ message: "Oyun tamamlanamadı." });
-    }
-  });
-
-  app.patch("/api/games/:id", gamesLimiter, async (req: Request, res: Response) => {
-    if (!req.isAuthenticated()) return res.status(401).json({ message: "Giriş yapmanız gerekiyor." });
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) return res.status(400).json({ message: "Geçersiz oyun ID." });
-    const parsed = gameSnapshotSchema.safeParse(req.body);
-    if (!parsed.success) return res.status(400).json({ message: "Geçersiz veri." });
-    const user = req.user as User;
-    try {
-      const game = await storage.updateGame(id, user.id, parsed.data);
-      if (!game) return res.status(404).json({ message: "Oyun bulunamadı." });
-      return res.json(game);
-    } catch {
-      return res.status(500).json({ message: "Anlık kayıt başarısız." });
     }
   });
 
@@ -370,22 +464,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.json(entries.map(e => ({ ...e, isMe: e.userId === me })));
     } catch {
       return res.status(500).json({ message: "Sıralama alınamadı." });
-    }
-  });
-
-  app.get("/api/games/leaderboard", async (req: Request, res: Response) => {
-    const { difficulty, section } = req.query;
-    const rawLimit = parseInt(req.query.limit as string, 10);
-    const limit = isNaN(rawLimit) ? 50 : Math.min(rawLimit, 50);
-    try {
-      const board = await storage.getLeaderboard({
-        difficulty: difficulty as string | undefined,
-        section: section as string | undefined,
-        limit,
-      });
-      return res.json(board);
-    } catch {
-      return res.status(500).json({ message: "Liderlik tablosu alınamadı." });
     }
   });
 

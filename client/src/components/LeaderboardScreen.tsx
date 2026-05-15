@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 interface LeaderboardEntry {
   userId: number;
   username: string;
-  masteryScore: number;
+  rating: number;
   totalGames: number;
   accuracyRate: number;
   maxStreakEver: number;
@@ -135,7 +135,7 @@ function LeaderRow({ entry, rank }: { entry: LeaderboardEntry; rank: number }) {
       {/* Mastery score */}
       <div className="text-right shrink-0">
         <div className="font-serif text-h2 text-foreground tabular-nums">
-          {entry.masteryScore.toLocaleString('tr-TR')}
+          {entry.rating.toLocaleString('tr-TR')}
         </div>
         <div className="text-caption text-muted-soft">puan</div>
       </div>

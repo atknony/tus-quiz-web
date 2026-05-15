@@ -35,14 +35,6 @@ export function formatTime(seconds: number): string {
 }
 
 /**
- * Calculate final score (only total time without penalties)
- */
-export function calculateFinalScore(state: GameState): number {
-  // Removed penalty system as per requirements
-  return state.totalTime;
-}
-
-/**
  * Calculate accuracy rate
  */
 export function calculateAccuracyRate(state: GameState): string {
